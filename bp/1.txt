@@ -1,0 +1,55 @@
+﻿
+----------------------------------------ajax调用生成页面的服务端代码方法--------------------------------------------
+//js代码
+$('.zanbox').click(function () {
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',//必须
+        url: 'Detail.aspx/Greet',//地址 + / + 方法名,不能在url地址后面传参
+        data: '{"id":"' + $('#hfnewid').val() + '","userid":"' + $('#hfnewid').val() + '"}',//后台方法参数传递,data不能写成js对象,要写json字符串
+        success: function (result) {
+            $('.zanbox span').text(result.d);//返回的是一个js对象
+        }
+    });
+});
+//后台方法代码
+[System.Web.Services.WebMethod]//必须
+public static int Greet(string id, string userid)//必须声明为静态方法
+{
+    return new Bll.ZX_News().ZAN(id, userid);//如果ZAN方法返回值是1,js代码中result的值为{d:1},可以返回更多的json数据
+}
+--------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------AsEnumerable , OfType , Cast--------------------------------------
+AsEnumerable<TSource>(IEnumerable<TSource>) 可用于查询实现当序列实现之间进行选择 IEnumerable<T> 但也有一组不同的可用公共查询方法。 
+例如，给定泛型类 Table 实现 IEnumerable<T> 和具有它自己的方法，如 Where, ，Select, ，和 SelectMany, ，调用 Where 像调用公共 Where 方法 Table。 
+一个 Table 表示数据库表的类型可能具有 Where方法，它将谓词表达式目录树作为参数并将该树到 SQL 转换为远程执行。 
+如果远程执行不需要时，例如谓词时，将调用本地方法，因为 AsEnumerable<TSource> 方法可用来隐藏自定义方法，并改为提供的标准查询运算符。
+
+Enumerable.OfType<TResult>方法是一个延迟执行的方法。只有执行遍历的时候，才会触发具体执行，当出现异常时，将进行忽略；
+例：lsit 集合将有3个对象，会忽略第三个转换失败的对象.
+ArrayList array = new ArrayList();  
+array.Add("a");  
+array.Add("b");  
+array.Add(4);  
+array.Add("c");
+List<string> lsit = new List<string>();  
+foreach (var v in array.OfType<string>())  
+{  
+    lsit.Add(v);  
+}
+
+Enumerable.Cast<TResult>方法是一个延迟执行的方法。只有执行遍历的时候，才会触发具体执行，当出现异常时，会抛出异常；
+例：在遍历到第三个数据时，将抛出异常。
+ArrayList array = new ArrayList();  
+array.Add("a");  
+array.Add("b");  
+array.Add(4);  
+array.Add("c");
+List<string> lsit = new List<string>();  
+foreach (var v in array.Cast<string>())  
+{  
+    lsit.Add(v);  
+}
+--------------------------------------------------------------------------------------------------------

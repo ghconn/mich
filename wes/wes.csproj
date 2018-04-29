@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F1409DC2-77F9-41BC-862C-916267D931B2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>wes</RootNamespace>
+    <AssemblyName>wes</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="const.txt" />
+    <Content Include="API.htm" />
+    <Content Include="ashx\pie.ashx" />
+    <Content Include="aspx\bl.aspx" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\js\npm.js" />
+    <Content Include="content\css\bootstrap.min.css" />
+    <Content Include="content\img\glyphicons-halflings-white.png" />
+    <Content Include="content\img\glyphicons-halflings.png" />
+    <Content Include="html\eq2.html" />
+    <Content Include="html\eq.html" />
+    <Content Include="html\bl.html" />
+    <Content Include="html\operation.html" />
+    <Content Include="html\plvd.html" />
+    <Content Include="html\ruler.html" />
+    <Content Include="html\sglr.html" />
+    <Content Include="ashx\api.ashx" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="script\thrift.js" />
+    <Content Include="script\large-ui.css.txt" />
+    <Content Include="script\yzywebh.js" />
+    <Content Include="th.txt" />
+    <None Include="Properties\PublishProfiles\conf1.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="aspx\np.aspx" />
+    <Content Include="aspx\z.aspx" />
+    <Content Include="html\pie.html" />
+    <Content Include="html\wb.html" />
+    <Content Include="mp3\addbank.mp3" />
+    <Content Include="mp3\cardfail.mp3" />
+    <Content Include="mp3\cardwait.mp3" />
+    <Content Include="mp3\chaoshi.wav" />
+    <Content Include="mp3\exception.mp3" />
+    <Content Include="mp3\exception_1.mp3" />
+    <Content Include="mp3\life.mp3" />
+    <Content Include="mp3\life.wav" />
+    <Content Include="mp3\PayBank.mp3" />
+    <Content Include="img\share.png" />
+    <Content Include="mp3\yichang.wav" />
+    <Content Include="ns.html" />
+    <Content Include="script\bootstrap.min.js" />
+    <Content Include="script\bootstrap.tooltips.min.js" />
+    <Content Include="script\Chart\Chart.bundle.js" />
+    <Content Include="script\Chart\Chart.js" />
+    <None Include="script\ss.inc" />
+    <Content Include="script\jquery-1.10.2.min.js" />
+    <Content Include="script\jquery-1.8.2.min.js" />
+    <Content Include="script\common.js" />
+    <Content Include="script\jquery-ui-1.8.24.min.js" />
+    <Content Include="script\jquery.mobile-1.2.0.min.js" />
+    <Content Include="script\jquery.validate.min.js" />
+    <Content Include="script\messages_cn.js" />
+    <Content Include="script\require.js" />
+    <Content Include="script\wdwebupload.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ashx\api.ashx.cs">
+      <DependentUpon>api.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\pie.ashx.cs">
+      <DependentUpon>pie.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\bl.aspx.cs">
+      <DependentUpon>bl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\bl.aspx.designer.cs">
+      <DependentUpon>bl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\np.aspx.cs">
+      <DependentUpon>np.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\np.aspx.designer.cs">
+      <DependentUpon>np.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\z.aspx.cs">
+      <DependentUpon>z.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\z.aspx.designer.cs">
+      <DependentUpon>z.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="hl\in.cs" />
+    <Compile Include="hl\nt.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\mdl\mdl.csproj">
+      <Project>{5a0f836a-16aa-4e30-b3f5-f02ab7972e03}</Project>
+      <Name>mdl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tpc\tpc.csproj">
+      <Project>{fbb88d2f-f03c-4606-953d-47cff75aba89}</Project>
+      <Name>tpc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>12439</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:12439/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

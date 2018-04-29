@@ -1,0 +1,336 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Web Proxy Api Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<style type="text/css">
+    body {
+        font-family: Segoe UI, Helvetica;
+        font-size: 12px;
+    }
+
+    .resource {
+        width: 75px;
+        height: 75px;
+        -ms-border-radius: 8px;
+        border-radius: 8px;
+        display: inline-block;
+        padding: 5px;
+        overflow: hidden;
+        border: 1px solid firebrick;
+        margin: 10px;
+        position: relative;
+        vertical-align: top;
+    }
+
+        .resource img {
+            height: 42px;
+            width: 42px;
+            position: absolute;
+            top: 6px;
+            left: 21px;
+        }
+
+        .resource p {
+            margin: 47px 0 0;
+            text-align: center;
+        }
+
+        .resource:hover {
+            background: lightgoldenrodyellow;
+            cursor: pointer;
+        }
+
+    form, #friendlyname, #log-off, #logged-off {
+        display: none;
+    }
+
+    form {
+        width: 275px;
+    }
+
+    input[type=text], input[type=password] {
+        width: 155px;
+    }
+
+    input[type=submit] {
+        margin: 12px 0;
+    }
+
+    label {
+        display: inline-block;
+        width: 73px;
+    }
+
+    #hidden-iframes {
+        /* The HDX plug-in ignores the launch if the ICA file is loaded into an element hidden with display: none. */
+        visibility: hidden;
+        position: absolute;
+        left: -999px;
+        top: -999px;
+        width: 0;
+        height: 0;
+    }
+</style>
+<script src="scripts/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    var $configXml, resourcesData, url;
+
+    $(document).ready(function () {
+        // Web Proxy request to fetch the configuration
+        ajaxWrapper({ url: 'Home/Configuration', dataType: 'xml', success: configSuccess });
+
+        $('form').submit(function () {
+            var username = $('#username').val(),
+                password = $('#password').val();
+
+            clearMessage();
+
+            if (!username || !password) {
+                showMessage('Enter a username and a password');
+                return false;
+            }
+
+            // Web Proxy request to log the user on
+            ajaxWrapper({
+                url: 'PostCredentialsAuth/Login',
+                dataType: 'xml',
+                success: loginSuccess,
+                error: loginError,
+                data: { username: username, password: password }
+            });
+
+            return false;
+        });
+
+        $('#log-off').click(function () {
+            // Web Proxy request to log the user off
+            url = ($configXml.find('authManager').attr('logoffURL'));
+            ajaxWrapper({ url: url, dataType: 'text', success: logoffSuccess });
+            return false;
+        });
+    });
+
+    function configSuccess(data) {
+        $configXml = $(data);
+        // The userLanguages setting reflects the browser's Accept-Language header, which can be used to localize the client UI
+        // var languages = $configXml.find('session').attr('userLanguages');
+
+        // Web Proxy request to enumerate the available authentication methods
+        ajaxWrapper({ url: 'Authentication/GetAuthMethods', dataType: 'xml', success: getAuthMethodsSuccess });
+    };
+
+    function getAuthMethodsSuccess(xmlData) {
+        var url;
+
+        $(xmlData).find('method').each(function (index, elt) {
+            var name = $(elt).attr("name"),
+                authUrl = $(elt).attr("url");
+
+            if (name == 'PostCredentials') {
+                url = authUrl;
+                return false; // Break out of the 'each' loop
+            } else {
+                return true; // Continue iterating
+            }
+        });
+
+        if (url) {
+            showLogonForm();
+        } else {
+            showMessage('PostCredentials authentication is not available - check HttpBasic is enabled at the Authentication service');
+        }
+    }
+
+    function loginSuccess(data) {
+        var $loginXml = $(data),
+            result = $loginXml.find('Result').text();
+
+        if (result == 'success') {
+            $('form').hide();
+            $('#log-off').show();
+
+            // Web Proxy request to enumerate the resources available to the user
+            url = $configXml.find('resourcesProxy').attr('listURL');
+            ajaxWrapper({ url: url, success: listResourcesSuccess });
+        } else {
+            showMessage('Login failed - try again');
+        }
+    }
+
+    function loginError() { console.log('Login failed'); }
+
+    function logoffSuccess() {
+        showMessage('You have logged off successfully');
+        showLogonForm();
+    }
+
+    function showLogonForm() {
+        $('#log-off').hide();
+        $('#resources-container').empty();
+        $('form').show();
+        $('#username').select().focus();
+    }
+
+    function listResourcesSuccess(data) {
+        var markup = '';
+
+        resourcesData = data.resources;
+
+        for (var i = 0; i < resourcesData.length; i++) {
+            markup += generateResourceMarkup(resourcesData[i], i);
+        }
+
+        $('#resources-container').append($(markup))
+                                 .off('click')
+                                 .on('click', '.resource', null, prepareLaunch);
+
+        // Web Proxy request to fetch the user's full name
+        url = ($configXml.find('authManager').attr('getUsernameURL'));
+        ajaxWrapper({ url: url, dataType: 'text', success: getUsernameSuccess });
+    }
+
+    function getUsernameSuccess(data) {
+        showMessage('Welcome ' + encodeHtml(data));
+    }
+
+    function prepareLaunch() {
+        var index = $(this).attr('id'),
+            resource = resourcesData[index];
+
+        console.log('launch: ' + resource.name);
+
+        if ($.inArray('ica30', resource.clienttypes) == -1) {
+            console.log('Resource does not support ICA launch');
+            return;
+        }
+
+        // Web Proxy request to check whether the resource is ready to launch
+        ajaxWrapper({ url: resource.launchstatusurl, success: launchStatusSuccess, error: launchStatusError });
+
+        function launchStatusSuccess(data, textStatus, xhr) {
+            if (xhr.getResponseHeader('CitrixWebReceiver-Authenticate')) {
+                // If the Web Proxy session has terminated for any reason, this authentication challenge header is returned.
+                // After authentication, all calls to the Web Proxy should be prepared to deal with this challenge, typically
+                // by prompting the user to log on again.
+                console.log('No session - user must log in again');
+                return;
+            }
+
+            console.log('launch status: ' + data.status);
+            // Note, data.status is set to 'retry' if a desktop VM needs to be started up by the server.
+            if (data.status == 'success') {
+                performLaunch(resource);
+            }
+        }
+
+        function launchStatusError() { console.log('Get launch status failed'); }
+    }
+
+    function performLaunch(resource) {
+        var icaFileUrl = resource.launchurl,
+            csrfToken = getCookie('CsrfToken'),
+            currentTime = (new Date()).getTime(),
+            frameId = "launchframe_" + currentTime;
+
+        // To initiate a launch, an ICA file is loaded into a hidden iframe.
+        // The ICA file is returned with content type "application/x-ica", allowing it to be intercepted by the Citrix HDX
+        // browser plug-in in Firefox/Chrome/Safari. For IE, the user may be prompted to open the ICA file.
+        $('#hidden-iframes').append('<iframe id="' + frameId + '" name="' + frameId + '"></iframe>');
+
+        if (csrfToken != null) {
+            icaFileUrl = updateQueryString(icaFileUrl, "CsrfToken", csrfToken);
+        }
+
+        // Web Proxy request to load the ICA file into an iframe
+        // The request is made by adding
+        icaFileUrl = updateQueryString(icaFileUrl, 'launchId', currentTime);
+        $("#" + frameId).attr('src', icaFileUrl);
+
+        console.log('perform launch - url: ' + icaFileUrl);
+    }
+
+    function generateResourceMarkup(resource, index) {
+        var result = '<div id="' + index + '" class="resource">';
+
+        result += '<img class="resource-icon" alt="' + encodeHtmlForAttr(resource.name) + '" src="' + resource.iconurl + '">';
+        result += '<p class="resource-name">' + encodeHtml(resource.name) + '</p>';
+        result += '</div>';
+
+        return result;
+    }
+
+    function showMessage(message) { $('#message').text(message); }
+
+    function clearMessage() { showMessage(''); }
+
+    function getCookie(name) {
+        var results = document.cookie.match('(^|;) ?' + name + '=([^;]*)');
+        return results ? unescape(results[2]) : null;
+    }
+
+    function updateQueryString(url, key, value) {
+        var re = new RegExp("([?|&])" + key + "=.*?(&|$)", "i");
+        if (url.match(re)) {
+            return url.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            return url + (url.match(/\?/) ? '&' : '?') + key + "=" + value;
+        }
+    }
+
+    function encodeHtml(value) {
+        return $('<div/>').text(value).html();
+    }
+
+    // Additionally encode double quotes to allow values to be used within double-quoted HTML attributes
+    function encodeHtmlForAttr(value) {
+        return encodeHtml(value).replace(/"/g, '&quot;');
+    }
+
+    function ajaxWrapper(options) {
+        var defaultOptions = {
+            type: 'POST',
+            dataType: 'json',
+            traditional: true,
+            beforeSend: function (jqXHR) {
+                var csrfToken = getCookie('CsrfToken');
+                if (csrfToken != null) {
+                    jqXHR.setRequestHeader("Csrf-Token", csrfToken);
+                }
+                var isUsingHttps = location.protocol.toLowerCase() == "https:" ? "Yes" : "No";
+                jqXHR.setRequestHeader("X-Citrix-IsUsingHTTPS", isUsingHttps);
+            },
+            error: function () {
+                console.log('Ajax error accessing URL: ' + options.url);
+            }
+        };
+
+        options = $.extend({}, defaultOptions, options);
+        $.ajax(options);
+    }
+</script>
+<body>
+    <h1>Web Proxy API Example</h1>
+    <form>
+        <fieldset>
+            <legend>Enter credentials</legend>
+            <p>
+                <label for="username">User name:</label>
+                <input type="text" id="username" name="username" />
+            </p>
+            <p>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" />
+            </p>
+        </fieldset>
+        <input type="submit" id="login-button" name="login-button" value="Log On" />
+    </form>
+    <a id="log-off" href="#">Log Off</a>
+    <p id="message"></p>
+    <div id="resources-container"></div>
+    <div id="hidden-iframes"></div>
+</body>
+</html>

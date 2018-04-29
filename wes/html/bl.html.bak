@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    
+</head>
+<body>
+    
+    <script>
+        //let arr = ['apple', 'banana', 'orange'];
+        //let breakfast = arr.map(fruit => fruit+'s');
+        //console.log(breakfast);
+
+        //var arr = 'abcdabbbbbbabc';
+
+        //var info = arr
+        //    .split('')
+        //    .reduce((r, v) => (r[v]++ || (r[v] = 1), r), {});
+
+        //console.log(info);
+
+        //var temp = {};
+        //'abcdaabc'.replace(/(\w{1})/g, function (m) {
+        //    temp[m] ? temp[m] += 1 : temp[m] = 1;
+        //})
+        //console.log(temp)
+        alert(1)
+    </script>
+    <!--<video controls="controls">
+        <source id="vs1" type="video/mp4" src="/upload/1/1/1.mp4" />
+    </video>-->
+</body>
+</html>

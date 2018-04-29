@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>queen</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        div {
+            margin-left: 100px;
+            margin-top: 100px;
+            white-space: nowrap;
+        }
+
+        @media screen and (max-width: 1200px) {
+            div {
+                margin-left: 10px;
+                margin-top: 10px;
+            }
+        }
+
+        .block {
+            border: 1px solid #303030;
+            width: 60px;
+            height: 60px;
+            margin-right: 3px;
+            display: inline-block;
+        }
+
+        @media screen and (max-width: 1200px) {
+            .block {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .black {
+            background: #303030;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="number" id="nq" value="8" onblur="resolve()">
+    </div>
+    <div id="pnl"></div>
+    <div>
+        <span id="solutionindex"></span>
+        <span>/</span>
+        <span id="solutionnumber"></span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="button" value="<<Pre" onclick="showpre()">
+        <input type="button" value="Next>>" onclick="shownext()">
+    </div>
+
+    <script>
+        let n = 8;
+        let allpoints = [];
+        let allcolumn = [];
+        let result = [];
+        let tempsolution = [];
+        let currindex = 0;
+
+        function init() {
+            n = parseInt(document.getElementById('nq').value);
+            //getallpoints();
+            getallcolumn();
+            result = [];
+            tempsolution = [];
+            currindex = 0;
+        }
+
+        function getallpoints() {
+            allpoints = [];
+            for (var i = 0; i < n * n; i++) {
+                allpoints.push(new point(i & n, parseInt(i / n)))
+            }
+        }
+
+        function getallcolumn() {
+            allcolumn = [];
+            for (var i = 0; i < n; i++) {
+                allcolumn.push(getpointscolumn(i))
+            }
+        }
+
+        function getpointscolumn(col) {
+            var pointincol = [];
+            for (var i = 0; i < n; i++) {
+                pointincol.push(new point(col, i));
+            }
+            return pointincol;
+        }
+
+        function point(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        function getleavebytemp(col) {
+            return allcolumn[col].filter(p=>tempsolution.every(temp=>p.x !== temp.x && p.y !== temp.y && p.y !== p.x + temp.y - temp.x && p.y !== -p.x + temp.y + temp.x))
+        }
+
+        function solve(col) {
+            if (col === n - 1) {
+                var leaveincol = getleavebytemp(col);
+                for (var i = 0; i < leaveincol.length; i++) {//leaveincol.length=(1 or 0)//loop isnt necessary
+                    tempsolution.push(leaveincol[i])
+                    result.push(tempsolution.slice())
+                    tempsolution.pop();
+                }
+            }
+            else {
+                var leaveincol = getleavebytemp(col);
+                for (var i = 0; i < leaveincol.length; i++) {
+                    tempsolution.push(leaveincol[i])
+                    solve(col + 1)
+                    tempsolution.pop();
+                }
+            }
+        }
+
+        function resolve() {
+            init()
+            console.time('solve')
+            solve(0)
+            console.timeEnd('solve')
+            show(0)
+        }
+
+        function show(ind) {
+            var pnl = document.getElementById('pnl')
+            var solutionindex = document.getElementById('solutionindex')
+            var solutionnumber = document.getElementById('solutionnumber')
+
+            pnl.innerHTML = '';
+            if (result.length == 0) {
+                solutionindex.innerText = '0'
+                solutionnumber.innerText = '0'
+            }
+            else {
+                solutionindex.innerText = ind + 1
+                solutionnumber.innerText = result.length
+
+                for (var i = 0; i < n * n; i++) {
+                    var node = document.createElement('i')
+                    var solution = result[ind]
+                    if (solution.some(p=>p.x === i % n && p.y === parseInt(i / n))) {
+                        node.setAttribute('class', 'block black')
+                    }
+                    else {
+                        node.setAttribute('class', 'block')
+                    }
+                    pnl.appendChild(node)
+                    if (i % n === n - 1) {
+                        var br = document.createElement('br')
+                        pnl.appendChild(br)
+                    }
+                }
+            }
+        }
+
+        function showpre() {
+            currindex = currindex - 1 >= 0 ? currindex - 1 : result.length - 1 >= 0 ? result.length - 1 : 0;
+            show(currindex)
+        }
+
+        function shownext() {
+            currindex = currindex + 1 <= result.length - 1 ? currindex + 1 : 0;
+            show(currindex)
+        }
+
+        init()
+        console.time('solve')
+        solve(0)
+        console.timeEnd('solve')
+        show(0)
+    </script>
+</body>
+</html>

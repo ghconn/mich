@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+
+    <style>
+        .slidetounlockbar {
+            position: relative;
+            font-size: .75em;
+            margin: 0 auto;
+            width: 25em;
+            height: 3.3em;
+            text-align: center;
+            line-height: 3.3em;
+            background: #E8E8E8;
+        }
+
+        #handler {
+            width: 3.2em;
+            height: 3.2em;
+            position: absolute;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: move;
+        }
+    </style>
+
+    <script src="/script/jquery-1.8.2.min.js"></script>
+    <script src="/script/jquery-ex.js"></script>
+    <script>
+        var f = function () {
+            var name = 'window';
+
+            var o = {
+                f: function () {
+                    var ff = (function () {
+                        this.name = 'abc';
+                    })();
+                    this.name = '123';
+                }
+            }
+            o.f();
+            console.log(name);
+
+            var arr = ['1', 2];
+            var v = '1';
+            arr[6] = 'aa';
+            if (v in arr)
+                console.log(arr);
+            arr.shift();
+            console.log(arr);
+
+            var s = 'wefjkenfksnfow　ejifhfbhsdklabbsljsbjs d';
+            s.__proto__.tra = function (regex) {
+                return this.replace(regex, '');
+            }
+            String.prototype.tra = function (regex) {
+                return this.replace(regex, '');
+            }
+            s = s.tra(/b|\s/g);
+            console.log(s);
+        }
+
+        var b = '　';
+        var r = new RegExp(/\d/);
+        //document.write(typeof r);
+        console.log('3sdfsdfwe3f1sdf1sd3f1ewdfs31313'.match(r));
+
+        f();
+        
+    </script>
+</head>
+<body>
+    
+    <script>
+        const cvtChar = c => {
+            if (/\w/.test(c)) {
+                const map = new Map([
+                ["0", "+[]"],
+                ["1", "~~!+[]"],
+                ["2", "-~!+[]"],
+                ["3", "-~-~!+[]"],
+                ["4", "-~-~-~!+[]"],
+                ["5", "-~-~-~-~!+[]"],
+                ["6", "-~-~-~-~-~!+[]"],
+                ["7", "-~-~-~-~-~-~!+[]"],
+                ["8", "-~-~-~-~-~-~-~!+[]"],
+                ["9", "-~-~-~-~-~-~-~-~!+[]"]]);
+
+                const p = "0".repeat(4 - c.codePointAt(0).toString(16).length).concat(c.codePointAt(0).toString(16));
+                // const p = c.codePointAt(0).toString(16).padStart(4, "0");
+                let str = "'\\\\u'";
+
+                for (const pc of p) {
+                    if (/\d/.test(pc)) {
+                        str = str.concat(" + ", map.get(pc));
+                    } else {
+                        str = str.concat(" + ", "'", pc, "'");
+                    }
+                }
+
+                return str;
+            } else {
+                return "'".concat(c, "'");
+            }
+        }
+
+        const joint = s => {
+            let jointString = Array.prototype.map.call(s, cvtChar).join(" + ");
+            console.log(eval(eval(jointString)));
+            return jointString;
+        }
+
+        joint('(name => console.log(`Hello, ${name}.`))("Gua Gua");');
+    </script>
+</body>
+</html>

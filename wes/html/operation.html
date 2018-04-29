@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+
+</head>
+<body>
+
+    <input type="text" id="numbers" />
+    <input type="number" id="ret" />
+    <input type="button" value="output" onclick="compute()" />
+    <div id="pnl"></div>
+
+    <script>
+        let numbers = []
+        let numberpermutations = []
+        let ret = 0
+        let symbols = [1, 2, 3, 4]
+        let symbolsarr = []
+        let symbolpermutations = []
+
+        function init() {
+            numbers = document.getElementById('numbers').value.split(',');
+            numberpermutations = permute(numbers)
+            //symbols = [...Array(numbers.length -1).keys()]
+            permute2(numbers.length - 1)
+            ret = parseInt(document.getElementById('ret').value)
+            document.getElementById('pnl').innerHTML = '';
+        }
+
+        function compute() {
+            init()
+
+            var pnl = document.getElementById('pnl')
+            var ret = document.getElementById('ret')
+
+            for (var i = 0; i < numberpermutations.length; i++) {
+                for (var j = 0; j < symbolpermutations.length; j++) {
+                    var expression = '';
+                    for (var k = 0; k < numbers.length; k++) {
+                        expression += numberpermutations[i][k]
+                        if (k !== numbers.length - 1) {
+                            var symbol = symbolpermutations[j][k]
+                            symbol = symbol === 1 ? '+' : symbol === 2 ? '-' : symbol === 3 ? '*' : '/'
+                            expression += symbol
+                        }
+                    }
+                    var node = document.createElement('p')
+                    var re = eval(expression)
+                    node.innerText = expression + '=' + re
+                    if (re == ret.value) {
+                        node.setAttribute("style", "color:#FF0000")
+                        document.body.insertBefore(node.cloneNode(true), pnl)
+                    }
+                    pnl.appendChild(node)
+                }
+            }
+        }
+
+        function permute(permutation) {
+            var length = permutation.length,
+                result = [permutation.slice()],
+                c = new Array(length).fill(0),
+                i = 1, k, p;
+
+            while (i < length) {
+                if (c[i] < i) {
+                    k = i % 2 && c[i];
+                    p = permutation[i];
+                    permutation[i] = permutation[k];
+                    permutation[k] = p;
+                    ++c[i];
+                    i = 1;
+                    result.push(permutation.slice());
+                } else {
+                    c[i] = 0;
+                    ++i;
+                }
+            }
+            return result;
+        }
+
+        function permute2(n) {//n 必须为整数大于0
+            //n = parseInt(n);
+            //if (n <= 0)
+            //    return;
+            if (n == 1) {
+                for (var i = 0; i < symbols.length; i++) {
+                    symbolsarr.push(symbols[i])
+                    symbolpermutations.push(symbolsarr.slice())
+                    symbolsarr.pop()
+                }
+            }
+            else {
+                for (var i = 0; i < symbols.length; i++) {
+                    symbolsarr.push(symbols[i])
+                    permute2(n - 1)
+                    symbolsarr.pop()
+                }
+            }
+        }
+    </script>
+</body>
+</html>

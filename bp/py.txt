@@ -1,0 +1,9 @@
+﻿list=[1,2,3] 
+list.pop(0)#删除指定位置的元素
+list.remove(1)#删除值为1的第一个元素
+list.append('a')#将元素添加到末尾
+list.insert(0,'a')#将元素添加到指定位置
+tuple=(1,2,3)#创建只包含一个元素的元组：a=(1,)即需要加个逗号
+dic=dict({'a':1,'b':'b'})
+#dic['abc']='123'和dic.setdefault('abc','123')有同样的效果，后者是调用函数，有返回值'123'
+sets=set([1,2,3])#set是无序的，会自动去掉重复

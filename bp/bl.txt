@@ -1,0 +1,1673 @@
+﻿using AutoMapper;
+using Manage.Core.Common;
+using Manage.Model.Models;
+using Manage.Model.Models.View;
+using Manage.ServerManage.Services;
+using Manage.ServerManage.ViewModels;
+using Manage.Service;
+using Manage.Web.Core;
+using Manage.Web.Core.Attributes;
+using Microsoft.CSharp.RuntimeBinder;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Web.Mvc;
+using System.Web.SessionState;
+namespace Manage.ServerManage.Controllers
+{
+	[SessionState(SessionStateBehavior.ReadOnly)]
+	public class DesktopController : BaseController
+	{
+		[CompilerGenerated]
+		[Serializable]
+		private sealed class <>c
+		{
+			public static readonly DesktopController.<>c <>9 = new DesktopController.<>c();
+			public static Func<VMDesktop, string> <>9__22_0;
+			public static Func<VMDesktop, bool> <>9__28_0;
+			public static Func<VMDesktop, string> <>9__29_0;
+			public static Func<VMDesktop, bool> <>9__31_0;
+			public static Func<VMDesktop, <>f__AnonymousType9<string, string, string, int, int, string, string, int>> <>9__38_0;
+			public static Func<VMDesktop, bool> <>9__40_0;
+			public static Func<VMDesktop, bool> <>9__40_1;
+			public static Func<VMDesktop, string> <>9__40_2;
+			public static Func<VMDesktop, string> <>9__40_4;
+			public static Func<VMDesktop, string> <>9__46_0;
+			public static Func<VMDesktop, string> <>9__46_1;
+			public static Func<VMDesktop, string> <>9__50_0;
+			public static Func<VMDesktop, string> <>9__52_0;
+			public static Func<KeyValuePair<string, int>, int> <>9__62_0;
+			public static Func<KeyValuePair<string, int>, string> <>9__62_1;
+			public static Func<KeyValuePair<string, int>, string> <>9__62_2;
+			public static Func<HostInfo, <>f__AnonymousType12<string, string>> <>9__63_0;
+			internal string <AddtDesktop>b__22_0(VMDesktop m)
+			{
+				return m.Name_label;
+			}
+			internal bool <DelSceneResult>b__28_0(VMDesktop m)
+			{
+				return m.CreatState == 0;
+			}
+			internal string <DeleteDesktop>b__29_0(VMDesktop m)
+			{
+				return m.Name_label;
+			}
+			internal bool <DelDesktopResult>b__31_0(VMDesktop m)
+			{
+				return m.CreatState == -1 || m.CreatState == 0;
+			}
+			internal <>f__AnonymousType9<string, string, string, int, int, string, string, int> <GetModel>b__38_0(VMDesktop m)
+			{
+				return new
+				{
+					Id = m.VMDesktopGUID,
+					Name_label = m.Name_label,
+					UserName = m.UserName,
+					CreatState = m.CreatState,
+					InMaintenanceMode = m.InMaintenanceMode,
+					RegMode = m.RegMode,
+					ProwerState = m.ProwerState,
+					RunTime = m.RunTime
+				};
+			}
+			internal bool <ReCreate>b__40_0(VMDesktop m)
+			{
+				return m.CreatState == 3;
+			}
+			internal bool <ReCreate>b__40_1(VMDesktop m)
+			{
+				return m.CreatState == 0 || m.CreatState == 4;
+			}
+			internal string <ReCreate>b__40_2(VMDesktop m)
+			{
+				return m.SceneGUID;
+			}
+			internal string <ReCreate>b__40_4(VMDesktop m)
+			{
+				return m.VMDesktopGUID;
+			}
+			internal string <DesktopCommand>b__46_0(VMDesktop m)
+			{
+				return m.Name_label;
+			}
+			internal string <DesktopCommand>b__46_1(VMDesktop m)
+			{
+				return m.VMDesktopGUID;
+			}
+			internal string <DeleteDesktops>b__50_0(VMDesktop m)
+			{
+				return m.VMDesktopGUID;
+			}
+			internal string <DeleteUserScene>b__52_0(VMDesktop m)
+			{
+				return m.VMDesktopGUID;
+			}
+			internal int <GetHostAvgDic>b__62_0(KeyValuePair<string, int> m)
+			{
+				return m.Value;
+			}
+			internal string <GetHostAvgDic>b__62_1(KeyValuePair<string, int> m)
+			{
+				return m.Key;
+			}
+			internal string <GetHostAvgDic>b__62_2(KeyValuePair<string, int> m)
+			{
+				return m.Key;
+			}
+			internal <>f__AnonymousType12<string, string> <GetHostInfos>b__63_0(HostInfo m)
+			{
+				return new
+				{
+					Name = m.Name,
+					State = m.NetworkPath
+				};
+			}
+		}
+		[CompilerGenerated]
+		private static class <>o__53
+		{
+			public static CallSite<Func<CallSite, object, string, object>> <>p__0;
+		}
+		private readonly IUserSceneService userSceneService;
+		private readonly IVMDesktopService vmDesktopService;
+		private readonly IClassRoomService classRoomService;
+		private readonly IOSTemplateService osTemplateService;
+		private readonly IMachineTemplateService machineTemplateService;
+		private readonly IDataDiskService dataDiskService;
+		private readonly IOStypeService ostypeService;
+		private readonly IServerHostService serverHostService;
+		private readonly INetInfoService netInfoService;
+		private readonly IPCourseTableService pCourseTableService;
+		private readonly IStudyCourseSceneService studyCourseSceneService;
+		public DesktopController(IUserSceneService userSceneService, IVMDesktopService vmDesktopService, IClassRoomService classRoomService, IManagerLogService managerLogService, IOSTemplateService osTemplateService, IMachineTemplateService machineTemplateService, IDataDiskService dataDiskService, IOStypeService ostypeService, IServerHostService serverHostService, INetInfoService netInfoService, IPCourseTableService pCourseTableService, IStudyCourseSceneService studyCourseSceneService) : base(managerLogService)
+		{
+			this.userSceneService = userSceneService;
+			this.vmDesktopService = vmDesktopService;
+			this.classRoomService = classRoomService;
+			this.osTemplateService = osTemplateService;
+			this.machineTemplateService = machineTemplateService;
+			this.dataDiskService = dataDiskService;
+			this.ostypeService = ostypeService;
+			this.serverHostService = serverHostService;
+			this.netInfoService = netInfoService;
+			this.pCourseTableService = pCourseTableService;
+			this.studyCourseSceneService = studyCourseSceneService;
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.View, NavName = "desktop_manage"), AdminAuthorize]
+		public ActionResult Index()
+		{
+			return base.View();
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.View, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult SelectSceneList(string keyword = "")
+		{
+			IUserSceneService arg_19_0 = this.userSceneService;
+			Manager expr_0D = base.GetAdminInfo();
+			IEnumerable<UserScene> list = arg_19_0.GetList(keyword, (expr_0D != null) ? expr_0D.Username : null);
+			if (!list.Any<UserScene>())
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "没有记录"
+				});
+			}
+			List<UserSceneViewModel> list2 = Mapper.Map<List<UserSceneViewModel>>(list);
+			foreach (UserSceneViewModel current in list2)
+			{
+				OSTemplate oSTemplate = this.osTemplateService.Get(current.OSGUID);
+				OStype oStype = this.ostypeService.Get((oSTemplate != null) ? oSTemplate.OSTypeGUID : null);
+				current.OSName = ((oStype != null) ? oStype.OSName : null);
+				current.OSType = ((oStype != null) ? oStype.OSType : null);
+				UserSceneViewModel arg_CC_0 = current;
+				ClassRoom expr_C0 = this.classRoomService.Get(current.RoomID);
+				arg_CC_0.RoomName = ((expr_C0 != null) ? expr_C0.Name : null);
+				current.RelationDesktopCount = this.vmDesktopService.GetCount(current.SceneGUID);
+				current.RunDesktopCount = this.vmDesktopService.GetRunNum(current.SceneGUID);
+			}
+			return base.Json(new
+			{
+				status = "y",
+				info = "成功",
+				data = list2
+			});
+		}
+		private IEnumerable<SelectListItem> GetSceneList(string id = "")
+		{
+			return 
+				from m in this.userSceneService.GetList()
+				select new SelectListItem
+				{
+					Selected = m.SceneGUID == id,
+					Text = m.DisplayName,
+					Value = m.SceneGUID
+				};
+		}
+		private IEnumerable<SelectListItem> GetOsTemplateList(string id = "")
+		{
+			IOSTemplateService arg_26_0 = this.osTemplateService;
+			Manager expr_19 = base.GetAdminInfo();
+			return 
+				from m in arg_26_0.GetList((expr_19 != null) ? expr_19.Username : null, true)
+				select new SelectListItem
+				{
+					Selected = m.OSGUID == id,
+					Text = m.Name,
+					Value = m.OSGUID
+				};
+		}
+		private IEnumerable<SelectListItem> GetMachineTemplateList(string id = "")
+		{
+			return 
+				from m in this.machineTemplateService.GetList()
+				select new SelectListItem
+				{
+					Selected = m.TempGUID == id,
+					Text = string.Format("{0}(CPU:{1} 内存:{2}G)", m.Name, m.CPUNum * m.CPUPhysicsNum, m.memoryNum.ToString("f1")),
+					Value = m.TempGUID
+				};
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Add, NavName = "desktop_manage"), AdminAuthorize, AsyncAction]
+		public ActionResult Add()
+		{
+			UserSceneFormView model = new UserSceneFormView
+			{
+				OSTemplates = this.GetOsTemplateList(""),
+				MachineTemplates = this.GetMachineTemplateList("")
+			};
+			return base.View("Edit", model);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Add, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult Add(UserSceneFormView model)
+		{
+			if (!string.IsNullOrEmpty(model.RoomID) && !string.IsNullOrEmpty(model.Prefix) && model.PrefixNum != 0)
+			{
+				string expr_28 = model.Name_label;
+				if (!string.IsNullOrEmpty((expr_28 != null) ? expr_28.Trim() : null) && !string.IsNullOrEmpty(model.OSGUID) && !string.IsNullOrEmpty(model.TempGUID))
+				{
+					model.Name_label = model.Name_label.Trim();
+					UserScene userScene = Mapper.Map<UserScene>(model);
+					userScene.SceneGUID = Guid.NewGuid().ToString();
+					userScene.CreatTime = DateTime.Now;
+					UserScene arg_BA_0 = userScene;
+					Manager expr_AE = base.GetAdminInfo();
+					arg_BA_0.Creator = ((expr_AE != null) ? expr_AE.Username : null);
+					userScene.DisplayName = model.Name_label;
+					object data;
+					List<VMDesktop> desktopList = this.GetDesktopList(model.DesktopCount, model.PrefixNum, model.NameFormat, model.Prefix, userScene, out data);
+					if (desktopList == null)
+					{
+						return base.Json(data);
+					}
+					if (!this.CreateDesktops(userScene, desktopList, model.HostName))
+					{
+						return base.Json(new
+						{
+							status = "n",
+							info = "云桌面管理平台后台服务未开启"
+						});
+					}
+					userScene.ProwerState = model.HostName;
+					this.userSceneService.Add(userScene, desktopList);
+					base.AddAdminLog(Enums.ActionEnum.Add.ToString(), "添加场景：" + model.Name_label);
+					return base.Json(new
+					{
+						status = "y",
+						info = "成功"
+					});
+				}
+			}
+			return base.Json(new ResponseData().Error("提交信息有误"));
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, AsyncAction]
+		public ActionResult EditScene(string id)
+		{
+			if (string.IsNullOrEmpty(id))
+			{
+				return base.Json(new ResponseData().Error("参数提交有误"), JsonRequestBehavior.AllowGet);
+			}
+			UserScene userScene = this.userSceneService.Get(id);
+			if (userScene == null)
+			{
+				return base.Json(new ResponseData().Error("当前场景不存在或已被删除"), JsonRequestBehavior.AllowGet);
+			}
+			SceneEditModel sceneEditModel = Mapper.Map<SceneEditModel>(userScene);
+			SceneEditModel arg_6B_0 = sceneEditModel;
+			ClassRoom expr_5F = this.classRoomService.Get(userScene.RoomID);
+			arg_6B_0.RoomName = ((expr_5F != null) ? expr_5F.Name : null);
+			OSTemplate oSTemplate = this.osTemplateService.Get(userScene.OSGUID);
+			sceneEditModel.OSTempName = ((oSTemplate != null) ? oSTemplate.Name : null);
+			SceneEditModel arg_B8_0 = sceneEditModel;
+			OStype expr_AC = this.ostypeService.Get((oSTemplate != null) ? oSTemplate.OSTypeGUID : null);
+			arg_B8_0.OSName = ((expr_AC != null) ? expr_AC.OSName : null);
+			MachineTemplate machineTemplate = this.machineTemplateService.Get(userScene.TempGUID);
+			if (machineTemplate != null)
+			{
+				sceneEditModel.MachineTempName = string.Format("{0} {1}CPU {2}G内存", machineTemplate.Name, machineTemplate.CPUNum * machineTemplate.CPUPhysicsNum, machineTemplate.memoryNum.ToString("f1"));
+			}
+			return base.View(sceneEditModel);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult EditScene(SceneEditModel model)
+		{
+			if (string.IsNullOrEmpty(model.DisplayName))
+			{
+				return base.Json(new ResponseData().Error("信息填写有误"));
+			}
+			UserScene userScene = this.userSceneService.Get(model.SceneGUID);
+			if (userScene == null)
+			{
+				return base.Json(new ResponseData().Error("当前场景不存在或已被删除"));
+			}
+			string displayName = userScene.DisplayName;
+			userScene.DisplayName = model.DisplayName;
+			userScene.IsShare = model.IsShare;
+			if (userScene.DesktopType != model.DesktopType)
+			{
+				List<VMDesktop> listBySceneId = this.vmDesktopService.GetListBySceneId(userScene.SceneGUID);
+				if (listBySceneId.Count == 0)
+				{
+					return base.Json(new ResponseData().Error("当前场景下没有桌面记录，无法修改桌面类型"));
+				}
+				userScene.DesktopType = model.DesktopType;
+				object obj = this.ReCreate(userScene, listBySceneId, false, false);
+				if (obj != null)
+				{
+					return base.Json(obj);
+				}
+			}
+			else if (displayName != userScene.DisplayName)
+			{
+				object data;
+				YunManageService.Client yunService = Service.GetYunService(out data);
+				if (yunService == null)
+				{
+					return base.Json(data);
+				}
+				UserSceneInfo sceneInfo = this.GetSceneInfo(userScene);
+				CreateDesktopInfo info = new CreateDesktopInfo
+				{
+					SceneInfo = sceneInfo,
+					Desktops = null,
+					HardwareInfo = this.GetHardwareInfo(userScene.TempGUID)
+				};
+				yunService.EditUserScene(info);
+			}
+			string[] properties = new string[]
+			{
+				"DesktopType",
+				"DisplayName",
+				"IsShare"
+			};
+			this.userSceneService.Update(userScene, properties);
+			base.AddAdminLog(Enums.ActionEnum.Edit.ToString(), "修改场景：" + model.DisplayName);
+			return base.Json(new ResponseData
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Add, NavName = "desktop_manage"), AdminAuthorize, AsyncAction]
+		public ActionResult AddtDesktop(string id = "")
+		{
+			UserScene userScene = this.userSceneService.Get(id);
+			VMDesktopFormView model = new VMDesktopFormView
+			{
+				Scenes = this.GetSceneList(id),
+				HostName = (userScene != null) ? userScene.ProwerState : null
+			};
+			return base.View("EditDesktop", model);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Add, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public ActionResult AddtDesktop(VMDesktopFormView model)
+		{
+			if (string.IsNullOrEmpty(model.Prefix) || model.PrefixNum == 0 || model.DesktopCount <= 0 || string.IsNullOrEmpty(model.SceneGUID))
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "提交信息有误"
+				});
+			}
+			UserScene userScene = this.userSceneService.Get(model.SceneGUID);
+			if (userScene == null)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "提交信息有误"
+				});
+			}
+			object data;
+			List<VMDesktop> desktopList = this.GetDesktopList(model.DesktopCount, model.PrefixNum, model.NameFormat, model.Prefix, userScene, out data);
+			if (desktopList == null)
+			{
+				return base.Json(data);
+			}
+			if (!this.CreateDesktops(userScene, desktopList, model.HostName))
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "云桌面管理平台后台服务未开启"
+				});
+			}
+			this.vmDesktopService.AddList(desktopList);
+			this.userSceneService.UpdateDesktopCount(userScene.SceneGUID, model.DesktopCount);
+			string arg_10C_0 = ",";
+			IEnumerable<VMDesktop> arg_107_0 = desktopList;
+			Func<VMDesktop, string> arg_107_1;
+			if ((arg_107_1 = DesktopController.<>c.<>9__22_0) == null)
+			{
+				arg_107_1 = (DesktopController.<>c.<>9__22_0 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<AddtDesktop>b__22_0));
+			}
+			string str = string.Join(arg_10C_0, arg_107_0.Select(arg_107_1));
+			base.AddAdminLog(Enums.ActionEnum.Add.ToString(), "添加桌面：" + str);
+			return base.Json(new
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		private List<VMDesktop> GetDesktopList(int desktopCount, int prefixNum, int nameFormat, string prefix, UserScene userScene, out object data)
+		{
+			if (0 >= desktopCount || desktopCount > 500)
+			{
+				data = new
+				{
+					status = "n",
+					info = "生成的桌面数量不得超过500"
+				};
+				return null;
+			}
+			List<VMDesktop> list = new List<VMDesktop>();
+			for (int i = 0; i < desktopCount; i++)
+			{
+				string str = (i + prefixNum).ToString().PadLeft(nameFormat, '0');
+				string text = prefix + str;
+				if (text.Length > 15)
+				{
+					data = new
+					{
+						status = "n",
+						info = "桌面名称必须小于15位字符"
+					};
+					return null;
+				}
+				if (this.vmDesktopService.ExistName(text))
+				{
+					data = new
+					{
+						status = "n",
+						info = "生成的桌面名称有重复"
+					};
+					return null;
+				}
+				if (new Regex("[^\0-ÿ]").IsMatch(text))
+				{
+					data = new
+					{
+						status = "n",
+						info = "桌面名称不允许包含中文字符"
+					};
+					return null;
+				}
+				VMDesktop item = new VMDesktop
+				{
+					SceneGUID = userScene.SceneGUID,
+					VMDesktopGUID = Guid.NewGuid().ToString(),
+					CreatTime = DateTime.Now,
+					Name_label = text,
+					CreatState = -1,
+					Name_description = prefix
+				};
+				list.Add(item);
+			}
+			data = "";
+			return list;
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.View, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult SelectList(int pageIndex = 1, int pageSize = 5, string sceneId = "", string orderName = "", string orderUsername = "", string orderUseState = "", string orderMaintenanceMode = "", string orderPowerState = "", string runTimeState = "", string hostNameState = "")
+		{
+			JsonResult result;
+			try
+			{
+				List<VmDesktopView> listByPaging = this.vmDesktopService.GetListByPaging((pageIndex < 1) ? 0 : (pageIndex - 1), pageSize, sceneId, orderName, orderUsername, orderUseState, orderMaintenanceMode, orderPowerState, runTimeState, hostNameState);
+				IEnumerable<string> listId = DesktopCheckedList.ListId;
+				int runNum = this.vmDesktopService.GetRunNum(sceneId);
+				if (!listByPaging.Any<VmDesktopView>())
+				{
+					result = base.Json(new ResponseData().Error("没有记录"));
+				}
+				else
+				{
+					result = base.Json(new
+					{
+						status = "y",
+						runNum = runNum,
+						data = listByPaging,
+						checkedList = listId
+					});
+				}
+			}
+			catch (Exception exception)
+			{
+				Log4NetHelper.Error(this, "SelectList->异常：", exception);
+				result = base.Json(new ResponseData().Error(""));
+			}
+			return result;
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.View, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult SelectCount(string sceneId = "")
+		{
+			JsonResult result;
+			try
+			{
+				int count = this.vmDesktopService.GetCount(sceneId);
+				result = base.Json(new ResponseData
+				{
+					status = "y",
+					data = count
+				});
+			}
+			catch (Exception exception)
+			{
+				Log4NetHelper.Error(this, "SelectCount->异常：", exception);
+				result = base.Json(new ResponseData
+				{
+					status = "y",
+					data = 0
+				});
+			}
+			return result;
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Delete, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult Delete(string id)
+		{
+			try
+			{
+				UserScene userScene = this.userSceneService.Get(id);
+				List<VMDesktop> listBySceneId = this.vmDesktopService.GetListBySceneId(userScene.SceneGUID);
+				object data;
+				JsonResult result;
+				if (!this.DeleteUserScene(userScene, listBySceneId, out data))
+				{
+					result = base.Json(data);
+					return result;
+				}
+				this.pCourseTableService.BatchDeleteBySceneId(userScene.SceneGUID);
+				this.studyCourseSceneService.DeleteBySceneId(userScene.SceneGUID);
+				YunManageService.Client yunManageService = Service.GetYunManageService();
+				if (yunManageService == null)
+				{
+					result = base.Json(new ResponseData().Error("云桌面管理平台后台服务未开启"));
+					return result;
+				}
+				yunManageService.UpdatePaiKeData();
+				base.AddAdminLog(Enums.ActionEnum.Delete.ToString(), "删除场景：" + userScene.DisplayName);
+				result = base.Json(new ResponseData
+				{
+					status = "y",
+					info = "成功"
+				});
+				return result;
+			}
+			catch (Exception exception)
+			{
+				Log4NetHelper.Error(this, "Delete->异常：", exception);
+			}
+			return base.Json(new ResponseData().Error("删除场景失败"));
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Delete, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult DeleteSceneAlert(string id)
+		{
+			return base.Json(this.DelSceneResult(id));
+		}
+		private ResponseData DelSceneResult(string id)
+		{
+			if (!this.userSceneService.Exist(id))
+			{
+				return new ResponseData("n", "当前场景不存在或已被删除");
+			}
+			IEnumerable<VMDesktop> arg_49_0 = this.vmDesktopService.GetListBySceneId(id);
+			Func<VMDesktop, bool> arg_49_1;
+			if ((arg_49_1 = DesktopController.<>c.<>9__28_0) == null)
+			{
+				arg_49_1 = (DesktopController.<>c.<>9__28_0 = new Func<VMDesktop, bool>(DesktopController.<>c.<>9.<DelSceneResult>b__28_0));
+			}
+			if (arg_49_0.Any(arg_49_1))
+			{
+				return new ResponseData("n", "有桌面正在创建，无法删除", "again");
+			}
+			return new ResponseData("y");
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Delete, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult DeleteDesktop()
+		{
+			IEnumerable<string> listId = DesktopCheckedList.ListId;
+			IList<VMDesktop> list = this.vmDesktopService.SelectList(listId.ToArray<string>());
+			object data;
+			if (!this.DeleteDesktops(list, out data))
+			{
+				return base.Json(data);
+			}
+			string arg_55_0 = ",";
+			IEnumerable<VMDesktop> arg_50_0 = list;
+			Func<VMDesktop, string> arg_50_1;
+			if ((arg_50_1 = DesktopController.<>c.<>9__29_0) == null)
+			{
+				arg_50_1 = (DesktopController.<>c.<>9__29_0 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<DeleteDesktop>b__29_0));
+			}
+			string str = string.Join(arg_55_0, arg_50_0.Select(arg_50_1));
+			base.AddAdminLog(Enums.ActionEnum.Delete.ToString(), "删除桌面：" + str);
+			return base.Json(new ResponseData
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Delete, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult DeleteDesktopAlert()
+		{
+			return base.Json(this.DelDesktopResult());
+		}
+		private ResponseData DelDesktopResult()
+		{
+			IEnumerable<string> listId = DesktopCheckedList.ListId;
+			if (!listId.Any<string>())
+			{
+				return new ResponseData("n", "没有选中的桌面");
+			}
+			IList<VMDesktop> list = this.vmDesktopService.SelectList(listId.ToArray<string>());
+			if (list.Count == 0)
+			{
+				return new ResponseData("n", "选中的桌面不存在或已被删除");
+			}
+			IEnumerable<VMDesktop> arg_68_0 = list;
+			Func<VMDesktop, bool> arg_68_1;
+			if ((arg_68_1 = DesktopController.<>c.<>9__31_0) == null)
+			{
+				arg_68_1 = (DesktopController.<>c.<>9__31_0 = new Func<VMDesktop, bool>(DesktopController.<>c.<>9.<DelDesktopResult>b__31_0));
+			}
+			if (arg_68_0.Any(arg_68_1))
+			{
+				return new ResponseData("n", "有桌面正在创建，无法删除", "again");
+			}
+			return new ResponseData("y");
+		}
+		private void DeleteIps(IList<VMDesktop> list)
+		{
+			DHCP_ManageService.Client dhcpManageService = Service.GetDhcpManageService();
+			if (((dhcpManageService != null) ? dhcpManageService.InputProtocol : null) == null)
+			{
+				return;
+			}
+			Dictionary<string, string> dictionary = new Dictionary<string, string>();
+			using (IEnumerator<VMDesktop> enumerator = list.GetEnumerator())
+			{
+				while (enumerator.MoveNext())
+				{
+					DesktopController.<>c__DisplayClass32_0 <>c__DisplayClass32_ = new DesktopController.<>c__DisplayClass32_0();
+					<>c__DisplayClass32_.desktop = enumerator.Current;
+					foreach (NetInfo current in this.netInfoService.GetList())
+					{
+						List<DHCP_ClientInfo> clients = dhcpManageService.GetClients(current.VLANName);
+						if (clients.Count == 0 || string.IsNullOrEmpty(<>c__DisplayClass32_.desktop.VMmac))
+						{
+							return;
+						}
+						IEnumerable<DHCP_ClientInfo> arg_A8_0 = clients;
+						Func<DHCP_ClientInfo, bool> arg_A8_1;
+						if ((arg_A8_1 = <>c__DisplayClass32_.<>9__0) == null)
+						{
+							DesktopController.<>c__DisplayClass32_0 expr_92 = <>c__DisplayClass32_;
+							arg_A8_1 = (expr_92.<>9__0 = ((DHCP_ClientInfo m) => m.MacAddress.ToLower() == expr_92.desktop.VMmac.ToLower()));
+						}
+						DHCP_ClientInfo dHCP_ClientInfo = arg_A8_0.FirstOrDefault(arg_A8_1);
+						if (dHCP_ClientInfo != null)
+						{
+							dictionary.Add(dHCP_ClientInfo.ClientIpAddress, current.VLANName);
+							break;
+						}
+					}
+				}
+			}
+			if (dictionary.Count == 0)
+			{
+				return;
+			}
+			using (Dictionary<string, string>.KeyCollection.Enumerator enumerator3 = dictionary.Keys.GetEnumerator())
+			{
+				while (enumerator3.MoveNext())
+				{
+					string ip = enumerator3.Current;
+					string subnetIporName = dictionary[ip];
+					DHCP_ClientInfo dHCP_ClientInfo2 = dhcpManageService.GetClientsReserved(subnetIporName).SingleOrDefault((DHCP_ClientInfo m) => m.ClientIpAddress == ip);
+					if (dHCP_ClientInfo2 == null)
+					{
+						dhcpManageService.DeleteClientByIP(ip);
+					}
+					else
+					{
+						dhcpManageService.DhcpRemoveReservedIPv4(new DHCP_ReservedClientInfo
+						{
+							SubnetAddress = Utils.GetGatewayZero(dHCP_ClientInfo2.SubnetAddress),
+							IPorNameorMac = dHCP_ClientInfo2.Name
+						});
+						dhcpManageService.DeleteClientByIP(ip);
+					}
+				}
+			}
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult OpenAllDesktop(string id)
+		{
+			return this.DesktopCommand("open", id);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult CloseAllDesktop(string id)
+		{
+			return this.DesktopCommand("close", id);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult RestartAllDesktop(string id)
+		{
+			return this.DesktopCommand("restart", id);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult ReCreateSceneDesktop(string id, bool again = false)
+		{
+			UserScene userScene = this.userSceneService.Get(id);
+			List<VMDesktop> listBySceneId = this.vmDesktopService.GetListBySceneId(id);
+			if (listBySceneId.Count == 0)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "没有桌面记录，无法执行操作"
+				});
+			}
+			object data = this.ReCreate(userScene, listBySceneId, true, again);
+			return base.Json(data);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult ReCreateDesktop(bool again = false)
+		{
+			IEnumerable<string> listId = DesktopCheckedList.ListId;
+			if (!listId.Any<string>())
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "没有选中的桌面"
+				});
+			}
+			IList<VMDesktop> list = this.vmDesktopService.SelectList(listId.ToArray<string>());
+			if (list.Count == 0)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "选中的桌面不存在或已被删除"
+				});
+			}
+			UserScene userScene = this.userSceneService.Get(list[0].SceneGUID);
+			object data = this.ReCreate(userScene, list, true, again);
+			return base.Json(data);
+		}
+		[HttpPost]
+		public JsonResult GetModel(string ids)
+		{
+			if (string.IsNullOrEmpty(ids))
+			{
+				return base.Json(new ResponseData().Error("参数有误"));
+			}
+			JsonResult result;
+			try
+			{
+				string[] ids2 = ids.Split(new char[]
+				{
+					','
+				});
+				IList<VMDesktop> list = this.vmDesktopService.SelectList(ids2);
+				if (!list.Any<VMDesktop>())
+				{
+					result = base.Json(new ResponseData().Error("未找到记录"));
+				}
+				else
+				{
+					IEnumerable<VMDesktop> arg_7E_0 = list;
+					var arg_7E_1;
+					if ((arg_7E_1 = DesktopController.<>c.<>9__38_0) == null)
+					{
+						arg_7E_1 = (DesktopController.<>c.<>9__38_0 = new Func<VMDesktop, <>f__AnonymousType9<string, string, string, int, int, string, string, int>>(DesktopController.<>c.<>9.<GetModel>b__38_0));
+					}
+					var data = arg_7E_0.Select(arg_7E_1).ToList();
+					result = base.Json(new ResponseData
+					{
+						status = "y",
+						data = data
+					});
+				}
+			}
+			catch (Exception exception)
+			{
+				Log4NetHelper.Error(this, "GetModel->异常：", exception);
+				result = base.Json(new ResponseData().Error(""));
+			}
+			return result;
+		}
+		private List<DesktopInfo> GetDesktopInfoList(string sceneName, IList<VMDesktop> listDesktop)
+		{
+			Dictionary<string, int> hostAvgDic = this.GetHostAvgDic(listDesktop.Count);
+			List<DesktopInfo> list = new List<DesktopInfo>();
+			int num = 0;
+			foreach (string current in hostAvgDic.Keys)
+			{
+				for (int i = 0; i < hostAvgDic[current]; i++)
+				{
+					VMDesktop vMDesktop = listDesktop[num];
+					list.Add(new DesktopInfo
+					{
+						Name = vMDesktop.Name_label,
+						Description = sceneName,
+						VMDesktopGUID = vMDesktop.VMDesktopGUID,
+						SelectHost = current
+					});
+					num++;
+				}
+			}
+			return list;
+		}
+		private object ReCreate(UserScene userScene, IList<VMDesktop> listDesktop, bool isCreateDesktop = true, bool again = false)
+		{
+			DesktopController.<>c__DisplayClass40_2 <>c__DisplayClass40_ = new DesktopController.<>c__DisplayClass40_2();
+			<>c__DisplayClass40_.userScene = userScene;
+			if (listDesktop != null)
+			{
+				Func<VMDesktop, bool> arg_30_1;
+				if ((arg_30_1 = DesktopController.<>c.<>9__40_0) == null)
+				{
+					arg_30_1 = (DesktopController.<>c.<>9__40_0 = new Func<VMDesktop, bool>(DesktopController.<>c.<>9.<ReCreate>b__40_0));
+				}
+				if (listDesktop.Any(arg_30_1))
+				{
+					return new ResponseData().Error("有正在删除的桌面，无法重新生成");
+				}
+			}
+			if (!again && listDesktop != null)
+			{
+				Func<VMDesktop, bool> arg_6E_1;
+				if ((arg_6E_1 = DesktopController.<>c.<>9__40_1) == null)
+				{
+					arg_6E_1 = (DesktopController.<>c.<>9__40_1 = new Func<VMDesktop, bool>(DesktopController.<>c.<>9.<ReCreate>b__40_1));
+				}
+				if (listDesktop.Any(arg_6E_1))
+				{
+					return new
+					{
+						status = "n",
+						info = "有正在创建，或者重新生成的桌面，无法重新生成",
+						noCreate = 1
+					};
+				}
+			}
+			object result;
+			YunManageService.Client yunService = Service.GetYunService(out result);
+			if (yunService == null)
+			{
+				return result;
+			}
+			if (!this.HostIsConnected(yunService, listDesktop[0].HypHypervisorConnectionUid, out result))
+			{
+				return result;
+			}
+			Func<VMDesktop, string> arg_CC_1;
+			if ((arg_CC_1 = DesktopController.<>c.<>9__40_2) == null)
+			{
+				arg_CC_1 = (DesktopController.<>c.<>9__40_2 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<ReCreate>b__40_2));
+			}
+			using (List<string>.Enumerator enumerator = listDesktop.Select(arg_CC_1).Distinct<string>().ToList<string>().GetEnumerator())
+			{
+				while (enumerator.MoveNext())
+				{
+					string sceneGuid = enumerator.Current;
+					UserScene scene = this.userSceneService.Get(sceneGuid);
+					if (scene == null)
+					{
+						object result2 = new ResponseData().Error("当前场景不存在或已被删除");
+						return result2;
+					}
+					List<VMDesktop> list = (
+						from m in listDesktop
+						where m.SceneGUID == sceneGuid
+						select m).ToList<VMDesktop>();
+					if (list.Count > 0)
+					{
+						IVMDesktopService arg_190_0 = this.vmDesktopService;
+						IEnumerable<VMDesktop> arg_185_0 = list;
+						Func<VMDesktop, string> arg_185_1;
+						if ((arg_185_1 = DesktopController.<>c.<>9__40_4) == null)
+						{
+							arg_185_1 = (DesktopController.<>c.<>9__40_4 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<ReCreate>b__40_4));
+						}
+						arg_190_0.UpdateStateBatch(arg_185_0.Select(arg_185_1).ToArray<string>(), 4);
+					}
+					this.DeleteIps(list);
+					UserSceneInfo sceneInfo = this.GetSceneInfo(scene);
+					List<DesktopInfo> desktops = (
+						from m in list
+						select new DesktopInfo
+						{
+							Name = m.Name_label,
+							Description = scene.Name_label,
+							VMDesktopGUID = m.VMDesktopGUID
+						}).ToList<DesktopInfo>();
+					CreateDesktopInfo createDesktopInfo = new CreateDesktopInfo
+					{
+						SceneInfo = sceneInfo,
+						Desktops = desktops,
+						HardwareInfo = this.GetHardwareInfo(scene.TempGUID)
+					};
+					if (!string.IsNullOrEmpty(<>c__DisplayClass40_.userScene.ProwerState))
+					{
+						IEnumerable<HostInfo> arg_22F_0 = yunService.GetHostInfos();
+						Func<HostInfo, bool> arg_22F_1;
+						if ((arg_22F_1 = <>c__DisplayClass40_.<>9__6) == null)
+						{
+							DesktopController.<>c__DisplayClass40_2 expr_219 = <>c__DisplayClass40_;
+							arg_22F_1 = (expr_219.<>9__6 = ((HostInfo m) => m.Name == expr_219.userScene.ProwerState));
+						}
+						HostInfo selectHostInfo = arg_22F_0.FirstOrDefault(arg_22F_1);
+						createDesktopInfo.SelectHostInfo = selectHostInfo;
+					}
+					if (!isCreateDesktop)
+					{
+						yunService.EditUserScene(createDesktopInfo);
+						object result2 = null;
+						return result2;
+					}
+					yunService.ReCreateDesktops(createDesktopInfo);
+				}
+			}
+			DesktopCheckedList.Clear();
+			return new ResponseData
+			{
+				status = "y",
+				info = "任务已提交，正在后台重新生成桌面。"
+			};
+		}
+		public bool CreateDesktops(UserScene userScene, IList<VMDesktop> listDesktop, string hostName = "")
+		{
+			YunManageService.Client yunManageService = Service.GetYunManageService();
+			if (yunManageService == null)
+			{
+				return false;
+			}
+			UserSceneInfo sceneInfo = this.GetSceneInfo(userScene);
+			List<DesktopInfo> desktops = (
+				from m in listDesktop
+				select new DesktopInfo
+				{
+					Name = m.Name_label,
+					Description = userScene.Name_label,
+					VMDesktopGUID = m.VMDesktopGUID
+				}).ToList<DesktopInfo>();
+			CreateDesktopInfo createDesktopInfo = new CreateDesktopInfo
+			{
+				SceneInfo = sceneInfo,
+				Desktops = desktops
+			};
+			if (!string.IsNullOrEmpty(hostName))
+			{
+				HostInfo selectHostInfo = yunManageService.GetHostInfos().FirstOrDefault((HostInfo m) => m.Name == hostName);
+				createDesktopInfo.SelectHostInfo = selectHostInfo;
+			}
+			createDesktopInfo.HardwareInfo = this.GetHardwareInfo(userScene.TempGUID);
+			yunManageService.CreateDesktops(createDesktopInfo);
+			return true;
+		}
+		private HardwareTemp GetHardwareInfo(string tempGUID)
+		{
+			MachineTemplate machineTemplate = this.machineTemplateService.Get(tempGUID);
+			if (machineTemplate != null)
+			{
+				return new HardwareTemp
+				{
+					TempGUID = machineTemplate.TempGUID,
+					CPUNum = machineTemplate.CPUNum,
+					CPUPhysicsNum = machineTemplate.CPUPhysicsNum,
+					MemoryMaxNum = (double)machineTemplate.memoryMaxNum,
+					MemoryNum = (double)machineTemplate.memoryNum,
+					MemoryType = (long)machineTemplate.memoryType,
+					SysDiskSpace = (long)machineTemplate.SysDiskSpace,
+					IsBDM = (machineTemplate.IsBuildLeadFile != 0) ? 1 : 0
+				};
+			}
+			return null;
+		}
+		private UserSceneInfo GetSceneInfo(UserScene userScene)
+		{
+			ClassRoom expr_11 = this.classRoomService.Get(userScene.RoomID);
+			string className = (expr_11 != null) ? expr_11.Name : null;
+			OSTemplate oSTemplate = this.osTemplateService.Get(userScene.OSGUID);
+			OStype oStype = this.ostypeService.Get((oSTemplate != null) ? oSTemplate.OSTypeGUID : null);
+			return new UserSceneInfo
+			{
+				RoomID = userScene.RoomID,
+				ClassName = className,
+				Name = userScene.Name_label,
+				DesktopType = userScene.DesktopType,
+				SceneGUID = userScene.SceneGUID,
+				Template = userScene.TempGUID,
+				OSImageName = Path.GetFileNameWithoutExtension((oSTemplate != null) ? oSTemplate.OSImageName : null),
+				VMTemplate = (oStype != null) ? oStype.VMTemplateName : null,
+				DisplayName = userScene.DisplayName
+			};
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult EnableUserScene(string id, int? state)
+		{
+			object data;
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return base.Json(data);
+			}
+			UserScene userScene = this.userSceneService.Get(id);
+			if (userScene == null)
+			{
+				return base.Json(new
+				{
+					status = "y",
+					info = "场景不存在或已被删除"
+				});
+			}
+			if (this.vmDesktopService.ExistDeleteDesktop(id))
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "有正在处理的桌面，无法执行操作"
+				});
+			}
+			List<string> names = new List<string>
+			{
+				userScene.Name_label + "_" + userScene.SceneGUID
+			};
+			yunService.EnableUserScene(names, state == 1);
+			return base.Json(new
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult EnableDesktops(int? state)
+		{
+			if (!state.HasValue)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "提交信息有误"
+				});
+			}
+			string[] array = DesktopCheckedList.ListId.ToArray<string>();
+			if (!array.Any<string>())
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "没有选中的桌面"
+				});
+			}
+			object data;
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return base.Json(data);
+			}
+			if (this.vmDesktopService.ExistDeleteDesktop(array))
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "有正在处理的桌面，无法执行操作"
+				});
+			}
+			List<string> desktopNamesByIds = this.vmDesktopService.GetDesktopNamesByIds(array);
+			if (desktopNamesByIds.Count == 0)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "选中的桌面不存在或已被删除"
+				});
+			}
+			this.vmDesktopService.UpdateStateBatch(array, (state == 1) ? 7 : 8);
+			yunService.EnableDesktops(desktopNamesByIds, state == 1);
+			return base.Json(new
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		private JsonResult DesktopCommand(string action, string sceneId = "")
+		{
+			List<string> list;
+			string[] array;
+			if (!string.IsNullOrEmpty(sceneId))
+			{
+				if (this.vmDesktopService.ExistDeleteDesktop(sceneId))
+				{
+					return base.Json(new
+					{
+						status = "n",
+						info = "有正在处理的桌面，无法执行操作"
+					});
+				}
+				List<VMDesktop> expr_3B = this.vmDesktopService.GetListBySceneId(sceneId);
+				Func<VMDesktop, string> arg_5B_1;
+				if ((arg_5B_1 = DesktopController.<>c.<>9__46_0) == null)
+				{
+					arg_5B_1 = (DesktopController.<>c.<>9__46_0 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<DesktopCommand>b__46_0));
+				}
+				list = expr_3B.Select(arg_5B_1).ToList<string>();
+				Func<VMDesktop, string> arg_85_1;
+				if ((arg_85_1 = DesktopController.<>c.<>9__46_1) == null)
+				{
+					arg_85_1 = (DesktopController.<>c.<>9__46_1 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<DesktopCommand>b__46_1));
+				}
+				array = expr_3B.Select(arg_85_1).ToArray<string>();
+			}
+			else
+			{
+				array = DesktopCheckedList.ListId.ToArray<string>();
+				if (!array.Any<string>())
+				{
+					return base.Json(new
+					{
+						status = "n",
+						info = "没有选中的桌面"
+					});
+				}
+				if (this.vmDesktopService.ExistDeleteDesktop(array))
+				{
+					return base.Json(new
+					{
+						status = "n",
+						info = "有正在处理的桌面，无法执行操作"
+					});
+				}
+				list = this.vmDesktopService.GetDesktopNamesByIds(array);
+			}
+			if (list.Count == 0)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "没有桌面记录，无法执行操作"
+				});
+			}
+			object data;
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return base.Json(data);
+			}
+			VMDesktop noTracking = this.vmDesktopService.GetNoTracking(array[0]);
+			if (!this.HostIsConnected(yunService, (noTracking != null) ? noTracking.HypHypervisorConnectionUid : null, out data))
+			{
+				return base.Json(data);
+			}
+			if (!(action == "open"))
+			{
+				if (!(action == "close"))
+				{
+					if (action == "restart")
+					{
+						yunService.RestartDesktops(list);
+					}
+				}
+				else
+				{
+					this.vmDesktopService.UpdateStateBatch(array, 6);
+					yunService.StopDesktops(list);
+				}
+			}
+			else
+			{
+				this.vmDesktopService.UpdateStateBatch(array, 5);
+				yunService.OpenDesktops(list);
+			}
+			if (string.IsNullOrEmpty(sceneId))
+			{
+				DesktopCheckedList.Clear();
+			}
+			return base.Json(new ResponseData("y", "成功"));
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult OpenDesktop()
+		{
+			return this.DesktopCommand("open", "");
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult CloseDesktop()
+		{
+			return this.DesktopCommand("close", "");
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult RestartDesktop()
+		{
+			return this.DesktopCommand("restart", "");
+		}
+		private bool DeleteDesktops(IList<VMDesktop> list, out object data)
+		{
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return false;
+			}
+			if (list.Count == 0)
+			{
+				data = new ResponseData().Error("未找到记录");
+				return false;
+			}
+			UserScene scene = this.userSceneService.Get(list[0].SceneGUID);
+			if (scene == null)
+			{
+				data = new ResponseData().Error("当前场景不存在或已被删除");
+				return false;
+			}
+			if (!this.HostIsConnected(yunService, list[0].HypHypervisorConnectionUid, out data))
+			{
+				return false;
+			}
+			this.DeleteIps(list);
+			IVMDesktopService arg_B5_0 = this.vmDesktopService;
+			Func<VMDesktop, string> arg_AA_1;
+			if ((arg_AA_1 = DesktopController.<>c.<>9__50_0) == null)
+			{
+				arg_AA_1 = (DesktopController.<>c.<>9__50_0 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<DeleteDesktops>b__50_0));
+			}
+			arg_B5_0.UpdateStateBatch(list.Select(arg_AA_1).ToArray<string>(), 3);
+			UserSceneInfo sceneInfo = this.GetSceneInfo(scene);
+			List<DesktopInfo> desktops = (
+				from m in list
+				select new DesktopInfo
+				{
+					Name = m.Name_label,
+					Description = scene.Name_label,
+					VMDesktopGUID = m.VMDesktopGUID
+				}).ToList<DesktopInfo>();
+			yunService.DeleteDesktops(sceneInfo, desktops, false);
+			data = null;
+			DesktopCheckedList.Clear();
+			return true;
+		}
+		private bool HostIsConnected(YunManageService.Client service, string connectionUid, out object data)
+		{
+			if (string.IsNullOrEmpty(connectionUid))
+			{
+				data = null;
+				return true;
+			}
+			ResultInfo resultInfo = service.HostIsConnected(connectionUid);
+			if (resultInfo == null || resultInfo.Code != "1")
+			{
+				data = new ResponseData().Error(((resultInfo != null) ? resultInfo.Message : null) ?? "服务器连接失败");
+				return false;
+			}
+			data = null;
+			return true;
+		}
+		public bool DeleteUserScene(UserScene scene, IList<VMDesktop> list, out object data)
+		{
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return false;
+			}
+			if (list.Count > 0)
+			{
+				if (!this.HostIsConnected(yunService, list[0].HypHypervisorConnectionUid, out data))
+				{
+					return false;
+				}
+				IVMDesktopService arg_6B_0 = this.vmDesktopService;
+				Func<VMDesktop, string> arg_60_1;
+				if ((arg_60_1 = DesktopController.<>c.<>9__52_0) == null)
+				{
+					arg_60_1 = (DesktopController.<>c.<>9__52_0 = new Func<VMDesktop, string>(DesktopController.<>c.<>9.<DeleteUserScene>b__52_0));
+				}
+				arg_6B_0.UpdateStateBatch(list.Select(arg_60_1).ToArray<string>(), 3);
+			}
+			this.DeleteIps(list);
+			List<DesktopInfo> desktops = (
+				from m in list
+				select new DesktopInfo
+				{
+					Name = m.Name_label,
+					Description = scene.Name_label,
+					VMDesktopGUID = m.VMDesktopGUID
+				}).ToList<DesktopInfo>();
+			UserSceneInfo sceneInfo = this.GetSceneInfo(scene);
+			yunService.DeleteDesktops(sceneInfo, desktops, true);
+			DesktopCheckedList.Clear();
+			return true;
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, AsyncAction]
+		public ActionResult EditPower(string id = "")
+		{
+			UserScene userScene = this.userSceneService.Get(id);
+			if (userScene == null)
+			{
+				return base.Json(new ResponseData().Error("场景不存在或已被删除"), JsonRequestBehavior.AllowGet);
+			}
+			object data;
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return base.Json(data, JsonRequestBehavior.AllowGet);
+			}
+			UserSceneInfo sceneInfo = this.GetSceneInfo(userScene);
+			UserScenePowerTimeScheme userScenePowerTimeScheme = yunService.GetUserScenePowerTimeScheme(sceneInfo);
+			if (userScenePowerTimeScheme.PeakDisconnectTimeout == -110 || userScenePowerTimeScheme.PowerTime.Count != 2)
+			{
+				return base.Json(new ResponseData().Error("获取数据有误"), JsonRequestBehavior.AllowGet);
+			}
+			if (DesktopController.<>o__53.<>p__0 == null)
+			{
+				DesktopController.<>o__53.<>p__0 = CallSite<Func<CallSite, object, string, object>>.Create(Binder.SetMember(CSharpBinderFlags.None, "Id", typeof(DesktopController), new CSharpArgumentInfo[]
+				{
+					CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null),
+					CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null)
+				}));
+			}
+			DesktopController.<>o__53.<>p__0.Target(DesktopController.<>o__53.<>p__0, base.ViewBag, id);
+			if (userScene.DesktopType == "2")
+			{
+				return base.View("EditStaticPower", userScenePowerTimeScheme);
+			}
+			return base.View(userScenePowerTimeScheme);
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult EditPower(PowerModel model)
+		{
+			object data;
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return base.Json(data);
+			}
+			UserScene userScene = this.userSceneService.Get(model.Id);
+			if (userScene == null)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "场景不存在或已被删除"
+				});
+			}
+			UserSceneInfo sceneInfo = this.GetSceneInfo(userScene);
+			string a = base.Request.Form["weekdayState"];
+			bool[] peakHours = this.GetPeakHours("peakHour");
+			int[] source = this.PeakSizeArr("powerSize");
+			ResultInfo resultInfo = yunService.SetUserScenePowerTimeScheme(sceneInfo, "工作日", peakHours.ToList<bool>(), source.ToList<int>(), a == "1");
+			if (resultInfo == null || resultInfo.Code != "1")
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = ((resultInfo != null) ? resultInfo.Message : null) ?? "失败"
+				});
+			}
+			string a2 = base.Request.Form["weekendState"];
+			bool[] peakHours2 = this.GetPeakHours("peakHourWeekEnd");
+			int[] source2 = this.PeakSizeArr("powerSizeWeekEnd");
+			ResultInfo resultInfo2 = yunService.SetUserScenePowerTimeScheme(sceneInfo, "周末", peakHours2.ToList<bool>(), source2.ToList<int>(), a2 == "1");
+			if (resultInfo2 == null || resultInfo2.Code != "1")
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = ((resultInfo2 != null) ? resultInfo2.Message : null) ?? "失败"
+				});
+			}
+			ResultInfo resultInfo3 = yunService.SetUserSceneDisconnectAction(sceneInfo, model.OffPeakAction, model.OffPeakTime, model.PeakAction, model.PeakTime);
+			if (resultInfo3 == null || resultInfo3.Code != "1")
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = ((resultInfo3 != null) ? resultInfo3.Message : null) ?? "失败"
+				});
+			}
+			return base.Json(new
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		[ActionAuthorize(Action = Enums.ActionEnum.Edit, NavName = "desktop_manage"), AdminAuthorize, HttpPost]
+		public JsonResult EditStaticPower(PowerModel model)
+		{
+			object data;
+			YunManageService.Client yunService = Service.GetYunService(out data);
+			if (yunService == null)
+			{
+				return base.Json(data);
+			}
+			UserScene userScene = this.userSceneService.Get(model.Id);
+			if (userScene == null)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "场景不存在或已被删除"
+				});
+			}
+			UserSceneInfo sceneInfo = this.GetSceneInfo(userScene);
+			ResultInfo resultInfo = yunService.SetUserSceneDisconnectAction(sceneInfo, model.OffPeakAction, model.OffPeakTime, model.PeakAction, model.PeakTime);
+			if (resultInfo == null || resultInfo.Code != "1")
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = ((resultInfo != null) ? resultInfo.Message : null) ?? "失败"
+				});
+			}
+			return base.Json(new
+			{
+				status = "y",
+				info = "成功"
+			});
+		}
+		private int[] PeakSizeArr(string name)
+		{
+			string[] array = base.Request.Form[name].Split(new char[]
+			{
+				','
+			});
+			int[] array2 = new int[24];
+			for (int i = 0; i < array.Length; i++)
+			{
+				int num = Utils.StrToInt(array[i], 0);
+				array2[i] = num;
+			}
+			return array2;
+		}
+		private bool[] GetPeakHours(string name)
+		{
+			bool[] array = new bool[24];
+			string text = base.Request.Form[name];
+			if (text != null)
+			{
+				string[] source = text.Split(new char[]
+				{
+					','
+				});
+				int j;
+				int i;
+				for (i = 0; i < array.Length; i = j + 1)
+				{
+					if (!source.All((string hour) => hour != i.ToString()))
+					{
+						array[i] = true;
+					}
+					j = i;
+				}
+			}
+			return array;
+		}
+		[AdminAuthorize, HttpPost]
+		public JsonResult ChkStateHandle(string id, bool isChecked = false, string sceneId = "")
+		{
+			Manager adminInfo = base.GetAdminInfo();
+			if (string.IsNullOrEmpty(id))
+			{
+				return base.Json(new ResponseData().Error("传入参数有误"));
+			}
+			if (!this.vmDesktopService.Exist(id))
+			{
+				return base.Json(new ResponseData().Error("桌面不存在或已被删除"));
+			}
+			if (isChecked)
+			{
+				this.ClearCheckList(sceneId);
+				DesktopCheckedList.Add(id, adminInfo.Username);
+			}
+			else
+			{
+				DesktopCheckedList.Remove(id, adminInfo.Username);
+			}
+			int checkedNum = DesktopCheckedList.ListId.Count<string>();
+			return base.Json(new
+			{
+				status = "y",
+				checkedNum = checkedNum,
+				info = "成功"
+			});
+		}
+		private void ClearCheckList(string sceneId)
+		{
+			IEnumerable<string> listId = DesktopCheckedList.ListId;
+			if (listId.Any<string>())
+			{
+				string id = listId.FirstOrDefault<string>();
+				if (this.vmDesktopService.Get(id).SceneGUID != sceneId)
+				{
+					DesktopCheckedList.Clear();
+				}
+			}
+		}
+		[AdminAuthorize, HttpPost]
+		public JsonResult SelectPage(bool isChecked = false, string ids = "", string sceneId = "")
+		{
+			Manager adminInfo = base.GetAdminInfo();
+			string[] arg_1F_0 = ids.Split(new char[]
+			{
+				','
+			});
+			this.ClearCheckList(sceneId);
+			string[] array = arg_1F_0;
+			for (int i = 0; i < array.Length; i++)
+			{
+				string text = array[i];
+				if (!string.IsNullOrEmpty(text) && this.vmDesktopService.Exist(text))
+				{
+					if (isChecked)
+					{
+						DesktopCheckedList.Add(text, adminInfo.Username);
+					}
+					else
+					{
+						DesktopCheckedList.Remove(text, adminInfo.Username);
+					}
+				}
+			}
+			int checkedNum = DesktopCheckedList.ListId.Count<string>();
+			return base.Json(new
+			{
+				status = "y",
+				checkedNum = checkedNum,
+				info = "成功"
+			});
+		}
+		[AdminAuthorize, HttpPost]
+		public JsonResult SelectAll(bool isChecked = false, string sceneId = "")
+		{
+			Manager adminInfo = base.GetAdminInfo();
+			List<VMDesktop> listBySceneId = this.vmDesktopService.GetListBySceneId(sceneId);
+			if (listBySceneId.Count == 0)
+			{
+				return base.Json(new
+				{
+					status = "n",
+					info = "没有记录"
+				});
+			}
+			DesktopCheckedList.Clear();
+			if (isChecked)
+			{
+				using (List<VMDesktop>.Enumerator enumerator = listBySceneId.GetEnumerator())
+				{
+					while (enumerator.MoveNext())
+					{
+						DesktopCheckedList.Add(enumerator.Current.VMDesktopGUID, adminInfo.Username);
+					}
+				}
+			}
+			int checkedNum = DesktopCheckedList.ListId.Count<string>();
+			return base.Json(new
+			{
+				status = "y",
+				checkedNum = checkedNum,
+				info = "成功"
+			});
+		}
+		private Dictionary<string, int> GetHostAvgDic(int count)
+		{
+			Dictionary<string, int> dictionary = this.serverHostService.SelectHostDic();
+			Dictionary<string, int> dictionary2 = new Dictionary<string, int>();
+			for (int i = 0; i < count; i++)
+			{
+				IEnumerable<KeyValuePair<string, int>> arg_39_0 = dictionary;
+				Func<KeyValuePair<string, int>, int> arg_39_1;
+				if ((arg_39_1 = DesktopController.<>c.<>9__62_0) == null)
+				{
+					arg_39_1 = (DesktopController.<>c.<>9__62_0 = new Func<KeyValuePair<string, int>, int>(DesktopController.<>c.<>9.<GetHostAvgDic>b__62_0));
+				}
+				IOrderedEnumerable<KeyValuePair<string, int>> arg_5D_0 = arg_39_0.OrderBy(arg_39_1);
+				Func<KeyValuePair<string, int>, string> arg_5D_1;
+				if ((arg_5D_1 = DesktopController.<>c.<>9__62_1) == null)
+				{
+					arg_5D_1 = (DesktopController.<>c.<>9__62_1 = new Func<KeyValuePair<string, int>, string>(DesktopController.<>c.<>9.<GetHostAvgDic>b__62_1));
+				}
+				IEnumerable<KeyValuePair<string, int>> arg_81_0 = arg_5D_0.ThenBy(arg_5D_1);
+				Func<KeyValuePair<string, int>, string> arg_81_1;
+				if ((arg_81_1 = DesktopController.<>c.<>9__62_2) == null)
+				{
+					arg_81_1 = (DesktopController.<>c.<>9__62_2 = new Func<KeyValuePair<string, int>, string>(DesktopController.<>c.<>9.<GetHostAvgDic>b__62_2));
+				}
+				string text = arg_81_0.Select(arg_81_1).FirstOrDefault<string>();
+				Dictionary<string, int> dictionary3 = dictionary;
+				string key = text;
+				dictionary3[key]++;
+				if (dictionary2.ContainsKey(text))
+				{
+					dictionary3 = dictionary2;
+					key = text;
+					dictionary3[key]++;
+				}
+				else
+				{
+					dictionary2.Add(text, 1);
+				}
+			}
+			return dictionary2;
+		}
+		public JsonResult GetHostInfos()
+		{
+			try
+			{
+				YunManageService.Client yunManageService = Service.GetYunManageService();
+				if (yunManageService == null)
+				{
+					JsonResult result = base.Json(new
+					{
+						status = "n",
+						info = "云桌面管理平台后台服务未开启"
+					}, JsonRequestBehavior.AllowGet);
+					return result;
+				}
+				List<HostInfo> hostInfos = yunManageService.GetHostInfos();
+				if (hostInfos.Count > 0)
+				{
+					IEnumerable<HostInfo> arg_55_0 = hostInfos;
+					var arg_55_1;
+					if ((arg_55_1 = DesktopController.<>c.<>9__63_0) == null)
+					{
+						arg_55_1 = (DesktopController.<>c.<>9__63_0 = new Func<HostInfo, <>f__AnonymousType12<string, string>>(DesktopController.<>c.<>9.<GetHostInfos>b__63_0));
+					}
+					var data = arg_55_0.Select(arg_55_1).ToList();
+					JsonResult result = base.Json(new ResponseData
+					{
+						status = "y",
+						data = data
+					});
+					return result;
+				}
+			}
+			catch (Exception exception)
+			{
+				Log4NetHelper.Error(this, "GetHostInfos->异常：", exception);
+			}
+			return base.Json(new ResponseData().Error("无记录"));
+		}
+	}
+}

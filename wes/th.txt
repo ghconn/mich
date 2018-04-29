@@ -1,0 +1,132 @@
+基本类型：
+
+bool：布尔值，true 或 false，对应 C#的 bool
+
+byte：8 位有符号整数，对应 C#的 byte
+
+i16：16 位有符号整数，对应 C#的 short
+
+i32：32 位有符号整数，对应 C#的 int
+
+i64：64 位有符号整数，对应 C#的 long
+
+double：64 位浮点数，对应 C#的 double
+
+string：未知编码文本或二进制字符串，对应 C#的 string
+
+结构体类型：
+
+struct：定义公共的对象，类似于 C 语言中的结构体定义，在 C#中是一个实体类
+
+容器类型：
+
+list：对应 C#的 List<T> 有序集合
+
+set：对应 C#的 HashSet<T>无序但是不能重复的集合
+
+map：对应 C#的 Dictionary<TKey,TValue>键值对集合，键不能重复
+
+异常类型：
+
+exception：对应 C#的 Exception
+
+服务类型：
+
+service：对应服务的类
+
+
+
+
+
+
+
+namespace csharp ThriftApp.Interface
+
+struct User{
+	1:i32 Id,
+	2:string Name,
+	3:string Pass
+}
+
+service UserServices{
+	User GetUserById(1:i32 id)
+	list<User> GetAllUseer()
+	list<User> GetUserByPageIndex(1:i32 pageIndex,2:i32 pageSize)
+	i32 GetUserCount()
+	bool Add(1:User user)
+}
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73

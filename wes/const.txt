@@ -1,0 +1,1151 @@
+﻿public class AppLaunchInfo : CommonAppLaunchInfo
+	{
+		private static readonly System.Globalization.CultureInfo DefaultCulture = CultureInfoUtilities.Parse("en") ?? System.Globalization.CultureInfo.CurrentUICulture;
+		private readonly HashSet<string> protectedAttributes = new HashSet<string>();
+		protected static readonly string Key_clientPrinterPortMapping = "ClientPrinterPortMapping";
+		protected static readonly string Key_clientPrinterSpooling = "ClientPrinterSpooling";
+		protected static readonly string Key_serverAddress = "ServerAddress";
+		protected static readonly string Key_includeClientName = "IncludeClientName";
+		protected static readonly string Key_clientName = "ClientName";
+		protected static readonly string Key_launchReference = "LaunchReference";
+		protected static readonly string Key_accessToken = "AccessToken";
+		protected static readonly string Key_overlayCredentials = "OverlayCredentials";
+		protected static readonly string Key_colorDepth = "ColorDepth";
+		protected static readonly string Key_publishedDisplaySize = "PublishedDisplaySize";
+		protected static readonly string Key_displaySize = "DisplaySize";
+		protected static readonly string Key_audioQuality = "AudioQuality";
+		protected static readonly string Key_bandwidthProfile = "BandwidthProfile";
+		protected static readonly string Key_sslEnabled = "SSLEnabled";
+		protected static readonly string Key_sslConnectionMode = "SSLConnectionMode";
+		protected static readonly string Key_sslAddress = "SSLAddress";
+		protected static readonly string Key_encryptionLevel = "EncryptionLevel";
+		protected static readonly string Key_networkProxy = "NetworkProxy";
+		protected static readonly string Key_cgpEnabled = "CGPEnabled";
+		protected static readonly string Key_cgpAddress = "CGPAddress";
+		protected static readonly string Key_mpsConnection = "MPSConnection";
+		protected static readonly string Key_internalServerAddress = "InternalServerAddress";
+		protected static readonly string Key_comPortMapping = "COMPortMapping";
+		protected static readonly string Key_specialFolderRedirection = "SpecialFolderRedirection";
+		protected static readonly string Key_allowFontSmoothing = "AllowFontSmoothing";
+		protected static readonly string Key_useSmartcardAuth = "UseSmartcardAuth";
+		protected static readonly string Key_usePassthroughAuth = "UsePassthroughAuth";
+		protected static readonly string Key_useSSPIAuth = "UseSSPIAuth";
+		protected static readonly string Key_keyPassthroughOption = "KeyPassthroughOption";
+		protected static readonly string Key_virtualCOMPortEnabled = "VirtualCOMPortEnabled";
+		protected static readonly string Key_isDesktop = "IsDesktop";
+		protected static readonly string Key_nameResolutionDuration = "NameResolutionDuration";
+		protected static readonly string Key_ticketRequestDuration = "TicketRequestDuration";
+		protected static readonly string Key_locale = "Locale";
+		protected static readonly string Key_desktopRestartAllowed = "DesktopRestartAllowed";
+		protected static readonly string Key_sessionSharingKey = "SessionSharingKey";
+		protected static readonly string Key_webSocketPort = "WebSocketPort";
+		protected static readonly string Key_ZoneUid = "ZoneUid";
+		protected static readonly string Key_ZoneName = "ZoneName";
+
+//---------------------------------------------------------------------------------------------------
+
+
+public class ConfigurationKeys
+	{
+		public const string Farm_AllFailedBypassDuration = "AllFailedBypassDuration";
+		public static readonly string ConfKey_ServerCommunicationAttempts = "ServerCommunicationAttempts";
+		public static readonly string ConfKey_CommunicationTimeout = "CommunicationTimeout";
+		public static readonly string ConfKey_ConnectionTimeout = "ConnectionTimeout";
+		public static readonly string ConfKey_EnableFTA = "EnableFileTypeAssociation";
+		public static readonly string ConfKey_PooledSockets = "PooledSockets";
+		public static readonly string ConfKey_AllowFontSmoothing = "AllowFontSmoothing";
+		public static readonly string ConfKey_AllowDisplayInFrames = "AllowDisplayInFrames";
+		public static readonly string ConfKey_OverlayAutologonCredsWithTicket = "OverlayAutologonCredsWithTicket";
+		public static readonly string ConfKey_RequireLaunchReference = "RequireLaunchReference";
+		public static readonly string ConfKey_AuthenticationMethods = "WIAuthenticationMethods";
+		public static readonly string ConfKey_LoginDomains = "LoginDomains";
+		public static readonly string ConfKey_DomainSelection = "DomainSelection";
+		public static readonly string ConfKey_UPNSuffixes = "UPNSuffixes";
+		public static readonly string ConfKey_HideDomainField = "HideDomainField";
+		public static readonly string ConfKey_RestrictDomains = "RestrictDomains";
+		public static readonly string ConfKey_CredentialFormat = "CredentialFormat";
+		public static readonly string CredentialFormat_All = "All";
+		public static readonly string CredentialFormat_UPN = "UPN";
+		public static readonly string CredentialFormat_DomainUsername = "DomainUsername";
+		public static readonly string ConfKey_AddressResolutionType = "AddressResolutionType";
+		public static readonly string ConfKey_AllowCustomizeSettings = "AllowCustomizeSettings";
+		public static readonly string ConfKey_ClientStreamingWin32 = "ClientStreamingWin32";
+		public static readonly string ConfKey_ClientIcaWin32 = "ClientIcaWin32";
+		public static readonly string ConfKey_ClientIcaSolarisSparc = "ClientIcaSolarisSparc";
+		public static readonly string ConfKey_ClientIcaSolarisX86 = "ClientIcaSolarisX86";
+		public static readonly string ConfKey_ClientIcaLinuxX86 = "ClientIcaLinuxX86";
+		public static readonly string ConfKey_ClientIcaIbmAix = "ClientIcaIbmAix";
+		public static readonly string ConfKey_ClientIcaHpUxUnix = "ClientIcaHpUxUnix";
+		public static readonly string ConfKey_ClientIcaMac = "ClientIcaMac";
+		public static readonly string ConfKey_ClientDefaultURL = "ClientDefaultURL";
+		public static readonly string ConfKey_LoginType = "LoginType";
+		public static readonly string ConfKey_NDSContextLookupLoadbalancing = "NDSContextLookupLoadbalancing";
+		public static readonly string ConfKey_NDSContextLookupServers = "NDSContextLookupServers";
+		public static readonly string ConfKey_NDSTreeName = "NDSTreeName";
+		public static readonly string ConfKey_PreferredContext = "SearchContextList";
+		public static readonly string ConfKey_AlternateAddressControl = "AlternateAddress";
+		public static readonly string ConfKey_AllowDynamicGateways = "AllowDynamicGateways";
+		public static readonly string ConfKey_TwoFactorPasswordIntegration = "TwoFactorPasswordIntegration";
+		public static readonly string ConfKey_TwoFactorUseFullyQualifiedUserNames = "TwoFactorUseFullyQualifiedUserNames";
+		public static readonly string ConfKey_AppAccessMethod = "ApplicationAccessMethods";
+		public static readonly string ConfKey_EnablePassthroughURLs = "EnablePassthroughURLs";
+		public static readonly string ConfKey_AutoLaunchDesktop = "AutoLaunchDesktop";
+		public static readonly string ConfKey_IcaFileSigning = "IcaFileSigningEnabled";
+		public static readonly string ConfKey_IcaFileThumbPrint = "IcaFileSigningCertificateThumbprint";
+		public static readonly string ConfKey_IFSHashAlgorithm = "IcaFileSigningHashAlgorithm";
+		public static readonly string AuthenticationTypeKey_Anonymous = "Anonymous";
+		public static readonly string AuthenticationTypeKey_CertificateSingleSignOn = "CertificateSingleSignOn";
+		public static readonly string AuthenticationTypeKey_Certificate = "Certificate";
+		public static readonly string AuthenticationTypeKey_SingleSignOn = "SingleSignOn";
+		public static readonly string AuthenticationTypeKey_Explicit = "Explicit";
+		public static readonly string ConfKey_ClientAddressMap = "ClientAddressMap";
+		public static readonly string ConfKey_ServerAddressMap = "ServerAddressMap";
+		public static readonly string ConfKey_InternalServerAddressMap = "InternalServerAddressMap";
+		public static readonly string ConfKey_ClientProxy = "ClientProxy";
+		public static readonly string ClientProxyKey_Auto = "Auto";
+		public static readonly string ClientProxyKey_Client = "Client";
+		public static readonly string ClientProxyKey_None = "None";
+		public static readonly string ClientProxyKey_Socks = "SOCKS";
+		public static readonly string ClientProxyKey_Secure = "Secure";
+		public static readonly string ConfKey_RADESessionURL = "RADESessionURL";
+		public static readonly string ConfKey_EnableServerLoadBalancing = "EnableServerLoadBalancing";
+		public static readonly string ConfKey_EnableSTALoadBalancing = "EnableSTALoadBalancing";
+		public static readonly string ConfKey_BypassFailedSTADuration = "BypassFailedSTADuration";
+		public static readonly string ConfKey_IgnoreClientProvidedClientAddress = "IgnoreClientProvidedClientAddress";
+		public static readonly string ConfKey_ShowClientInstallCaption = "ShowClientInstallCaption";
+		public static readonly string ConfKey_RequestICAClientSecureChannel = "RequestICAClientSecureChannel";
+		public static readonly string RequestICAClientSecureChannel_TLS = "TLS-GovCiphers";
+		public static readonly string RequestICAClientSecureChannel_SSL = "SSL-AnyCiphers";
+		public static readonly string RequestICAClientSecureChannel_Detect = "Detect-AnyCiphers";
+		public static readonly string ConfKey_LaunchClients = "LaunchClients";
+		public static readonly string LaunchClients_ICALocal = "ICA-Local";
+		public static readonly string LaunchClients_ICAJava = "ICA-Java";
+		public static readonly string LaunchClients_RDPEmbedded = "RDP-Embedded";
+		public static readonly string ConfKey_Enable_ClientWizard_Auto_Mode = "EnableWizardAutoMode";
+		public static readonly string ConfKey_JavaClientPackages = "JavaClientPackages";
+		public static readonly string JavaClientPackages_Seamless = "Seamless";
+		public static readonly string JavaClientPackages_PrinterMapping = "PrinterMapping";
+		public static readonly string JavaClientPackages_CryptoJ = "CryptoJ";
+		public static readonly string JavaClientPackages_SSL = "SSL";
+		public static readonly string JavaClientPackages_Audio = "Audio";
+		public static readonly string JavaClientPackages_ClientDriveMapping = "ClientDriveMapping";
+		public static readonly string JavaClientPackages_Clipboard = "Clipboard";
+		public static readonly string JavaClientPackages_SecureICA = "SecureICA";
+		public static readonly string JavaClientPackages_ZeroLatency = "ZeroLatency";
+		public static readonly string ConfKey_AllowCustomizeJavaClientPackages = "AllowCustomizeJavaClientPackages";
+		public static readonly string ConfKey_AllowUserPasswordChange = "AllowUserPasswordChange";
+		public static readonly string ConfKey_PNAChangePasswordMethod = "PNAChangePasswordMethod";
+		public static readonly string AllowUserPasswordChange_Never = "Never";
+		public static readonly string AllowUserPasswordChange_ExpiredOnly = "Expired-only";
+		public static readonly string AllowUserPasswordChange_Always = "Always";
+		public static readonly string ConfKey_ShowPasswordExpiryWarning = "ShowPasswordExpiryWarning";
+		public static readonly string ShowPasswordExpiryWarning_Never = "Never";
+		public static readonly string ShowPasswordExpiryWarning_WindowsPolicy = "WindowsPolicy";
+		public static readonly string ShowPasswordExpiryWarning_Custom = "Custom";
+		public static readonly string ConfKey_PasswordExpiryWarningPeriod = "PasswordExpiryWarningPeriod";
+		public static readonly string ConfKey_AllowUserAccountUnlock = "AllowUserAccountUnlock";
+		public static readonly string ConfKey_AllowUserPasswordReset = "AllowUserPasswordReset";
+		public static readonly string ConfKey_AccountSelfServiceUrl = "AccountSelfServiceUrl";
+		public static readonly string Transport_HTTP = "HTTP";
+		public static readonly string Transport_SSL = "SSL";
+		public static readonly string Transport_HTTPS = "HTTPS";
+		public static readonly string ConfKey_AdditionalExplicitAuthentication = "AdditionalExplicitAuthentication";
+		public static readonly string ConfKey_EnableLegacyICAClientSupport = "EnableLegacyICAClientSupport";
+		public static readonly string ConfKey_EnableWorkspaceControl = "EnableWorkspaceControl";
+		public static readonly string ConfKey_ReconnectAtLogin = "ReconnectAtLogin";
+		public static readonly string ConfKey_AllowCustomizeReconnectAtLogin = "AllowCustomizeReconnectAtLogin";
+		public static readonly string ConfKey_ReconnectButton = "ReconnectButton";
+		public static readonly string ConfKey_AllowCustomizeReconnectButton = "AllowCustomizeReconnectButton";
+		public static readonly string ConfKey_EnableLogoffApplications = "EnableLogoffApplications";
+		public static readonly string ConfKey_AllowCustomizeLogoff = "AllowCustomizeLogoff";
+		public static readonly string ConfKey_OverrideIcaClientname = "OverrideIcaClientname";
+		public static readonly string ConfKey_RequestedHighColorIcons = "RequestedHighColorIcons";
+		public static readonly string ConfKey_ErrorCallbackURL = "ErrorCallbackURL";
+		public static readonly string ConfKey_SiteLayout = "UserInterfaceLayout";
+		public static readonly string ConfKey_UserInterfaceMode = "UserInterfaceMode";
+		public static readonly string ConfKey_UserInterfaceBranding = "UserInterfaceBranding";
+		public static readonly string ConfKey_BrandingColor = "BrandingColor";
+		public static readonly string ConfKey_HeadingImage = "HeadingImage";
+		public static readonly string ConfKey_CompactHeaderImage = "CompactHeaderImage";
+		public static readonly string ConfKey_DefaultCustomTextLocale = "DefaultCustomTextLocale";
+		public static readonly string ConfKey_WelcomeMessagePrefix = "WelcomeMessage_";
+		public static readonly string ConfKey_FooterTextPrefix = "FooterText_";
+		public static readonly string ConfKey_EnableKerberosToMPS = "EnableKerberosToMPS";
+		public static readonly string ConfKey_AGEWebServiceURL = "AGEWebServiceUrl";
+		public static readonly string ConfKey_AGEPromptPassword = "AGEPromptPassword";
+		public static readonly string ConfKey_AGAuthenticationMethod = "AGAuthenticationMethod";
+		public static readonly string ConfKey_AllowCustomizeKeyPassthrough = "AllowCustomizeTransparentKeyPassthrough";
+		public static readonly string ConfKey_AllowCustomizeLayout = "AllowCustomizeLayout";
+		public static readonly string ConfKey_KioskMode = "KioskMode";
+		public static readonly string ConfKey_RadiusServers = "RadiusServers";
+		public static readonly string ConfKey_RadiusSecret = "RadiusSecret";
+		public static readonly string ConfKey_RadiusRequestTimeout = "RadiusRequestTimeout";
+		public static readonly string ConfKey_RadiusLoadBalancing = "EnableRadiusServerLoadBalancing";
+		public static readonly string ConfKey_BypassFailedRadiusServerDuration = "BypassFailedRadiusServerDuration";
+		public static readonly string ConfKey_DuplicateLogLimit = "DuplicateLogLimit";
+		public static readonly string ConfKey_DuplicateLogInterval = "DuplicateLogInterval";
+		public static readonly string ConfKey_CSG_EnableSessionReliability = "CSG_EnableSessionReliability";
+		public static readonly string ConfKey_CSG_Server = "CSG_Server";
+		public static readonly string ConfKey_CSG_ServerPort = "CSG_ServerPort";
+		public static readonly string ConfKey_CSG_STA_URL = "CSG_STA_URL";
+		public static readonly string ConfKey_CSG_UseTwoTickets = "CSG_UseTwoTickets";
+		public static readonly string ConfKey_MultiFarmAuthenticationMode = "MultiFarmAuthenticationMode";
+		public static readonly string ConfKey_SuppressDuplicateResources = "SuppressDuplicateResources";
+		public static readonly string ConfKey_MultiLaunchTimeout = "MultiLaunchTimeout";
+		public static readonly string ConfKey_WebSessionTimeout = "WebSessionTimeout";
+		public static readonly string ConfKey_RecoveryFarmPrefix = "RecoveryFarm";
+		public static readonly string ConfKey_FarmPrefix = "Farm";
+		public static readonly string ConfKey_FarmGroupSuffix = "Groups";
+		public static readonly string ConfKey_LogoffFederationService = "LogoffFederationService";
+		public static readonly string Farm_Name = "Name";
+		public static readonly string Farm_XmlPort = "XMLPort";
+		public static readonly string Farm_SslRelayPort = "SSLRelayPort";
+		public static readonly string Farm_Transport = "Transport";
+		public static readonly string Farm_BypassDuration = "BypassDuration";
+		public static readonly string Farm_MaxServersPerRequest = "maxServersPerRequest";
+		public static readonly string Farm_LoadBalance = "LoadBalance";
+		public static readonly string Farm_TTL = "TicketTimeToLive";
+		public static readonly string Farm_RADE_TTL = "RADETicketTimeToLive";
+		public static readonly int Farm_MaxNo = 512;
+		public static readonly string ConfKey_AutoLoginDefault = "AutoLoginDefault";
+		public static readonly string ConfKey_AllowCustomizeAutoLogin = "AllowCustomizeAutoLogin";
+		public static readonly string ConfKey_HideAccountLockedDisabledErrors = "HideAccountLockedDisabledErrors";
+		public static readonly string ConfKey_KCDEnabled = "kerberosDelegation";
+		public static readonly string ConfKey_AuthenticationPoint = "AuthenticationPoint";
+		public static readonly string ConfKey_HeadingHomePage = "HeadingHomePage";
+		public static readonly string ConfKey_DisplayBrandingImage = "DisplayBrandingImage";
+		public static readonly string ConfKey_BrandingImage = "BrandingImage";
+		public static readonly string ConfKey_HeaderFontColor = "HeaderFontColor";
+		public static readonly string ConfKey_ShowSearch = "ShowSearch";
+		public static readonly string ConfKey_AllowCustomizeShowSearch = "AllowCustomizeShowSearch";
+		public static readonly string ConfKey_DefaultViewStyle = "DefaultViewStyle";
+		public static readonly string ConfKey_DefaultCompactViewStyle = "DefaultCompactViewStyle";
+		public static readonly string ConfKey_ViewStyles = "ViewStyles";
+		public static readonly string ConfKey_CompactViewStyles = "CompactViewStyles";
+		public static readonly string ConfKey_ShowHints = "ShowHints";
+		public static readonly string ConfKey_AllowCustomizeShowHints = "AllowCustomizeShowHints";
+		public static readonly string ConfKey_PersistFolderLocation = "PersistFolderLocation";
+		public static readonly string ConfKey_AllowCustomizePersistFolderLocation = "AllowCustomizePersistFolderLocation";
+		public static readonly string ConfKey_ShowRefresh = "ShowRefresh";
+		public static readonly string ConfKey_LoginTitlePrefix = "LoginTitle_";
+		public static readonly string ConfKey_LoginSysMessagePrefix = "LoginSysMessage_";
+		public static readonly string ConfKey_AppSysMessagePrefix = "AppSysMessage_";
+		public static readonly string ConfKey_AppWelcomeMessagePrefix = "AppWelcomeMessage_";
+		public static readonly string ConfKey_PreLoginMessageTitlePrefix = "PreLoginMessageTitle_";
+		public static readonly string ConfKey_PreLoginMessageTextPrefix = "PreLoginMessageText_";
+		public static readonly string ConfKey_PreLoginMessageButtonPrefix = "PreLoginMessageButton_";
+		public static readonly string ConfKey_AppTabPrefix = "AppTab";
+		public static readonly string ConfKey_SetNoLoadBiasFlag = "SetNoLoadBiasFlag";
+		public static readonly string Tab_AllResources = "AllResources";
+		public static readonly string Tab_Applications = "Applications";
+		public static readonly string Tab_Desktops = "Desktops";
+		public static readonly string Tab_Content = "Content";
+		public static readonly string TabNameKey = "Name";
+		public static readonly string TabTitleKey = "Title_";
+		public static readonly string TabHomeFolder = "Home";
+		public static readonly string TabDisallowedResources = "hideResources";
+		public static readonly string TabAllowedResources = "showResources";
+		public static readonly int Tabs_MaxNo = 8;
+		public static readonly string ConfKey_JavaFallbackMode = "JavaFallbackMode";
+		public static readonly string ConfKey_UpgradeClientsAtLogin = "UpgradeClientsAtLogin";
+		public static readonly string ConfKey_ShowDesktopViewer = "ShowDesktopViewer";
+		public static readonly string ConfKey_AdvancedRadeRequestValidation = "RADERequestValidation";
+		public static readonly string ConfKey_ApplianceMultiDesktop = "ApplianceMultiDesktop";
+		public static readonly string ConfKey_ApplianceEmbeddedSmartCardSSO = "ApplianceEmbeddedSmartCardSSO";
+		public static readonly string ConfKey_ApplianceEmbeddedSmartCardSSOPinTimeout = "ApplianceEmbeddedSmartCardSSOPinTimeout";
+		public static readonly string Farm_Type = "FarmType";
+		public static readonly string Legacy_Workspace_Control = "LegacyWorkspaceControl";
+		public static readonly string ConfKey_FilterByTypesInclude = "FilterByTypesInclude";
+		public static readonly string ConfKey_FilterByKeywordsInclude = "FilterByKeywordsInclude";
+		public static readonly string ConfKey_FilterByKeywordsExclude = "FilterByKeywordsExclude";
+		public static readonly string ConfKey_LeasingStatusExpiryLeasing = "leasingStatusExpiryLeasing";
+		public static readonly string ConfKey_LeasingStatusExpiryFailed = "leasingStatusExpiryFailed";
+		public static readonly string ConfKey_LeasingStatusExpiryPending = "leasingStatusExpiryPending";
+		public static readonly string ConfKey_AllowSpecialFolderRedirection = "AllowSpecialFolderRedirection";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class Constants
+	{
+		public const string SubscriptionMimetype = "application/vnd.citrix.subscription+xml";
+		public const string SubscriptionUpdateMimetype = "application/vnd.citrix.subscriptionupdate+xml";
+		public const string SubscriptionResultMimetype = "application/vnd.citrix.subscriptionresult+xml";
+		public const string SubscriptionConflictMimetype = "application/vnd.citrix.subscriptionconflict+xml";
+		public const string SubscriptionsMimetype = "application/vnd.citrix.subscriptions+xml";
+		public const string DazzleSubscriptionsNamespace = "http://citrix.com/delivery-services/2-0/subscriptions";
+		public const string DazzleEndpointsNamespace = "http://citrix.com/dazzleservices/1-0/endpoints";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class DazzleResourcesSchemaAccessor
+	{
+		public static readonly string SubscriptionsSchemaLocation = "Citrix.DeliveryServices.DazzleResources.Schema.Schemas.Subscriptions.xsd";
+		public static readonly string EndpointsSchemaLocation = "Citrix.DeliveryServices.DazzleResources.Schema.Schemas.Endpoints.xsd";
+		public static readonly string SubscriptionsExportSchemaLocation = "Citrix.DeliveryServices.DazzleResources.Schema.Schemas.SubscriptionsExport.xsd";
+		public static readonly string EndpointWithEmptyId = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithEmptyId.xml";
+		public static readonly string EndpointWithEmptyProtocol = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithEmptyProtocol.xml";
+		public static readonly string EndpointWithEmptyUrl = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithEmptyUrl.xml";
+		public static readonly string EndpointWithMalformedUrl = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithMalformedUrl.xml";
+		public static readonly string EndpointWithoutAProtocol = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithoutAProtocol.xml";
+		public static readonly string EndpointWithoutId = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithoutId.xml";
+		public static readonly string EndpointWithoutProtocols = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithoutProtocols.xml";
+		public static readonly string EndpointWithoutUrl = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithoutUrl.xml";
+		public static readonly string EndpointWithRelativeUrl = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Invalid.EndpointWithRelativeUrl.xml";
+		public static readonly string MultipleEndpoints = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Valid.MultipleEndpoints.xml";
+		public static readonly string SingleEndpoint = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Valid.SingleEndpoint.xml";
+		public static readonly string NoEndpoints = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Endpoints.Valid.NoEndpoints.xml";
+		public static readonly string SubscriptionEmptyExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionEmptyExample.xml";
+		public static readonly string SubscriptionWithEntriesExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionWithEntriesExample.xml";
+		public static readonly string SubscriptionWithEmptyEntriesExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionEmptyEntriesExample.xml";
+		public static readonly string SubscriptionWithEmptyPropertyValuesExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionEmptyPropertyValuesExample.xml";
+		public static readonly string SubscriptionPropertiesExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionPropertiesExample.xml";
+		public static readonly string SubscriptionsExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionsExample.xml";
+		public static readonly string SubscriptionUpdateExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionUpdateExample.xml";
+		public static readonly string SubscriptionUpdateByIdExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionUpdateByIdExample.xml";
+		public static readonly string SubscribeWithClientNameAndAddressEntriesExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscribeWithClientNameAndAddressEntriesExample.xml";
+		public static readonly string SubscriptionResultExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionResultExample.xml";
+		public static readonly string SubscriptionConflictExample = "Citrix.DeliveryServices.DazzleResources.Schema.Examples.Subscription.Valid.SubscriptionConflictExample.xml";
+		
+//---------------------------------------------------------------------------------------------------
+
+public class PnaErrorIds
+	{
+		public const string ResourceUnavailableError = "ResourceUnavailable";
+		public const string AppRemovedError = "AppRemoved";
+		public const string SessionLimitError = "ActiveSessionLimitReached";
+		public const string NoAvailableWorkstationError = "NoAvailableWorkstation";
+		public const string WorkstationConnectionRefusedError = "WorkstationConnectionRefused";
+		public const string WorkstationInMaintenanceError = "WorkstationInMaintenance";
+		public const string OperationInProgressError = "OperationInProgress";
+		public const string CharlotteError = "CharlotteErrorOther";
+		public const string CharlotteErrorBadCredentials = "CharlotteErrorBadCredentials";
+		public const string CharlotteErrorCredentialsMustChange = "CharlotteErrorCredentialsMustChange";
+		public const string CharlotteErrorCredentialsExpired = "CharlotteErrorCredentialsExpired";
+		public const string CharlotteErrorAccountLockedOut = "CharlotteErrorAccountLockedOut";
+		public const string CharlotteErrorAccountDisabled = "CharlotteErrorAccountDisabled";
+		public const string CharlotteErrorInvalidLogonHours = "CharlotteErrorInvalidLogonHours";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class PnaConfigViewConstants
+	{
+		public static readonly string StoreBaseUrlId = "StoreBaseUrl";
+		public static readonly string LogonMethodId = "LogonMethod";
+		public static readonly string EnableKerberosId = "EnableKerberos";
+		public static readonly string ChangePasswordUrlId = "ChangePasswordUrl";
+		public static readonly string ChangePasswordAllowedId = "ChangePasswordAllowed";
+		public static readonly string ChangePasswordMethodId = "ChangePasswordMethod";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class MimeTypes
+	{
+		public const string ALL_TYPES = "*/*";
+		public const string ALL_IMAGES = "image/*";
+		public const string GIF_IMAGE = "image/gif";
+		public const string PNG_IMAGE = "image/png";
+		public const string ICO_IMAGE = "image/vnd.microsoft.icon";
+		public const string RESOURCES_XML = "application/vnd.citrix.resources+xml";
+		public const string RESOURCE_XML = "application/vnd.citrix.resource+xml";
+		public const string LAUNCH_PARAMETERS_XML = "application/vnd.citrix.launchparams+xml";
+		public const string LAUNCH_DATA_XML = "application/vnd.citrix.launchdata+xml";
+		public const string MACHINE_POWER_OFF_XML = "application/vnd.citrix.machinepoweroff+xml";
+		public const string MACHINE_POWER_OFF_PARAMETERS_XML = "application/vnd.citrix.machinepoweroffparams+xml";
+		public const string ASSIGN_DESKTOP_PARAMETERS_XML = "application/vnd.citrix.assigndesktopparams+xml";
+		public const string ASSIGN_DESKTOP_XML = "application/vnd.citrix.assigndesktop+xml";
+		public const string SESSION_PARAMETERS_XML = "application/vnd.citrix.sessionparams+xml";
+		public const string SESSION_STATE_XML = "application/vnd.citrix.sessionstate+xml";
+		public const string SESSION_RESULT_XML = "application/vnd.citrix.sessionresults+xml";
+		public const string DATA_STORE_PARAMETERS_XML = "application/vnd.citrix.datastoreparams+xml";
+		public const string DATA_STORE_RESULT_XML = "application/vnd.citrix.datastoreresult+xml";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class Namespaces
+	{
+		public const string SessionParameters = "http://citrix.com/delivery-services/1-0/sessionparams";
+		public const string SessionState = "http://citrix.com/delivery-services/1-0/sessionstate";
+		public const string SessionResult = "http://citrix.com/delivery-services/1-0/sessionresult";
+		public const string DataStore = "http://citrix.com/delivery-services/1-0/datastore";
+		public static readonly string Resource = "http://citrix.com/delivery-services/2-0/resources";
+		public static readonly string MachinePowerOff = "http://citrix.com/delivery-services/1-0/machinepoweroff";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class ResourcesCoreSchemaAccessor
+	{
+		public static readonly string LAUNCH_DATA_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.LaunchData.xsd";
+		public static readonly string LAUNCH_PARAMS_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.LaunchParams.xsd";
+		public static readonly string MACHINE_POWER_OFF_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.MachinePowerOff.xsd";
+		public static readonly string MACHINE_POWER_OFF_PARAMS_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.MachinePowerOffParams.xsd";
+		public static readonly string RESOURCES_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.Resources.xsd";
+		public static readonly string SessionParametersSchemaLocation = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.SessionParameters.xsd";
+		public static readonly string SessionStateSchemaLocation = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.SessionState.xsd";
+		public static readonly string SessionResultSchemaLocation = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.SessionResult.xsd";
+		public static readonly string ASSIGN_DESKTOP_PARAMS_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.AssignDesktopParams.xsd";
+		public static readonly string ASSIGN_DESKTOP_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.AssignDesktop.xsd";
+		public static readonly string DESKTOP_INFO_SCHEMA_LOCATION = "Citrix.DeliveryServices.ResourcesCommon.Schema.Schemas.DesktopInfo.xsd";
+		public static readonly string LAUNCH_PARAMS_EXAMPLE_MINIMAL = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchParams.MinimalLaunchParams.xml";
+		public static readonly string LAUNCH_PARAMS_EXAMPLE_ABSOLUTE = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchParams.LaunchParamsAbsolute.xml";
+		public static readonly string LAUNCH_PARAMS_EXAMPLE_PERCENTAGE = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchParams.LaunchParamsPercentage.xml";
+		public static readonly string LAUNCH_PARAMS_EXAMPLE_SEAMLESS = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchParams.LaunchParamsSeamless.xml";
+		public static readonly string LAUNCH_DATA_EXAMPLE_FAIL = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchData.LaunchFailData.xml";
+		public static readonly string LAUNCH_DATA_EXAMPLE_FAIL_WITH_REMEDY_HINT = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchData.LaunchFailWithRemedyHintData.xml";
+		public static readonly string LAUNCH_DATA_EXAMPLE_RETRY = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchData.LaunchRetryData.xml";
+		public static readonly string LAUNCH_DATA_EXAMPLE_SUCCESS_ICA = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchData.LaunchIcaData.xml";
+		public static readonly string LAUNCH_DATA_EXAMPLE_SUCCESS_OTHER = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchData.LaunchOtherData.xml";
+		public static readonly string LAUNCH_DATA_EXAMPLE_SUCCESS_ICA_WITH_LAUNCH_TICKET = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.LaunchData.LaunchIcaDataWithLaunchTicket.xml";
+		public static readonly string MACHINE_POWER_OFF_PARAMS_EXAMPLE_MINIMAL = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.MachinePowerOffParams.MinimalParams.xml";
+		public static readonly string MACHINE_POWER_OFF_EXAMPLE_SUCCESS = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.MachinePowerOff.MachinePowerOffSuccess.xml";
+		public static readonly string MACHINE_POWER_OFF_EXAMPLE_ERROR = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.MachinePowerOff.MachinePowerOffError.xml";
+		public static readonly string ASSIGN_DESKTOP_PARAMS_EXAMPLE_MINIMAL = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.AssignDesktopParams.MinimalParams.xml";
+		public static readonly string ASSIGN_DESKTOP_EXAMPLE_SUCCESS = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.AssignDesktop.AssignDesktopSuccess.xml";
+		public static readonly string ASSIGN_DESKTOP_EXAMPLE_ERROR = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.AssignDesktop.AssignDesktopError.xml";
+		public static readonly string DESKTOP_INFO_EXAMPLE_SUCCESS_ASSIGNED = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.DesktopInfo.DesktopInfoAssigned.xml";
+		public static readonly string DESKTOP_INFO_EXAMPLE_SUCCESS_ASSIGN_ON_FIRST_USE = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.DesktopInfo.DesktopInfoAssignOnFirstUse.xml";
+		public static readonly string DESKTOP_INFO_EXAMPLE_SUCCESS_SHARED = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.DesktopInfo.DesktopInfoShared.xml";
+		public static readonly string RESOURCES_EXAMPLE_SIMPLE = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.Resources.Resources.xml";
+		public static readonly string RESOURCE_EXAMPLE_SIMPLE = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.Resources.Resource.xml";
+		public static readonly string RESOURCE_DOCUMENT_EXAMPLE_SIMPLE = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.Resources.ResourceDocument.xml";
+		public static readonly string SessionParametersWithOnlyClientName = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionParameters.Valid.SessionParametersWithOnlyClientName.xml";
+		public static readonly string SessionParametersComplete = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionParameters.Valid.CompleteSessionParameters.xml";
+		public static readonly string SessionParametersExtended = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionParameters.Valid.ExtendedSessionParameters.xml";
+		public static readonly string SessionParametersWithoutClientName = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionParameters.Invalid.SessionParametersWithoutClientName.xml";
+		public static readonly string SessionParametersWithInvalidIncludeActiveSessions = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionParameters.Invalid.SessionParametersWithInvalidIncludeActiveSessions.xml";
+		public static readonly string SessionParametersWithInvalidEmptyTicket = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionParameters.Invalid.SessionParametersWithInvalidEmptyTicket.xml";
+		public static readonly string SessionStateEmpty = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Valid.EmptySessionState.xml";
+		public static readonly string SessionStateComplete = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Valid.CompleteSessionState.xml";
+		public static readonly string SessionStateMethodWithoutUrl = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Invalid.SessionStateMethodWithoutUrl.xml";
+		public static readonly string SessionStateSessionWithoutId = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Invalid.SessionStateSessionWithoutId.xml";
+		public static readonly string SessionStateSessionWithoutServerType = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Invalid.SessionStateSessionWithoutServerType.xml";
+		public static readonly string SessionStateWithoutEnumerationAttribute = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Invalid.SessionStateWithoutEnumerationAttribute.xml";
+		public static readonly string SessionStateWithoutInitialApp = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionState.Invalid.SessionStateWithoutInitialApp.xml";
+		public static readonly string SuccessSessionResult = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionResult.Valid.SuccessSessionResult.xml";
+		public static readonly string SessionResultWithInvalidStatus = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionResult.Invalid.SessionResultWithInvalidStatus.xml";
+		public static readonly string SessionResultWithoutStatus = "Citrix.DeliveryServices.ResourcesCommon.Schema.Examples.SessionResult.Invalid.SessionResultWithoutStatus.xml";
+	
+
+//---------------------------------------------------------------------------------------------------
+
+public static class ErrorCodes
+	{
+		public const string DEFAULT_RESOURCE_ERROR_KEY = "ResourceError";
+		public const string APP_REMOVED_ERROR_KEY = "AppRemoved";
+		public const string NO_MORE_ACTIVE_SESSIONS_ERROR_KEY = "NoMoreActiveSessions";
+		public const string GENERAL_APP_LAUNCH_ERROR_KEY = "GeneralAppLaunchError";
+		public const string CREDENTIALS_MUST_CHANGE_ERROR_KEY = "CredentialsMustChange";
+		public const string GENERAL_CREDENTIALS_FAILURE_ERROR_KEY = "GeneralCredentialsFailure";
+		public const string INVALID_CREDENTIALS_ERROR_KEY = "InvalidCredentials";
+		public const string CREDENTIALS_EXPIRED_ERROR_KEY = "CredentialsExpired";
+		public const string ACCOUNT_LOCKED_OUT_ERROR_KEY = "AccountLockedOut";
+		public const string ACCOUNT_DISABLED_ERROR_KEY = "AccountDisabled";
+		public const string INVALID_LOGON_HOURS_ERROR_KEY = "InvalidLogonHours";
+		public const string NOT_LICENSED_ERROR_KEY = "NotLicensed";
+		public const string UNAVAILABLE_DESKTOP_ERROR_KEY = "UnavailableDesktop";
+		public const string COULD_NOT_CONNECT_TO_WORKSTATION_ERROR_KEY = "CouldNotConnectToWorkstation";
+		public const string WORKSTATION_IN_MAINTENANCE_ERROR_KEY = "WorkstationInMaintenance";
+		
+//---------------------------------------------------------------------------------------------------
+
+public static class ResourceAttributeNames
+	{
+		public const string AccessClientExtended = "Citrix.MPS.AccessClientExtended";
+		public const string ImageThumbprint = "Citrix.FullIconHash.Hmac";
+		public const string OriginalDescription = "Citrix.OriginalDesc";
+		public const string Keywords = "Citrix.Keywords";
+		public const string DesktopHostname = "Citrix.MPS.DesktopHostName";
+		public const string DesktopAssignmentType = "Citrix.MPS.DesktopAssignmentType";
+	}
+		
+//---------------------------------------------------------------------------------------------------
+
+public class ClaimsAuthRequiredAttribute : ActionFilterAttribute
+	{
+		public const string InvalidTokenReason = "invalidtoken";
+		public const string ExpiredReason = "expired";
+		public const string NotForThisServiceReason = "notforthisservice";
+		public const string NotTrustedReason = "nottrusted";
+		public const string TokenSignatureNotVerifiedReason = "tokenSignatureNotVerified";
+		public const string NoTokenReason = "notoken";
+		public const string PasswordClaimNotFoundReason = "passwordClaimNotFound";
+		public const string BadAccountReason = "badaccount";
+		public const string BadPasswordReason = "badpassword";
+		public const string InvalidAudienceReason = "invalidAudience";
+		public const string WrongClaims = "wrongclaims";
+		public const string InsufficientRights = "insufficientRights";
+		public const string GatewayClaimsInconsistentReason = "gatewayclaimsinconsistent";
+		public static readonly string AuthenticateHeaderName = "WWW-Authenticate";
+		public static readonly string AuthorizationHeaderName = "Authorization";
+		private static readonly Tracer Tracer = CitrixAuthTracer.Tracer;
+		public static readonly string CitrixAuthSchemeName = "CitrixAuth";
+		private static readonly int CitrixAuthSchemeNameLength = ClaimsAuthRequiredAttribute.CitrixAuthSchemeName.Length;
+		public static readonly string ClaimsPrincipalItemName = "Citrix.DeliveryServices.CurrentClaimsPrincipal";
+		public static readonly string DefaultTokenManagerKey = "TokenManager";
+		public static readonly string DefaultTokenServiceIdKey = "TokenServiceId";
+		public static readonly string DefaultServiceRootHintKey = "ServiceRootHint";
+		public static readonly string DefaultRequiredTokenTemplateKey = "ReqTokenTemplate";
+		
+//---------------------------------------------------------------------------------------------------
+
+public static class Assertion
+	{
+		private const int ExpectedNumberOfAssertions = 3;
+		private const string PrivateKeyAttributeName = "private-key";
+		private const string PrivateDataAttributeName = "private-data";
+		private const string RelyingPartyAttributeName = "relying-party";
+		private const string RequiredTokenTemplateAttributeName = "token-template";
+		private const string DeliveryServicesNamespace = "urn:citrix:delivery-services";
+		private const string SAML_PREFIX = "saml";
+		private const string SAML_NAMESPACE = "urn:oasis:names:tc:SAML:1.0:assertion";
+		private const string VALID_START = "NotBefore";
+		private const string VALID_END = "NotOnOrAfter";
+		private const string ISSUER = "Issuer";
+		private static readonly SerializePerformanceCounter SerializePerformanceCounter = new SerializePerformanceCounter();
+		private static readonly DeserializePerformanceCounter DeserializePerformanceCounter = new DeserializePerformanceCounter();
+		private static readonly string CONDITIONS_PATH = string.Format("/{0}:Assertion/{0}:Conditions", "saml");
+		private static readonly string AUDIENCE_RESTRICTION_PATH = string.Format("./{0}:AudienceRestrictionCondition/{0}:Audience", "saml");
+		private static readonly string ASSERTION_PATH = string.Format("/{0}:Assertion", "saml");
+		private static readonly string ATTRIBUTE_PATH = string.Format("/{0}:Assertion/{0}:AttributeStatement/{0}:Attribute", "saml");
+		private static readonly string SPECIFIC_ATTRIBUTE_PATH_FORMAT = Assertion.ATTRIBUTE_PATH + "[@AttributeName='{0}']";
+		private static readonly string ATTRIBUTE_VALUE_PATH = string.Format("./{0}:AttributeValue", "saml");
+
+//---------------------------------------------------------------------------------------------------
+
+public static class MPSAttributeName
+	{
+		public const string APP_DISPLAY_SIZE = "Citrix.MPS.AppDisplaySize";
+		public const string COLOR_DEPTH = "Citrix.MPS.ColorDepth";
+		public const string AUDIO_QUALITY = "Citrix.MPS.AudioQuality";
+		public const string ENCRYPTION = "Citrix.MPS.Encryption";
+		public const string SHOW_ON_DESKTOP = "Citrix.MPS.ShowOnDesktop";
+		public const string START_MENU_SHOW = "Citrix.MPS.StartMenu.Show";
+		public const string START_MENU_ROOT = "Citrix.MPS.StartMenu.Root";
+		public const string START_MENU_PATH = "Citrix.MPS.StartMenu.Path";
+		public const string PUBLISHER_NAME = "Citrix.MPS.PublisherName";
+		public const string SSL_ENABLED = "Citrix.MPS.SSLEnabled";
+		public const string REMOTE_ACCESS_ENABLED = "Citrix.MPS.RemoteAccessEnabled";
+		public const string COOKIES = "Citrix.MPS.Cookies";
+		public const string HOST_ID = "Citrix.MPS.HostId";
+		public const string HOST_ID_TYPE = "Citrix.MPS.HostId.Type";
+		public const string SESSION_ID = "Citrix.MPS.SessionId";
+		public const string SESSION_STATE = "Citrix.MPS.SessionState";
+		public const string SESSION_RESOURCE_TYPE = "Citrix.MPS.SessionResourceType";
+		public const string PLAYS_MIME_TYPE = "Citrix.MPS.PlaysMIMEType";
+		public const string PLAYS_FILE_EXTENSION = "Citrix.MPS.PlaysFileExtension";
+		public const string PLAYS_FILE_TYPE = "Citrix.MPS.PlaysFileType";
+		public const string APP_IS_DESKTOP = "Citrix.MPS.AppIsDesktop";
+		public const string FOLDER_HAS_DESKTOP = "Citrix.MPS.FolderHasDesktop";
+		public const string SEQUENCE_NUMBER = "Citrix.MPS.SequenceNumber";
+		public const string SERVER_TYPE = "Citrix.MPS.ServerType";
+		public const string ACCESS_CLIENT = "Citrix.MPS.AccessClient";
+		public const string RADE_INITIAL_APP = "Citrix.MPS.RadeInitialApp";
+		public const string RADE_EXTRA_CMD_LINE = "Citrix.MPS.RadeExtraCmdLine";
+		public const string RADE_RUN_SAFER_LEVEL = "Citrix.MPS.RadeRunSaferLevel";
+		public const string RADE_OFFLINE_MODE = "Citrix.MPS.RadeOfflineMode";
+		public const string RADE_LICENSE_TYPE = "Citrix.MPS.RadeLicenseType";
+		public const string DESKTOP_CAN_POWER_OFF = "Citrix.MPS.DesktopCanPowerOff";
+		public const string DESKTOP_ASSIGNMENT_TYPE = "Citrix.MPS.DesktopAssignmentType";
+		public const string DESKTOP_HOST_NAME = "Citrix.MPS.DesktopHostName";
+		public const string HAS_CLIENT_HOSTED_APPS = "Citrix.MPS.HasClientHostedApps";
+		public const string USE_RTWIMODE = "Citrix.MPS.UseRTWIMode";
+		public const string USE_CONNECTION_BAR = "Citrix.MPS.UseConnectionBar";
+		public const string INITIAL_APP_RESOURCE_ID = "Citrix.MPS.InitialAppResourceId";
+		public const string INITIAL_APP_RESOURCE_AGGREGATED = "Citrix.MPS.InitialAppResourceAggregated";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+	public static class MPSBehaviorName
+	{
+		public static readonly string LAUNCH = "Citrix.MPS.Launch";
+		public static readonly string SESSION_CONTROL = "Citrix.MPS.SessionControl";
+		public static readonly string DESKTOP_CONTROL = "Citrix.MPS.DesktopControl";
+		public static readonly string WORKFLOW = "Citrix.MPS.Workflow";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class MPSNamespacePrefix
+	{
+		public static readonly string APP = NamespacePrefix.MPS + "App";
+		public static readonly string DOC = NamespacePrefix.MPS + "Doc";
+		public static readonly string SESSION = NamespacePrefix.MPS + "Session";
+		public static readonly string CURRENT_SESSIONS = NamespacePrefix.MPS + "CurrentSessions";
+		public static readonly string DESKTOP = NamespacePrefix.MPS + "Desktop";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public class NFuseDtd
+	{
+		public const int currentVersionMajor = 5;
+		public const int currentVersionMinor = 7;
+		public const string Addresstype_no_change = "no-change";
+		public const string Addresstype_dot = "dot";
+		public const string Addresstype_dns = "dns";
+		public const string Addresstype_dot_port = "dot-port";
+		public const string Addresstype_dns_port = "dns-port";
+		public const string Addresstype_port = "port";
+		public const string Addresstype_uri = "uri";
+		public const string AppOnDesktop_value_true = "true";
+		public const string AppOnDesktop_value_false = "false";
+		public const string AppInStartmenu_value_true = "true";
+		public const string AppInStartmenu_value_false = "false";
+		public const string CGPAddress_wildcard = "*";
+		public const string ClientType_ica30 = "ica30";
+		public const string ClientType_rade = "rade";
+		public const string ClientType_rdp = "rdp";
+		public const string ClientType_viewsoft = "viewsoft";
+		public const string ClientType_content = "content";
+		public const string ClientType_all = "all";
+		public const string ConnectionType_tcp = "tcp";
+		public const string ConnectionType_ssl = "ssl";
+		public const string ConnectionType_socks = "socks";
+		public const string ConnectionType_http_tunnel = "http-tunnel";
+		public const string Credentials_type_upn = "UPN";
+		public const string Credentials_type_sam = "SAM";
+		public const string Credentials_type_sid = "SID";
+		public const string DataType_value_app = "app";
+		public const string DataType_value_server = "server";
+		public const string AppDataType_app = "app";
+		public const string AppDataType_session = "session";
+		public const string DesktopAssignmentType_assigned = "assigned";
+		public const string DesktopAssignmentType_shared = "shared";
+		public const string DesktopAssignmentType_assign_on_first_use = "assign-on-first-use";
+		public const string DesiredDetails_defaults = "defaults";
+		public const string DesiredDetails_icon = "icon";
+		public const string DesiredDetails_accessList = "access-list";
+		public const string DesiredDetails_fileType = "file-type";
+		public const string DesiredDetails_radeOfflineMode = "rade-offline-mode";
+		public const string DesiredDetails_permissions = "permissions";
+		public const string DesiredDetails_fullIconData = "full-icon-data";
+		public const string DesiredDetails_fullIconHash = "full-icon-hash";
+		public const string DesiredDetails_desktopInfo = "desktop-info";
+		public const string DesiredDetails_all = "all";
+		public const string DesiredInfo_userIdentity = "user-identity";
+		public const string Domain_type_NT = "NT";
+		public const string Domain_type_NDS = "NDS";
+		public const string Domain_type_UNIX = "UNIX";
+		public const string Encryption_minimum_true = "true";
+		public const string Encryption_minimum_false = "false";
+		public const string ErrorId_account_disabled = "account-disabled";
+		public const string ErrorId_account_locked_out = "account-locked-out";
+		public const string ErrorId_active_session_limit_reached = "active-session-limit-reached";
+		public const string ErrorId_bad_request = "bad-request";
+		public const string ErrorId_connection_refused = "connection-refused";
+		public const string ErrorId_disallowed = "disallowed";
+		public const string ErrorId_expired_credentials = "expired-credentials";
+		public const string ErrorId_failed_credentials = "failed-credentials";
+		public const string ErrorId_host_unreachable = "host-unreachable";
+		public const string ErrorId_invalid_logon_hours = "invalid-logon-hours";
+		public const string ErrorId_mfserver_overloaded = "mfserver-overloaded";
+		public const string ErrorId_must_change_credentials = "must-change-credentials";
+		public const string ErrorId_no_alt_address = "no-alt-address";
+		public const string ErrorId_no_available_workstation = "no-available-workstation";
+		public const string ErrorId_no_server = "no-server";
+		public const string ErrorId_not_found = "not-found";
+		public const string ErrorId_not_licensed = "not-licensed";
+		public const string ErrorId_not_trusted = "not-trusted";
+		public const string ErrorId_parser_error = "parser-error";
+		public const string ErrorId_resource_unavailable = "resource-unavailable";
+		public const string ErrorId_retry_required = "retry-required";
+		public const string ErrorId_service_unavailable = "service-unavailable";
+		public const string ErrorId_sid_enumeration_denied = "sid-enumeration-denied";
+		public const string ErrorId_sid_enumeration_failed = "sid-enumeration-failed";
+		public const string ErrorId_ticketing_disabled = "ticketing-disabled";
+		public const string ErrorId_unspecified = "unspecified";
+		public const string ErrorId_unsupported_address_type = "unsupported-address-type";
+		public const string ErrorId_unsupported_client_type = "unsupported-client-type";
+		public const string ErrorId_version_mismatch = "version-mismatch";
+		public const string ErrorId_workstation_in_maintenance = "workstation-in-maintenance";
+		public const string IconFormat_raw = "raw";
+		public const string MPSError_type_IMA = "IMA";
+		public const string MPSError_type_MFU = "MFU";
+		public const string Flags_alt_addr = "alt-addr";
+		public const string Flags_no_load_bias = "no-load-bias";
+		public const string Flags_multi_addr = "multi-addr";
+		public const string Password_encoding_cleartext = "cleartext";
+		public const string Password_encoding_ctx1 = "ctx1";
+		public const string Password_encoding_rsa56 = "rsa56";
+		public const string Password_encoding_rsa128 = "rsa128";
+		public const string PermissionId_machine_poweroff = "machine-poweroff";
+		public const string RemedyHint_restart_desktop = "restart-desktop";
+		public const string Settings_appisdisabled_true = "true";
+		public const string Settings_appisdisabled_false = "false";
+		public const string Settings_appisdesktop_true = "true";
+		public const string Settings_appisdesktop_false = "false";
+		public const string FileType_isdefault_true = "true";
+		public const string FileType_isdefault_false = "false";
+		public const string FileType_overwrite_true = "true";
+		public const string FileType_overwrite_false = "false";
+		public const string Scope_traverse_onelevel = "onelevel";
+		public const string Scope_traverse_subtree = "subtree";
+		public const string ServerAddress_protocol_ipv4 = "ipv4";
+		public const string ServerAddress_protocol_ipv6 = "ipv6";
+		public const string ServerType_win32 = "win32";
+		public const string ServerType_videoframe = "videoframe";
+		public const string ServerType_x = "x";
+		public const string ServerType_java = "java";
+		public const string ServerType_viewsoft = "viewsoft";
+		public const string ServerType_all = "all";
+		public const string ShowPasswordExpiryWarning_value_true = "true";
+		public const string ShowPasswordExpiryWarning_value_false = "false";
+		public const string SoundType_none = "none";
+		public const string SoundType_basic = "basic";
+		public const string SoundType_minimum_true = "true";
+		public const string SoundType_minimum_false = "false";
+		public const string VideoType_none = "none";
+		public const string VideoType_basic = "basic";
+		public const string VideoType_minimum_true = "true";
+		public const string VideoType_minimum_false = "false";
+		public const string WinType_pixels = "pixels";
+		public const string WinType_percent = "percent";
+		public const string WinType_seamless = "seamless";
+		public const string WinType_fullscreen = "fullscreen";
+		public const string RadeOfflineMode_none = "none";
+		public const string RadeOfflineMode_immediate = "immediate";
+		public const string RadeOfflineMode_launch = "launch";
+		public const string RadeLicenseType_online = "online";
+		public const string RadeLicenseType_offline = "offline";
+		public const string RadeLicenseType_online_streaming = "online-streaming";
+		public const string RadeLicenseType_offline_streaming = "offline-streaming";
+		public const string LeasingStatus_working = "working";
+		public const string LeasingStatus_leasing = "leasing";
+		public const string LeasingStatus_pendingfailed = "pending-failed";
+		public const string LeasingStatus_failed = "failed";
+		public static readonly string Encryption_basic = EncryptionLevel.BASIC.ToString();
+		public static readonly string Encryption_rc5_login = EncryptionLevel.RC5_LOGIN.ToString();
+		public static readonly string Encryption_rc5_40 = EncryptionLevel.RC5_40.ToString();
+		public static readonly string Encryption_rc5_56 = EncryptionLevel.RC5_56.ToString();
+		public static readonly string Encryption_rc5_128 = EncryptionLevel.RC5_128.ToString();
+		public static readonly string Encryption_SSL = "SSL";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public class TransactionStatusException : XmlClientException, ResolvableException
+	{
+		private const string MSGPREFIX_TRANS_STATUS_EXCEPTION = "TransactionStatusException.";
+		private const string MSGKEY_IMAERROR = "TransactionStatusException.IMAError";
+		public const string RETRY_DELAY_HINT = "RetryDelayHint";
+		public const string RETRY_REASON = "RetryReason";
+		public const string RETRY_KEY = "RetryKey";
+		public const string ErrorId_ChangePasswordOldInvalid = "ChangePasswordOldInvalid";
+		public const string ErrorId_ChangePasswordNewInvalid = "ChangePasswordNewInvalid";
+		public const string ErrorId_ChangePasswordFailed = "ChangePasswordFailed";
+		public const string ErrorId_CharlotteErrorBadCredentials = "CharlotteErrorBadCredentials";
+		public const string ErrorId_CharlotteErrorInvalidLogonHours = "CharlotteErrorInvalidLogonHours";
+		public const string ErrorId_CharlotteErrorAccountDisabled = "CharlotteErrorAccountDisabled";
+		public const string ErrorId_CharlotteErrorAccountLockedOut = "CharlotteErrorAccountLockedOut";
+		public const string ErrorId_CharlotteErrorCredentialsMustChange = "CharlotteErrorCredentialsMustChange";
+		public const string ErrorId_CharlotteErrorCredentialsExpired = "CharlotteErrorCredentialsExpired";
+		public const string ErrorId_RetryRequired = "RetryRequired";
+		public const string ErrorId_ActiveSessionLimitReached = "ActiveSessionLimitReached";
+		public const string ErrorId_NotPermitted = "OperationNotPermitted";
+		public const string ErrorId_NoMachine = "NoMachineFoundForUser";
+		public const string ErrorId_NotFound = "ResourceNotFound";
+		public const string ErrorId_OperationInProgress = "OperationInProgress";
+		public const string ErrorId_ResourceUnavailable = "ResourceUnavailable";
+		public const string ErrorId_AccessDenied = "AccessDeniedToUser";
+		public const string ErrorId_UnsupportedClientType = "UnsupportedClientType";
+		public const string ErrorId_ChangePasswordConsistencyCheck = "ChangePasswordConsistencyCheck";
+		public const string ErrorId_CharlotteErrorUnspecified = "CharlotteErrorUnspecified";
+		public const string ErrorId_CharlotteErrorNoAlternateAddress = "CharlotteErrorNoAlternateAddress";
+		public const string ErrorId_CharlotteAppHostUnreachable = "CharlotteAppHostUnreachable";
+		public const string ErrorId_WorkspaceControlNotTrusted = "WorkspaceControlNotTrusted";
+		public const string ErrorId_NotLicensed = "NotLicensed";
+		public const string ErrorId_CharlotteMFServerOverloaded = "CharlotteMFServerOverloaded";
+		public const string ErrorId_TicketingDisabled = "TicketingDisabled";
+		public const string ErrorId_Disallowed = "Disallowed";
+		public const string ErrorId_NotRegistered = "NotRegistered";
+		public const string ErrorId_IMAError = "IMAError";
+		public const string ErrorId_UnsupportedAddressType = "UnsupportedAddressType";
+		public const string ErrorId_NoAvailableWorkstation = "NoAvailableWorkstation";
+		public const string ErrorId_ConnectionRefused = "ConnectionRefused";
+		public const string ErrorId_SidEnumerationDenied = "SidEnumerationDenied";
+		public const string ErrorId_SidEnumerationFailed = "SidEnumerationFailed";
+		public const string ErrorId_WorkstationInMaintenance = "WorkstationInMaintenance";
+		public const string ErrorId_NotSupported = "OperationNotSupported";
+		public const string ErrorId_TimedOut = "ServerTimedOut";
+		public const string ErrorId_WorkstationInMaintenancePowerOff = "WorkstationInMaintenancePowerOff";
+		public const string ErrorId_UserNotFound = "UserNotFound";
+
+//---------------------------------------------------------------------------------------------------
+
+public class WireException : XmlClientException
+	{
+		private const string UnknownRequestClass = "[UnknownRequest]";
+		private const string MSGPREFIX_WIRE_EXCEPTION = "WireException.";
+		public const string ErrorId_ServerReadError = "ServerReadError";
+		public const string ErrorId_ServerWriteError = "ServerWriteError";
+		public const string ErrorId_ConnectionRefused = "ConnectionRefused";
+		public const string ErrorId_UnknownHost = "UnknownHost";
+		public const string ErrorId_BadHTTPSyntax = "BadHTTPSyntax";
+		public const string ErrorId_BadCharlotteSyntax = "BadCharlotteSyntax";
+		public const string ErrorId_PrematurePacketEnd = "PrematurePacketEnd";
+		public const string ErrorId_HttpErrorPacket = "HttpErrorPacket";
+		public const string ErrorId_CharlotteErrorNoServerAvailable = "CharlotteErrorNoServerAvailable";
+		public const string ErrorId_CharlotteErrorOther = "CharlotteErrorOther";
+		public const string ErrorId_CharlotteErrorVersionMismatch = "CharlotteErrorVersionMismatch";
+		public const string ErrorId_CharlotteErrorBadRequest = "CharlotteErrorBadRequest";
+		public const string ErrorId_CharlotteErrorParserError = "CharlotteErrorParserError";
+		public const string ErrorId_CharlotteErrorServiceUnavailable = "CharlotteErrorServiceUnavailable";
+		public const string ErrorId_HttpErrorPacket404 = "HttpErrorPacket404";
+		public const string ErrorId_HttpErrorPacket405 = "HttpErrorPacket405";
+		public const string ErrorId_HttpErrorPacket406 = "HttpErrorPacket406";
+		public const string ErrorId_HttpErrorPacket411 = "HttpErrorPacket411";
+		public const string ErrorId_HttpErrorPacket409 = "HttpErrorPacket409";
+		public const string ErrorId_HttpErrorPacket413 = "HttpErrorPacket413";
+		public const string ErrorId_HttpErrorPacket503 = "HttpErrorPacket503";
+		public const string ErrorId_XmlParserErrorBadXml = "XmlParserErrorBadXml";
+		public const string ErrorId_XmlParserErrorGeneric = "XmlParserErrorGeneric";
+		public const string ErrorId_XmlParserErrorNoDtd = "XmlParserErrorNoDtd";
+		public const string ErrorId_ServerReadErrorSsl = "ServerReadErrorSsl";
+		public const string ErrorId_ConnectionFailedSsl = "ConnectionFailedSsl";
+		public const string ErrorId_NFuseServerLowerVersion = "NFuseServerLowerVersion";
+		public const string ErrorId_UnknownRelayServer = "UnknownRelayServer";
+		public const string ErrorId_SslErrorGeneralError = "SslErrorGeneralError";
+		public const string ErrorId_SocksErrorGeneralError = "SocksErrorGeneralError";
+		public const string ErrorId_CapabilityNotSupported = "CapabilityNotSupported";
+		
+//---------------------------------------------------------------------------------------------------
+
+public class ICAConstants
+	{
+		public static readonly string SECTION_ENCODING = "Encoding";
+		public static readonly string SECTION_WFCLIENT = "WFClient";
+		public static readonly string SECTION_APPSERVERS = "ApplicationServers";
+		public static readonly string SECTION_APPLICATION = "_$_APPNAME_$_";
+		public static readonly string VALNAME_INPUTENCODING = "InputEncoding";
+		public static readonly string VALNAME_ADDRESS = "Address";
+		public static readonly string VALNAME_FONT_SMOOTHING_TYPE = "FontSmoothingType";
+		public static readonly string VALNAME_USERNAME = "Username";
+		public static readonly string VALNAME_TWI_DISABLE_SESSION_SHARING = "TWIDisableSessionSharing";
+		public static readonly string VALNAME_ENABLE_SESSION_SHARING = "EnableSessionSharing";
+		public static readonly string VALNAME_DOMAIN = "Domain";
+		public static readonly string VALNAME_CLEAR_PASSWORD = "ClearPassword";
+		public static readonly string VALNAME_PASSWORD = "Password";
+		public static readonly string VALNAME_LOGON_TICKET = "LogonTicket";
+		public static readonly string VALNAME_LOGON_TICKET_TYPE = "LogonTicketType";
+		public static readonly string VALNAME_LAUNCH_REFERENCE = "LaunchReference";
+		public static readonly string VALNAME_CLIENT_NAME = "ClientName";
+		public static readonly string VALNAME_DESIRED_COLOR = "DesiredColor";
+		public static readonly string VALNAME_DESIRED_H_RES = "DesiredHRES";
+		public static readonly string VALNAME_DESIRED_V_RES = "DesiredVRES";
+		public static readonly string VALNAME_SCREEN_PERCENT = "ScreenPercent";
+		public static readonly string VALNAME_TWI_MODE = "TWIMode";
+		public static readonly string VALNAME_CLIENT_AUDIO = "ClientAudio";
+		public static readonly string VALNAME_AUDIO_BANDWIDTH_LIMIT = "AudioBandwidthLimit";
+		public static readonly string VALNAME_LONG_COMMAND_LINE = "LongCommandLine";
+		public static readonly string VALNAME_ENCRYPTION_SESSION_LEVEL = "EncryptionLevelSession";
+		public static readonly string VALNAME_SSL_ENABLE = "SSLEnable";
+		public static readonly string VALNAME_SSL_PROXY_HOST = "SSLProxyHost";
+		public static readonly string VALNAME_BROWSER_PROTOCOL = "BrowserProtocol";
+		public static readonly string VALNAME_HTTP_BROWSER_ADDRESS = "HTTPBrowserAddress";
+		public static readonly string VALNAME_SSL_CIPHERS = "SSLCiphers";
+		public static readonly string VALNAME_SECURE_CHANNEL_PROTOCOL = "SecureChannelProtocol";
+		public static readonly string VALNAME_PROXY_TYPE = "ProxyType";
+		public static readonly string VALNAME_PROXY_HOST = "ProxyHost";
+		public static readonly string VALNAME_PROXY_AUTO_CONFIG_URL = "ProxyAutoConfigURL";
+		public static readonly string VALNAME_ICA_SOCKS_PROXY_HOST = "ICASOCKSProxyHost";
+		public static readonly string VALNAME_ICA_SOCKS_PROXY_PORT_NUMBER = "ICASOCKSProxyPortNumber";
+		public static readonly string VALNAME_ICA_SOCKS_PROTOCOL_VERSION = "ICASOCKSProtocolVersion";
+		public static readonly string VALNAME_CGP_ADDRESS = "CGPAddress";
+		public static readonly string VALNAME_CGP_SECURITY_TICKET = "CGPSecurityTicket";
+		public static readonly string VALNAME_USE_LOCAL_USER_AND_PASSWORD = "UseLocalUserAndPassword";
+		public static readonly string VALNAME_INITIAL_PROGRAM = "InitialProgram";
+		public static readonly string VALNAME_TRANSPORT_RECONNECT_ENABLED = "TransportReconnectEnabled";
+		public static readonly string VALNAME_SESSIONSHARING_KEY = "SessionsharingKey";
+		public static readonly string VALNAME_COM_ALLOWED = "COMAllowed";
+		public static readonly string VALNAME_CPM_ALLOWED = "CPMAllowed";
+		public static readonly string VALNAME_VSL_ALLOWED = "VSLAllowed";
+		public static readonly string VALNAME_DISABLE_CTRL_ALT_DEL = "DisableCtrlAltDel";
+		public static readonly string VALNAME_SSPI_ENABLED = "UseSSPIOnly";
+		public static readonly string VALNAME_VIRTUAL_COM_PORT = "VirtualCOMPortEmulation";
+		public static readonly string VALNAME_TRANSPARENT_KEY_PASSTHROUGH = "TransparentKeyPassthrough";
+		public static readonly string VALNAME_TRANSPORT_DRIVER = "TransportDriver";
+		public static readonly string VALNAME_UILOCALE = "UILocale";
+		public static readonly string VALNAME_SPECIAL_FOLDER_REDIRECTION = "SFRAllowed";
+		public static readonly string VALNAME_CONNECTION_BAR = "ConnectionBar";
+		public static readonly string VALNAME_DESKTOP_RESTART_ALLOWED = "DesktopRestartAllowed";
+		public static readonly string VALNAME_TITLE = "Title";
+		public static readonly string VALNAME_RTWI_MODE = "RTWIMode";
+		public static readonly string VALNAME_CLIENT_HOSTED_APPS = "ClientHostedApps";
+		public static readonly string VALNAME_LAUNCHER = "Launcher";
+		public static readonly string VALNAME_AUTOLOGON_ALLOWED = "AutologonAllowed";
+		public static readonly string VALNAME_WEB_SOCKET_PORT = "WebSocketPort";
+		public static readonly string VALUE_PROXY_AUTO = "Auto";
+		public static readonly string VALUE_PROXY_WPAD = "Wpad";
+		public static readonly string VALUE_PROXY_NONE = "None";
+		public static readonly string VALUE_PROXY_HTTPS = "Secure";
+		public static readonly string VALUE_PROXY_SOCKS = "Socks";
+		public static readonly string VALUE_PROXY_SCRIPT = "Script";
+		public static readonly string VALUE_ENCRYPTION_LEVEL_RC5_128 = "EncRC5-128";
+		public static readonly string VALUE_ENCRYPTION_LEVEL_RC5_56 = "EncRC5-56";
+		public static readonly string VALUE_ENCRYPTION_LEVEL_RC5_40 = "EncRC5-40";
+		public static readonly string VALUE_ENCRYPTION_LEVEL_RC5_AUTH = "EncRC5-0";
+		public static readonly string VALUE_ENCRYPTION_LEVEL_NONE = "NoEncrypt";
+		public static readonly string VALUE_SESSION_KEY_ENC_RC5_128 = "rc5-128";
+		public static readonly string VALUE_SESSION_KEY_ENC_RC5_56 = "rc5-56";
+		public static readonly string VALUE_SESSION_KEY_ENC_RC5_40 = "rc5-40";
+		public static readonly string VALUE_SESSION_KEY_ENC_RC5_LOGIN = "rc5-login";
+		public static readonly string VALUE_SESSION_KEY_ENC_BASIC = "basic";
+		public static readonly string VALUE_BROWSER_PROTOCOL_HTTPONTCP = "HTTPonTCP";
+		public static readonly string VALUE_HTTP_BROWSER_ADDRESS_DISABLE = "!";
+		public static readonly string VALUE_SECURE_CHANNEL_CIPHER_GOV = "GOV";
+		public static readonly string VALUE_SECURE_CHANNEL_CIPHER_COM = "COM";
+		public static readonly string VALUE_SECURE_CHANNEL_CIPHER_ALL = "all";
+		public static readonly string VALUE_SECURE_CHANNEL_PROTOCOL_TLS = "TLS";
+		public static readonly string VALUE_SECURE_CHANNEL_PROTOCOL_SSL = "SSL";
+		public static readonly string VALUE_SECURE_CHANNEL_PROTOCOL_DETECT = "Detect";
+		public static readonly string VALUE_AUDIO_HIGH_QUALITY = "0";
+		public static readonly string VALUE_AUDIO_MEDIUM_QUALITY = "1";
+		public static readonly string VALUE_AUDIO_LOW_QUALITY = "2";
+		public static readonly string VALUE_KEYPASSTHROUGH_LOCAL = "Local";
+		public static readonly string VALUE_KEYPASSTHROUGH_REMOTE = "Remote";
+		public static readonly string VALUE_KEYPASSTHROUGH_FULLSCREENONLY = "FullScreenOnly";
+		public static readonly string VALUE_TRANSPORT_DRIVER_TCPIP = "TCP/IP";
+		public static readonly string VALUE_SESSION_KEY_AUDIO_HIGH = "high";
+		public static readonly string VALUE_SESSION_KEY_AUDIO_MEDIUM = "medium";
+		public static readonly string VALUE_SESSION_KEY_AUDIO_LOW = "low";
+		public static readonly string VALUE_SESSION_KEY_AUDIO_OFF = "none";
+		public static readonly string VALUE_ICA_SOCKS_PROTOCOL_VERSION = "0";
+		public static readonly string VALUE_FULL_SCREEN = "4294967295";
+		public static readonly string VALUE_ON = "On";
+		public static readonly string VALUE_OFF = "Off";
+		public static readonly string VALUE_CONNECTION_BAR_ENABLED = "1";
+		public static readonly string VALUE_RESTART_ENABLED = "1";
+		
+
+//---------------------------------------------------------------------------------------------------
+
+public static class AttributeName
+	{
+		public const string ID = "Citrix.Id";
+		public const string AGGREGATION_ID = "Citrix.AggregationId";
+		public const string DISPLAY_PATH = "Citrix.DisplayPath";
+		public const string DISPLAY_NAME = "Citrix.DisplayName";
+		public const string DISPLAY_ICON = "Citrix.DisplayIcon";
+		public const string MULTI_IMAGE_ICON = "Citrix.MultiImageIcon";
+		public const string MULTI_IMAGE_ICON_INFO = "Citrix.MultiImageIconInfo";
+		public const string FULL_ICON_HASH = "Citrix.FullIconHash";
+		public const string FULL_ICON_DATA = "Citrix.FullIconData";
+		public const string DESCRIPTION = "Citrix.Description";
+		public const string NAME_OF_SOURCE = "Citrix.NameOfSource";
+		public const string TYPE_OF_SOURCE = "Citrix.TypeOfSource";
+		public const string AGGREGATION_GROUP = "Citrix.AggregationGroup";
+		public const string ACTIVE_SESSION_BEHAVIOUR = "Citrix.PreserveActiveSession";
+		public const string ID_AT_SOURCE = "Citrix.IdAtSource";
+		public const string ACCESS_URL = "Citrix.AccessURL";
+		public const string ENABLED = "Citrix.Enabled";
+		public const string RESOURCE_TYPE = "Citrix.ResourceType";
+		public const string KEYWORDS = "Citrix.Keywords";
+		public const string ORIGINALDESCRIPTION = "Citrix.OriginalDesc";
+		public const string PROPERTIES = "Citrix.Properties";
+		public const string AUTO_PROVISIONED = "Citrix.IsAutoProvisioned";
+		public const string MANDATORY = "Citrix.IsMandatory";
+		public const string TREAT_AS_APP = "Citrix.TreatAsApp";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public static class MPSResourceType
+	{
+		public const string APPLICATION = "Citrix.MPS.Application";
+		public const string DOCUMENT = "Citrix.MPS.Document";
+		public const string SESSION = "Citrix.MPS.Session";
+		public const string CURRENT_SESSIONS = "Citrix.MPS.CurrentSessions";
+		public const string DESKTOP = "Citrix.MPS.Desktop";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------------------------
+
+public static class ExplicitFormsMessages
+	{
+		public static readonly string BaseName = "ExplicitFormsCommon";
+		public static readonly string ResourceBundle = ExplicitFormsMessages.BaseName + ":";
+		public static readonly string UsernameLabelKey = ExplicitFormsMessages.ResourceBundle + "UsernameLabel";
+		public static readonly string DomainUserLabelKey = ExplicitFormsMessages.ResourceBundle + "DomainUserLabel";
+		public static readonly string PasswordLabelKey = ExplicitFormsMessages.ResourceBundle + "PasswordLabel";
+		public static readonly string DomainLabelKey = ExplicitFormsMessages.ResourceBundle + "DomainLabel";
+		public static readonly string SaveCredentialsLabelKey = ExplicitFormsMessages.ResourceBundle + "SaveCredentialsLabel";
+		public static readonly string LoginButtonTextKey = ExplicitFormsMessages.ResourceBundle + "LoginButtonText";
+		public static readonly string OldPasswordLabelKey = ExplicitFormsMessages.ResourceBundle + "OldPasswordLabel";
+		public static readonly string NewPasswordLabelKey = ExplicitFormsMessages.ResourceBundle + "NewPasswordLabel";
+		public static readonly string ConfirmPasswordLabelKey = ExplicitFormsMessages.ResourceBundle + "ConfirmPasswordLabel";
+		public static readonly string DomainUserAssistiveTextKey = ExplicitFormsMessages.ResourceBundle + "DomainUserAssistiveText";
+		public static readonly string ChangePasswordHeadingKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordHeadingText";
+		public static readonly string ChangeExpiredPasswordHeadingKey = ExplicitFormsMessages.ResourceBundle + "ChangeExpiredPasswordHeadingText";
+		public static readonly string ChangeExpiredPasswordInfoKey = ExplicitFormsMessages.ResourceBundle + "MustChangeExpiredPasswordInfoText";
+		public static readonly string ChangePasswordInfoKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordInfoText";
+		public static readonly string ChangePasswordButtonTextKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordButtonText";
+		public static readonly string ChangePasswordFailedErrorTextKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordFailedErrorText";
+		public static readonly string ChangePasswordMismatchErrorTextKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordConfirmDifferentErrorText";
+		public static readonly string ChangePasswordConfirmButtonTextKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordConfirmButtonText";
+		public static readonly string ChangePasswordConfirmTextKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordConfirmText";
+		public static readonly string LoginFailedErrorTextKey = ExplicitFormsMessages.ResourceBundle + "LoginFailedErrorText";
+		public static readonly string CancelButtonTextKey = ExplicitFormsMessages.ResourceBundle + "CancelButtonText";
+		public static readonly string FailureMessageConfirmButtonTextKey = ExplicitFormsMessages.ResourceBundle + "FailureMessageConfirmButtonText";
+		public static readonly string NotPossibleToChangeBlankPasswordTextKey = ExplicitFormsMessages.ResourceBundle + "NotPossibleToChangeBlankPasswordText";
+		public static readonly string ElectiveChangePasswordRequiresPasswordKey = ExplicitFormsMessages.ResourceBundle + "ElectiveChangePasswordRequiresPassword";
+		public static readonly string MissingRequiredFieldsKey = ExplicitFormsMessages.ResourceBundle + "MissingRequiredFields";
+		public static readonly string ChangePasswordLogicErrorWrongExplicitBLKey = ExplicitFormsMessages.ResourceBundle + "ChangePasswordLogicErrorWrongExplicitBL";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public class FormsParser
+	{
+		public const string NsMgrPrefix = "ag";
+		public const string AuthResponseTag = "AuthenticateResponse";
+		public const string AuthResponseElement = "/ag:AuthenticateResponse";
+		public const string StatusTag = "Status";
+		public const string StatusElement = "/ag:Status";
+		public const string ResultTag = "Result";
+		public const string ResultElement = "/ag:Result";
+		public const string StateContextTag = "StateContext";
+		public const string StateContextElement = "/ag:StateContext";
+		public const string LogMessageTag = "LogMessage";
+		public const string LogMessageElement = "/ag:LogMessage";
+		public const string CredentialUpdateInfoListTag = "CredentialUpdateInformationList";
+		public const string CredentialUpdateInfoListElement = "/ag:CredentialUpdateInformationList";
+		public const string CredentialUpdateInfoTag = "CredentialUpdateInformation";
+		public const string CredentialUpdateInfoElement = "/ag:CredentialUpdateInformation";
+		public const string CredentialDisplayNameTag = "CredentialDisplayName";
+		public const string CredentialDisplayNameElement = "/ag:CredentialDisplayName";
+		public const string AuthenticationInfoIdTag = "AuthenticationInfoId";
+		public const string AuthenticationInfoIdElement = "/ag:AuthenticationInfoId";
+		public const string ExpiryTimeTag = "ExpiryTime";
+		public const string ExpiryTimeElement = "/ag:ExpiryTime";
+		public const string TimeRemainingTag = "TimeRemaining";
+		public const string TimeRemainingElement = "/ag:TimeRemaining";
+		public const string CredentialUpdateServiceTag = "CredentialUpdateService";
+		public const string CredentialUpdateServiceElement = "/ag:CredentialUpdateService";
+		public const string AuthRequirementsTag = "AuthenticationRequirements";
+		public const string AuthRequirementsElement = "/ag:AuthenticationRequirements";
+		public const string PostBackTag = "PostBack";
+		public const string PostBackElement = "/ag:PostBack";
+		public const string CancelPostBackTag = "CancelPostBack";
+		public const string CancelPostBackElement = "/ag:CancelPostBack";
+		public const string CancelButtonTextTag = "CancelButtonText";
+		public const string CancelButtonTextElement = "/ag:CancelButtonText";
+		public const string TimeoutTag = "Timeout";
+		public const string TimeoutElement = "/ag:Timeout";
+		public const string RequirementsTag = "Requirements";
+		public const string RequirementsElement = "/ag:Requirements";
+		public const string RequirementTag = "Requirement";
+		public const string RequirementElement = "/ag:Requirement";
+		public const string CredentialTag = "Credential";
+		public const string CredentialElement = "/ag:Credential";
+		public const string IdTag = "ID";
+		public const string IdElement = "/ag:ID";
+		public const string SaveIdTag = "SaveID";
+		public const string SaveIdElement = "/ag:SaveID";
+		public const string TypeTag = "Type";
+		public const string TypeElement = "/ag:Type";
+		public const string LabelTag = "Label";
+		public const string LabelElement = "/ag:Label";
+		public const string HighlightFieldsTag = "HighlightFields";
+		public const string HighlightFieldsElement = "/ag:HighlightFields";
+		public const string CredentialIdTag = "CredentialID";
+		public const string CredentialIdElement = "/ag:CredentialID";
+		public const string TextTag = "Text";
+		public const string TextElement = "/ag:Text";
+		public const string BinaryTag = "Binary";
+		public const string BinaryElement = "/ag:Binary";
+		public const string InputTag = "Input";
+		public const string InputElement = "/ag:Input";
+		public const string AssistiveTextTag = "AssistiveText";
+		public const string AssistiveTextElement = "/ag:AssistiveText";
+		public const string SecretTag = "Secret";
+		public const string SecretElement = "/ag:Secret";
+		public const string ReadOnlyTag = "ReadOnly";
+		public const string ReadOnlyElement = "/ag:ReadOnly";
+		public const string InitialValueTag = "InitialValue";
+		public const string InitialValueElement = "/ag:InitialValue";
+		public const string ConstraintTag = "Constraint";
+		public const string ConstraintElement = "/ag:Constraint";
+		public const string RadioButtonTag = "RadioButton";
+		public const string RadioButtonElement = "/ag:RadioButton";
+		public const string InitialSelectionTag = "InitialSelection";
+		public const string InitialSelectionElement = "/ag:InitialSelection";
+		public const string DisplayValuesTag = "DisplayValues";
+		public const string DisplayValuesElement = "/ag:DisplayValues";
+		public const string DisplayValueTag = "DisplayValue";
+		public const string DisplayValueElement = "/ag:DisplayValue";
+		public const string DisplayTag = "Display";
+		public const string DisplayElement = "/ag:Display";
+		public const string ValueTag = "Value";
+		public const string ValueElement = "/ag:Value";
+		public const string ComboBoxTag = "ComboBox";
+		public const string ComboBoxElement = "/ag:ComboBox";
+		public const string MultiComboBoxTag = "MultiComboBox";
+		public const string MultiComboBoxElement = "/ag:MultiComboBox";
+		public const string SelectTag = "Select";
+		public const string SelectElement = "/ag:Select";
+		public const string ButtonTag = "Button";
+		public const string ButtonElement = "/ag:Button";
+		public const string CheckBoxTag = "CheckBox";
+		public const string CheckBoxElement = "/ag:CheckBox";
+		
+//---------------------------------------------------------------------------------------------------
+
+public class FormsElements
+	{
+		public const string FormsProtocolXmlNamespaceV1 = "http://citrix.com/authentication/response/1";
+		public const string FormsProtocolContentType = "application/vnd.citrix.authenticateresponse-1+xml";
+		public const string StatusSuccess = "success";
+		public const string StatusErrorParamsNotExpected = "error-params-not-expected";
+		public const string StatusErrorSessionInvalid = "error-sessionid-invalid";
+		public const string StatusErrorInternalFailure = "error-internal-failure";
+		public const string StatusErrorBadRequest = "error-bad-request";
+		public const string ResultSuccess = "success";
+		public const string ResultFail = "fail";
+		public const string ResultCancelled = "cancelled";
+		public const string ResultMoreInfo = "more-info";
+		public const string ResultUpdateCredentials = "update-credentials";
+		public const string CredentialTypeNone = "none";
+		public const string CredentialTypeUserName = "username";
+		public const string CredentialTypeDomain = "domain";
+		public const string CredentialTypePassword = "password";
+		public const string CredentialTypeNewPassword = "newpassword";
+		public const string CredentialTypePasscode = "passcode";
+		public const string CredentialTypeSaveCredentials = "savecredentials";
+		public const string CredentialTypeTextCredential = "textcredential";
+		public const string CredentialTypeX509 = "x509";
+		public const string LabelTypeNone = "none";
+		public const string LabelTypePlain = "plain";
+		public const string LabelTypeHeading = "heading";
+		public const string LabelTypeInformation = "information";
+		public const string LabelTypeWarning = "warning";
+		public const string LabelTypeError = "error";
+		public const string LabelTypeConfirmation = "confirmation";
+		public const string LabelTypeImage = "image";
+	}
+
+//---------------------------------------------------------------------------------------------------
+
+public class CitrixAGBasicForbiddenActionResult : HttpStatusActionResult
+	{
+		public const string ReasonHeaderName = "X-Citrix-SSOFailure-Reason";
+		public const string WrongAuthenticationScheme = "WrongAuthenticationScheme";
+		public const string MissingRequiredAuthorizationHeaderKey = "MissingRequiredAuthorizationHeaderKey";
+		public const string UnexpectedAuthorizationHeaderParameter = "UnexpectedAuthorizationHeaderParameter";
+		public const string EmptyUsername = "EmptyUsername";
+		public const string Unknown = "Unknown";
+		public const string BadCredentials = "BadCredentials";
+		public const string WebServiceCallbackFailed = "WebServiceCallbackFailed";
+		public const string WebServiceCommsFailed = "WebServiceCommsFailed";
+		public const string GatewayNotFound = "GatewayNotFound";
+		public const string GatewayMisconfigured = "GatewayMisconfigured";
+
+//---------------------------------------------------------------------------------------------------

@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户登录</title>
+    <meta charset="utf-8" />
+
+    <style>
+            html {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background: url('img/bg.png') no-repeat center center fixed;
+                background-size: 100% 100%;
+                font-family: Arial,'Microsoft YaHei';
+                font-size: small;
+                color: white;
+            }
+
+            .headline {
+                position: relative;
+                width: 100%;
+                height: 9%;
+                min-height: 60px;
+                background-color: rgba(255,255,255,0.2);
+            }
+
+            .logo {
+                position: absolute;
+                width: 8%;
+                height: 62%;
+                top: 0;
+                bottom: 0;
+                left: 8%;
+                margin: auto;
+                background: url('img/logo_03.png') no-repeat;
+                background-size: 100% 100%;
+            }
+
+            .subbody {
+                min-height: 100%;
+                height: auto !important;
+                height: 100%;
+                margin: 0 0 -60px 0;
+            }
+
+            .footcname {
+                clear: both;
+                height: 60px;
+                line-height: 60px;
+                text-align: center;
+                font-size: small;
+            }
+
+            .hr {
+                position: relative;
+                margin-top: 4%;
+                height: 0;
+                overflow: visible;
+            }
+
+            .lbuseraction {
+                position: absolute;
+                font-size: xx-large;
+                width: 20%;
+                height: 56px;
+                line-height: 56px;
+                text-align: center;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            .hrleft {
+                height: 0;
+                border-top: thin solid #006A9B;
+                width: 40%;
+                float: left;
+            }
+
+            .hrright {
+                height: 0;
+                border-top: thin solid #006A9B;
+                width: 40%;
+                float: right;
+            }
+
+            .loginbody {
+                clear: both;
+                padding: 3% 0;
+            }
+
+            .loginpanel {
+                width: 26%;
+                min-width: 320px;
+                height: 100%;
+                margin: auto;
+                padding: 2%;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(240,240,240,0.1);
+                border-radius: 4px;
+            }
+
+            .loginform {
+                height: 100%;
+            }
+
+                .loginform .fline {
+                    margin-bottom: 4%;
+                    text-align: center;
+                    width: 100%;
+                }
+
+                .loginform .lbl {
+                    display: inline-block;
+                    font-weight: 300;
+                }
+
+                .loginform .fline .txt {
+                    width: 62%;
+                    height: 24px;
+                    background-color: rgba(196,214,228,0.8);
+                    border: thin solid transparent;
+                    border-radius: 2px;
+                    color: #F8F8FF;
+                    font-size: medium;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+
+                    .loginform .fline .txt:-moz-placeholder { 
+                        color: #23597B;
+                        font-size: smaller;
+                        opacity: .6;
+                    }
+
+                    .loginform .fline .txt::-moz-placeholder { 
+                        color: #23597B;
+                        font-size: smaller;
+                        opacity: .6;
+                    }
+
+                    .loginform .fline .txt:-ms-input-placeholder {
+                        color: #23597B;
+                        font-size: smaller;
+                        opacity: .6;
+                    }
+
+                    .loginform .fline .txt::-webkit-input-placeholder {
+                        color: #23597B;
+                        font-size: smaller;
+                        opacity: .6;
+                    }
+
+            .fline .txt:focus {
+                outline: none;
+                border: thin solid #009ACA;
+            }
+
+            .btnloginpanel {
+                padding-top: 4%;
+            }
+
+                .btnloginpanel .btnlogin {
+                    width: 35%;
+                    border-radius: 3px;
+                    background: #009ACA;
+                    cursor: pointer;
+                    user-select: none;
+                    display: table;
+                    height: 28px;
+                    margin: 0 auto;
+                }
+
+            .btnlogin span {
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            #btnlogin:hover {
+                background: #009AD2;
+            }
+
+            #btnlogin:active {
+                background: #009AC0;
+            }
+
+            a {
+                text-decoration: none;
+                color: white;
+            }
+
+                a:visited {
+                    color: white;
+                }
+    </style>
+
+</head>
+<body>
+    <div class="subbody">
+        <div class="headline">
+            <div class="logo">
+            </div>
+        </div>
+        <div class="hr">
+            <div class="hrleft"></div>
+            <div class="lbuseraction">用户登录</div>
+            <div class="hrright"></div>
+        </div>
+        <div class="loginbody">
+            <div class="loginpanel">
+                <form class="loginform" action="../Auth/LoginAttempt" method="post">
+                    <div class="fline">
+                        <div class="lbl">账号:</div>
+                        <input class="txt" type="text" id="stuno" name="stuno" placeholder="实训室用户用学号登录" />
+                    </div>
+                    <div class="fline">
+                        <div class="lbl">密码:</div>
+                        <input class="txt" type="password" id="pass" name="pass" />
+                    </div>
+                    <div class="errtext">
+                        <span style="color:transparent;user-select:none;">错误提示:</span>
+                        <div class="lbl">&nbsp;</div>
+                        <span id="errinfo"></span>
+                    </div>
+                    <div class="fline btnloginpanel">
+                        <div class="btnlogin" id="btnlogin"><span>登 录</span></div>
+                    </div>
+                    <div class="fline">
+                        <a href="#">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#">忘记密码</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footcname">
+        湖南云之翼软件有限公司
+    </div>
+</body>
+</html>

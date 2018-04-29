@@ -1,0 +1,52 @@
+﻿
+------------------------------------------------------------------------------------------------------------------------
+context.Server.MapPath(context.Request.FilePath);//var context = HttpContext.Current;//当前请求文件在服务器目录里的绝对路径
+HttpRuntime.AppDomainAppVirtualPath;//应用程序根目录，相当于~/
+//mvc视图文件中~相当于HttpRuntime.AppDomainAppVirtualPath，但css和js代码中的~/不经编译，不能使用
+//斜杠('/')写在路径前面代表网站根目录
+//以前版本中,html标签中代表路径的~/要经编译，必须添加runat="server"
+//
+string path = System.Environment.CurrentDirectory;//程序A中启动程序B，程序B中的此代码返回的路径是程序A的工作目录
+string path = System.IO.Directory.GetCurrentDirectory();
+string path = Path.GetDirectoryName(Application.ExecutablePath);
+Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Desktop))//获取盘符//C:\
+//
+string path = System.Windows.Forms.Application.StartupPath;
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+dt2.Rows.Add(dt1.Rows[0]);//错误，该行已属于另一个表
+dt2.Rows.Add(dt1.Rows[0].ItemArray);//成功
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+ex.Message + "\r\n" + ex.StackTrace + (ex.InnerException == null ? "" : ("\r\n\r\n" + ex.InnerException.Message + "\r\n" + ex.InnerException.StackTrace)) + "\r\n"
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+BitConverter.ToInt32(bytes[],index)
+从bytes[]中第index+1个开始,取4个字节,转换为整数.
+eg1:BitConverter.ToInt16(Encoding.ASCII.GetBytes("22abc"),0)
+Int16类型占两个字节,取前两个字节0011001000110010=12850(ASCII编码每一个字符一个字节,这里取了两个2,一个2存储为00110010=50,结果等于50个256加50)
+eg2:BitConverter.ToInt16(Encoding.Unicode.GetBytes("22abc"),0)
+Int16类型占两个字节,取前两个字节0000000000110010=50(Unicode编码每一个字符两个字节,这里取了1个2前面补0,结果等于0个256加50)
+Unicode是一个字符集,不是一个编码规范,两个字节无法储存Unicode字符集里的所有字符.
+.Net中的Encoding.Unicode是一种编码规范,等于UTF-16格式
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+DateTime.Now.ToUniversalTime().ToString("R", DateTimeFormatInfo.InvariantInfo)
+//Thu, 30 Nov 2017 06:35:34 GMT
+结果字符串格式与js代码new Date().toGMTString()一致
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+SendKeys.SendWait("^C");  //Ctrl+C 组合键
+SendKeys.SendWait("+C");  //Shift+C 组合键
+SendKeys.SendWait("%C");  //Alt+C 组合键
+SendKeys.SendWait("+(AX)");  //Shift+A+X 组合键
+SendKeys.SendWait("+AX");  //Shift+A 组合键,之后按X键
+SendKeys.SendWait("{left 5}");  //按←键 5次
+SendKeys.SendWait("{h 10}");   //按h键 10次
+SendKeys.Send("汉字");  //模拟输入"汉字"2个字
+------------------------------------------------------------------------------------------------------------------------
