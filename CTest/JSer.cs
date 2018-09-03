@@ -10,14 +10,33 @@ namespace CTest
 {
     public class JSer
     {
-        static void _Main(string[] args)
+        static void _Main()
         {
-            mdl.ent<ClassA> ent = new mdl.ent<ClassA>();
-            ent.t = new List<ClassA> { new ClassA() { C1 = new Class1[] { new Class1(), new Class1() } }, new ClassA() { C1 = new Class1[] { new Class1() } } };
-            ent.dts = new List<DateTime>() { DateTime.Now, DateTime.Today };
-            ent.Ls = new int[] { 1, 2, 3, 4, 5 };
-            ent.dict = new Dictionary<string, ClassA>() { { "abc", new ClassA() { C1 = new Class1[] { new Class1(), new Class1() { ss = "KY" } } } }, { "zxc", new ClassA() { C1 = new Class1[] { new Class1(), new Class1() { ss = "SS" } } } } };
-            ent.dict2 = new Dictionary<string, string>() { { "abc", "123" }, { "xxx", "456" } };
+            var ent = new mdl.chartpie<mdl.point>()
+            {
+                datasets = new List<mdl.dataset<mdl.point>>()
+                {
+                    new mdl.dataset<mdl.point>()
+                    {
+                        backgroundColor = new string[]{ "red","green" },
+                        data =new mdl.point[]
+                        {
+                            new mdl.point() { x=.1f, y=.2f },
+                            new mdl.point() { x = .3f, y = .5f }
+                        }
+                    },
+                    new mdl.dataset<mdl.point>()
+                    {
+                        backgroundColor = new string[]{ "blue","dark" },
+                        data =new mdl.point[]
+                        {
+                            new mdl.point() { x=.123f, y=.99f },
+                            new mdl.point() { x=.7f, y=.17f }
+                        }
+                    }
+                },
+                labels = new string[] { "mingyuan", "pactera" }
+            };
 
             Stopwatch sw = new Stopwatch();
             sw.Start();

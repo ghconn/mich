@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IISWorker.cs" />
     <Compile Include="DllRef.cs" />
     <Compile Include="FiddlerDemo.cs" />
     <Compile Include="Duplex.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="NetScaler_Login.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="PropertiesToEntityClassCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Slst.cs" />
     <Compile Include="SP.cs" />

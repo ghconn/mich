@@ -63,7 +63,7 @@ namespace CTest
             //    Console.WriteLine(s_recv);
             //    socket.Close();
             //});
-            
+
 
             #region thrift client
             //try
@@ -97,7 +97,7 @@ namespace CTest
             Console.ReadKey();
             #endregion
 
-        }
+        }        
 
         static IEnumerator<mdl.point> set()
         {
