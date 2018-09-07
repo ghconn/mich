@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,6 +75,7 @@
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\img\glyphicons-halflings-white.png" />
     <Content Include="content\img\glyphicons-halflings.png" />
+    <Content Include="html\air.html" />
     <Content Include="html\eq2.html" />
     <Content Include="html\eq.html" />
     <Content Include="html\bl.html" />
@@ -90,6 +92,10 @@
     <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="img\0001.png" />
+    <Content Include="img\help.gif" />
+    <Content Include="img\mysoft.png" />
+    <Content Include="script\air-bubble.js" />
     <Content Include="script\thrift.js" />
     <Content Include="script\large-ui.css.txt" />
     <Content Include="script\yzywebh.js" />
