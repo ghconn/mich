@@ -55,9 +55,9 @@ var airbubble = (function () {
                 *无素在下边，显示在上边
                 *无素在右边，显示在左边
                 *无素在左边，显示在右边
-                *元素宽度/高度大于2.5，元素高度大于可eletop，显示在下边
-                *元素宽度/高度大于2.5，元素高度不大于可eletop，显示在上边
-                *元素宽度/高度不大于2.5，元素宽度大于可eleright，显示在左边
+                *元素宽度/高度大于2.5，元素高度大于eletop，显示在下边
+                *元素宽度/高度大于2.5，元素高度不大于eletop，显示在上边
+                *元素宽度/高度不大于2.5，元素宽度大于eleright，显示在左边
                 *非以上情况，显示在右边
                 */
                 if (eleleft < airwidth && eletop < airheight && eleleft < vawidth / 2 && eletop < vaheight / 2) {
