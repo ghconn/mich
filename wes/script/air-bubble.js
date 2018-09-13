@@ -13,6 +13,7 @@ var airbubble = (function () {
         offsetleft: 0,
         offsettop: 0,
         cursor: 'help',
+        show: true,
         animate: { enabled: false/*todo*/ }
     }
     var _bind = function (that) {
@@ -131,6 +132,9 @@ var airbubble = (function () {
             icon.attr('src', option.iconsrc);
             icon.attr('width', option.iconsize);
             icon.css({ cursor: option.cursor, position: 'absolute' });
+            if (!option.show) {
+                icon.css('display', 'none');
+            }
             var left, top;
             switch (option.relpos) {
                 case "top":
@@ -157,6 +161,12 @@ var airbubble = (function () {
         else {
             this.$eventele = this.$host;
         }
+    }
+    abf.prototype.show = function () {
+        this.$eventele !== this.$host && this.$eventele.show();
+    }
+    abf.prototype.hide = function () {
+        this.$eventele !== this.$host && this.$eventele.hide();
     }
     return abf;
 })()

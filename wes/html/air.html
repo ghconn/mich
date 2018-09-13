@@ -8,6 +8,8 @@
 </head>
 <body>
     <input type="radio" id="rdo" value="1" />
+    <input type="button" id="show" value="show" />
+    <input type="button" id="hide" value="hide" />
     <p>1</p>
     <p>1</p>
     <p>1</p>
@@ -55,8 +57,10 @@
     <p>1</p>
     <p>1</p>
     <script>
-        var html = '<div style="background:#f6f6f6"><p style="padding:0;margin:0">123423333333333333333333322344432222222222222</p><p>1</p><p>1</p><p>1</p><p>1</p><p style="padding:0;margin:0">1</p></div>';
-        var air = new airbubble().init('lbl', { iconsrc: '../img/help.gif', airtype: 'img', src: '../img/mysoft.png', relpos: 'top', offsettop: 20, iconsize: 28 });
+        //var html = '<div style="background:#f6f6f6"><p style="padding:0;margin:0">123423333333333333333333322344432222222222222</p><p>1</p><p>1</p><p>1</p><p>1</p><p style="padding:0;margin:0">1</p></div>';
+        var air = new airbubble().init('lbl', { iconsrc: '../img/help.gif', airtype: 'img', src: '../img/0001.png', relpos: 'top', offsettop: 20, iconsize: 28, show: false });
+        $('#show').click(() => { air.show() })
+        $('#hide').click(() => { air.hide() })
     </script>
 </body>
 </html>
