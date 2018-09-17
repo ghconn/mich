@@ -50,3 +50,24 @@ SendKeys.SendWait("{left 5}");  //按←键 5次
 SendKeys.SendWait("{h 10}");   //按h键 10次
 SendKeys.Send("汉字");  //模拟输入"汉字"2个字
 ------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+获取当前 System.Threading.Thread 的当前应用程序域
+public static AppDomain CurrentDomain { get; }
+使用指定的名称新建应用程序域
+public static AppDomain CreateDomain(string friendlyName);
+卸载指定的应用程序域。
+public static void Unload(AppDomain domain);
+指示是否对当前进程启用应用程序域的 CPU 和内存监视，开启后可以根据相关属性进行监控
+public static bool MonitoringIsEnabled { get; set; }
+当前域托管代码抛出异常时最先发生的一个事件，框架设计中可以用到
+public event EventHandler<FirstChanceExceptionEventArgs> FirstChanceException;
+当某个异常未被捕获时调用该事件，如代码里只catch了a异常，实际产生的是 b异常，那么b异常就没有捕捉到。
+public event UnhandledExceptionEventHandler UnhandledException;
+为指定的应用程序域属性分配指定值。该应用程序域的局部存储值，该存储不划分上下文和线程，均可通过GetData获取。
+public void SetData(string name, object data);
+如果想使用托管代码来覆盖CLR的默认行为https://msdn.microsoft.com/zh-cn/library/system.appdomainmanager(v=vs.85).aspx
+public AppDomainManager DomainManager { get; }
+返回域的配置信息，如在config中配置的节点信息
+public AppDomainSetup SetupInformation { get; }
+------------------------------------------------------------------------------------------------------------------------
