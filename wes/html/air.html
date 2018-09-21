@@ -5,29 +5,18 @@
     <title></title>
     <script src="../script/jquery-1.10.2.min.js"></script>
     <script src="../script/air-bubble.js"></script>
+    <script src="../script/lwloading.js"></script>
 </head>
 <body>
     <input type="radio" id="rdo" value="1" />
     <input type="button" id="show" value="show" />
     <input type="button" id="hide" value="hide" />
+
+    <div id="xxx" style="width:200px;height:300px;margin-left:200px"></div>
     <p>1</p>
     <p>1</p>
     <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <p>1</p>
-    <div style="white-space:nowrap">
+    <div style="white-space:nowrap" id="container">
         <span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><select id="lbl"><option>今天我没有</option></select>
     </div>
     <p>1</p>
@@ -56,11 +45,17 @@
     <p>1</p>
     <p>1</p>
     <p>1</p>
+
     <script>
         //var html = '<div style="background:#f6f6f6"><p style="padding:0;margin:0">123423333333333333333333322344432222222222222</p><p>1</p><p>1</p><p>1</p><p>1</p><p style="padding:0;margin:0">1</p></div>';
         var air = new airbubble().init('lbl', { iconsrc: '../img/help.gif', airtype: 'img', src: '../img/0001.png', relpos: 'top', offsettop: 20, iconsize: 28, show: false });
-        $('#show').click(() => { air.show() })
-        $('#hide').click(() => { air.hide() })
+        $('#show').click(function() { air.show() })
+        $('#hide').click(function() { air.hide() })
+
+        var lwl = new lwloading().init('xxx', { speed: 1200 });
+        $('#show').click(function () { lwl.show() });
+        $('#hide').click(function () { lwl.hide() });
+
     </script>
 </body>
 </html>

@@ -64,6 +64,13 @@ namespace CTest
             //    socket.Close();
             //});
 
+            string lst[] = new string[] { "1", "2" };
+            var s = "x";
+            var s2 = "";
+            if (Array.indexOf(s) != -1)
+                s2 = "1";
+            else
+                s2 = "0";
 
             #region thrift client
             //try

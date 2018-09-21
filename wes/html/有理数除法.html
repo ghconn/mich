@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<style type="text/css">
+		body{
+			font-size: small;
+			font-family: Arial,'Microsoft YaHei';
+		}
+		.pnl{
+			width: 60%;
+			min-width: 600px;
+			margin: 0 auto;
+		}
+		@media screen and (max-width: 900px){
+			.pnl{
+				min-width: 300px;
+			}
+		}
+		.hln{
+			margin-bottom: 20px; 
+		}
+		.pnl input{
+			padding-left: 5px; 
+			border: 1px solid #cccccc;
+        	outline: none;
+        	width: 190px;
+        	height: 28px;
+		}
+		.pnl input:focus{
+			border: 1px solid #a5a5a5;
+		}
+		.s-area{
+			padding: 15px;
+			border-radius: 5px;
+			background:#ff6a00;
+			color:#fff;
+			word-wrap: break-word;
+		}
+	</style>
+</head>
+<body>
+	<div class="pnl">
+		<span>被除数:</span>
+		<div class="hln">
+			<input type="text" id="m" onchange="showme()" onkeydown="return digitcheck()" />
+		</div>
+		<span>除数:</span>
+		<div class="hln">
+			<input type="text" id="n" onchange="showme()" onkeydown="return digitcheck()" />
+		</div>
+		<span>小数部分第几位:</span>
+		<div class="hln">
+			<input type="text" id="nth" onchange="showme()" onkeydown="return digitcheck()" />
+		</div>
+		<span>总览:</span>
+		<div class="hln">
+			<div class="s-area" id="mix"></div>
+		</div>
+		<span id="index">小数部分第n位的数字:</span>
+		<div class="hln">
+			<div class="s-area" id="re"></div>
+		</div>
+		<span>循环体:</span>
+		<div class="hln">
+			<div class="s-area" id="lpbody"></div>
+		</div>
+		<span>循环体长度:</span>
+		<div class="hln">
+			<div class="s-area" id="lplen"></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function showme(){
+			var m=parseInt(document.getElementById('m').value);
+			var n=parseInt(document.getElementById('n').value);
+			var nth=parseInt(document.getElementById('nth').value);
+
+			var eleind=document.getElementById('index');
+			if(nth)
+				eleind.innerText=eleind.innerText.replace(/\d+|n/,nth);
+
+			if((m||m===0) && n && (nth||nth===0)){
+				var elemix=document.getElementById('mix');
+				var elere=document.getElementById('re');
+				var elelpbody=document.getElementById('lpbody');
+				var elelen=document.getElementById('lplen');
+
+				elemix.innerText='';
+				elere.innerText='';
+				elelpbody.innerText='';
+				elelen.innerText='';
+
+				compute(m,n,nth,function(a,b,c,d){
+					if(a){
+						elemix.innerText='mixture:'+a+'\n'+'从第'+(b+1)+'位出现循环体';
+					}
+					else{
+						elemix.innerText='从第1位出现循环体';
+					}
+					elere.innerText=c;
+					elelpbody.innerText=d.join(',')
+					elelen.innerText=d.length;
+				})
+			}
+		}
+
+		function digitcheck(){//数字检测，不允许键入非数字字符，在某些手机上不能生效
+			var e = event || window.event || arguments.callee.caller.arguments[0];
+			return (e.keyCode>=48&&e.keyCode<=57) || e.keyCode===8;
+		}
+
+		function compute(m,n,nth,fn){
+			var mixture,index,re=0,lpbody=[];
+
+			//------------分离功能
+			function loopbody(){
+				if(m===0||m===n){
+					//lpbody=lpbody.map((el)=>(~~(el/n)))//经测试,IE浏览器不支持此es6语法
+					lpbody=lpbody.map(function(el){return ~~(el/n)})
+					index=lpbody.length;
+					return;
+				}
+				if(m>n){
+					m=m%n;
+					return loopbody();
+				}
+				{//只为格式
+					var cur=m*10%n;
+					if(lpbody.indexOf(m*10)===-1){
+						lpbody.push(m*10)
+						m=m*10%n;
+						return loopbody()
+					}
+					else{
+						index=lpbody.indexOf(m*10)
+						//lpbody=lpbody.map((el)=>(~~(el/n)))//经测试,IE浏览器不支持此es6语法
+						lpbody=lpbody.map(function(el){return ~~(el/n)})
+					}
+				}
+			}
+			//------------
+
+			loopbody();
+
+			if(index>0){
+				//注意:这里是slice,下面是splice
+				mixture=lpbody.slice(0,index)
+			}
+
+			nth=nth-1;
+			//如果nth是在循环体开始之前
+			if(nth<index){
+				re=lpbody[nth];
+				//如果被除尽,定义循环体为0
+				if(index===lpbody.length){
+					lpbody=[0];
+				}
+				else{
+					//去掉mixtrue，只保留循环体
+					lpbody.splice(0,index);
+				}
+			}
+			else{
+				//如果被除尽,定义循环体为0
+				if(index===lpbody.length){
+					lpbody=[0];
+				}
+				else{
+					//去掉mixtrue，只保留循环体
+					lpbody.splice(0,index);
+					re=lpbody[(nth-index)%lpbody.length]
+				}
+			}
+
+			fn && fn(mixture,index,re,lpbody,lpbody.length)
+		}
+	</script>
+</body>
+</html>
+
+

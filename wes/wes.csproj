@@ -92,9 +92,11 @@
     <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="html\有理数除法.html" />
     <Content Include="img\0001.png" />
     <Content Include="img\help.gif" />
     <Content Include="img\mysoft.png" />
+    <Content Include="script\lwloading.js" />
     <Content Include="script\air-bubble.js" />
     <Content Include="script\thrift.js" />
     <Content Include="script\large-ui.css.txt" />
