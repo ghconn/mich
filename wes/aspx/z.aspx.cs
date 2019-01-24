@@ -14,6 +14,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using tpc;
 
+#pragma warning disable 0618
+
 namespace wes.aspx
 {
     public partial class z : System.Web.UI.Page

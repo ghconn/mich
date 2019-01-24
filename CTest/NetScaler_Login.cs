@@ -17,15 +17,15 @@ namespace CTest
             headers.Add("X-Citrix-IsUsingHTTPS", "Yes");
             var container = new CookieContainer();
 
-            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/", "get", "", "", "", container, null, headers, out re);
+            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/", "get", "", "", "", null, container, null, headers, out re);
             var strcook = container.GetCookieHeader(new Uri("https://yun.dev.cloud.com/Citrix/storeWeb/"));
 
             var referrer = "https://yun.dev.cloud.com/vpn/index.html";
-            HttpCreator.Create("https://yun.dev.cloud.com/cgi/login", "post", referrer, "login=10101&passwd=123qwe,.", "", container, null, headers, out re);
+            HttpCreator.Create("https://yun.dev.cloud.com/cgi/login", "post", referrer, "login=10101&passwd=123qwe,.", "", null, container, null, headers, out re);
 
             strcook = container.GetCookieHeader(new Uri("https://yun.dev.cloud.com/Citrix/storeWeb/"));
 
-            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/Home/Configuration", "post", "", "", "", container, null, headers, out re);
+            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/Home/Configuration", "post", "", "", "", null, container, null, headers, out re);
 
             strcook = container.GetCookieHeader(new Uri("https://yun.dev.cloud.com/Citrix/storeWeb/"));
 
@@ -34,11 +34,11 @@ namespace CTest
             if (match.Success)
                 csrftoken = match.Groups[1].Value;
 
-            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/Authentication/GetAuthMethods", "post", "", "", "", container, null, headers, out re);
+            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/Authentication/GetAuthMethods", "post", "", "", "", null, container, null, headers, out re);
             strcook = container.GetCookieHeader(new Uri("https://yun.dev.cloud.com/Citrix/storeWeb/"));
 
             referrer = "https://yun.dev.cloud.com/Citrix/storeWeb/";
-            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/GatewayAuth/Login", "post", referrer, "", "", container, null, headers, out re);
+            HttpCreator.Create("https://yun.dev.cloud.com/Citrix/storeWeb/GatewayAuth/Login", "post", referrer, "", "", null, container, null, headers, out re);
 
             strcook = container.GetCookieHeader(new Uri("https://yun.dev.cloud.com/Citrix/storeWeb/"));
             

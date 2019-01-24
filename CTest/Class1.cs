@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable 0414
+
 namespace CTest
 {
     public class Class1
@@ -40,7 +42,6 @@ namespace CTest
         {
             return base.I;
         }
-
         public Class1[] C1 { get; set; }
     }
     public class ClassB : cb

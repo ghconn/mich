@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1.txt" />
+    <Content Include="1.xml" />
     <Content Include="2.txt" />
     <Content Include="bl.txt" />
     <Content Include="csharp.txt" />
@@ -45,6 +46,10 @@
     <Content Include="py.txt" />
     <Content Include="sql.txt" />
     <Content Include="symbol.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="2.json" />
+    <None Include="1.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

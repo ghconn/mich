@@ -12,7 +12,7 @@ namespace CTest
 {
     class HttpCreator
     {
-        public static HttpWebResponse Create(string url, string method, string referrer, string postData, string contentType, CookieContainer cookieContainer, IEnumerable<string> acceptContentType, IDictionary<string, string> extraHeader, out string result, string host = null)
+        public static HttpWebResponse Create(string url, string method, string referrer, string postData, string contentType, Encoding encoding, CookieContainer cookieContainer, IEnumerable<string> acceptContentType, IDictionary<string, string> extraHeader, out string result, string host = null)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = method;
@@ -23,7 +23,12 @@ namespace CTest
             if (acceptContentType != null)
             {
                 request.Accept = string.Join(",", acceptContentType);
-            }            
+            }
+
+            if (encoding == null)
+            {
+                encoding = Encoding.UTF8;
+            }
 
             if (cookieContainer != null)
             {
@@ -80,7 +85,7 @@ namespace CTest
                 try
                 {
                     //获取服务端返回数据
-                    StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    StreamReader sr = new StreamReader(response.GetResponseStream(), encoding);
                     result = sr.ReadToEnd().Trim();
                     sr.Close();
                 }

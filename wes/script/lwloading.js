@@ -5,11 +5,11 @@ var lwloading = (function () {
         offsetx: 0,
         offsety: 0,
         color: '#0000FF',//text,img,html
-        wdith: 260,
+        width: 260,
         ibarwidth: 60,
         thickness: 2,
         speed: 'slow'
-    }    
+    }
     var lwl = function () { }
     lwl.prototype.init = function (id, option) {
         this.$host = $('#' + id);
@@ -20,31 +20,36 @@ var lwloading = (function () {
     lwl.prototype.render = function (config) {
         $.extend(option, config);
         this.$lwlele = $('<div></div>');
+        var antele = $('<div></div>');
         var ibar = $('<i></i>');
-        this.$lwlele.append(ibar);
+        var iblank = $('<i></i>');
         this.$lwlele.css({
             display: 'none',
             position: 'absolute',
-            width: option.wdith + 'px',
+            width: option.width + 'px',
             height: option.thickness + 'px',
             border: '1px solid ' + option.color,
             overflow: 'hidden'
         });
-        ibar.css({ display: 'block', background: option.color, width: option.ibarwidth + 'px', height: option.thickness + 'px', position: 'absolute' });
+        antele.css({ position: 'absolute', left: -option.width + 'px', width: (option.width + option.ibarwidth) + 'px', height: option.thickness + 'px' });
+        ibar.css({ display: 'block', background: option.color, width: option.ibarwidth + 'px', height: option.thickness + 'px', float: 'left' });
+        iblank.css({ display: 'block', width: (option.width - option.ibarwidth) + 'px', height: option.thickness + 'px', float: 'left' })
+        antele.append(ibar).append(iblank).append(ibar.clone());
+        this.$lwlele.append(antele);
 
         var left, top;
         var hw = this.$host.width(), hh = this.$host.height();
         switch (option.relpos) {
             case "center":
-                left = (hw - option.wdith) / 2;
+                left = (hw - option.width) / 2;
                 top = (hh - option.thickness) / 2;
                 break;
             case "top":
-                left = (hw - option.wdith) / 2;
+                left = (hw - option.width) / 2;
                 top = -option.thickness;
                 break;
             case "bottom":
-                left = (hw - option.wdith) / 2;
+                left = (hw - option.width) / 2;
                 top = hh + option.thickness;
                 break;
         }
@@ -54,8 +59,8 @@ var lwloading = (function () {
         option.speed === 'normal' && (option.speed = 400)
         option.speed === 'slow' && (option.speed = 600)
         function start() {
-            ibar.animate({ left: option.wdith + 'px' }, option.speed, function () {
-                ibar.css('left', -option.ibarwidth);
+            antele.animate({ left: 0 }, option.speed, function () {
+                antele.css('left', -option.width + 'px');
                 start();
             });
         }
@@ -68,4 +73,4 @@ var lwloading = (function () {
         this.$lwlele !== this.$host && this.$lwlele.hide();
     }
     return lwl;
-})()
+})();

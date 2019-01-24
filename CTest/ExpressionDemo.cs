@@ -49,22 +49,22 @@ namespace CTest
             return list;
         }
 
-        void test()
+        public static void _main()
         {
-            var l = new List<Class1>() { };//Count:1000000
+            var l = Enumerable.Range(0, 1000000).Select((i) => new Class1()).ToList();
             Stopwatch sw = new Stopwatch();
 
             sw.Restart();
             l = ExpressionDemo.SetAllProperty(l, "ss", "0");
             sw.Stop();
 
-            Console.WriteLine(sw.ElapsedMilliseconds);//1300ms
+            Console.WriteLine("ms:" + sw.ElapsedMilliseconds);//1300ms//453ms
 
             sw.Restart();
             l = ExpressionDemo.ExpressionTree(l, "ss", "1");
             sw.Stop();
 
-            Console.WriteLine(sw.ElapsedMilliseconds);//89ms
+            Console.WriteLine("ms:" + sw.ElapsedMilliseconds);//89ms//25ms
         }
     }
 }

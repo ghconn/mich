@@ -69,13 +69,14 @@ namespace wes.ashx
 
         public void abc()
         {
-            //Response.StatusCode = 404;
+            Response.StatusCode = 500;
             Response.Write(Request.Cookies["NSC_AAAC"]?.Value);
             Response.Write(string.Join(";", Request.UserLanguages));
         }
 
         public void d()
         {
+            var s = ""[2];
             Response.ContentType = "image/png";
             //var bts = bof.StreamToBytes(new FileStream(@"E:\Source\MICH\bp\pic\prototype.png", FileMode.Open));
             //Response.OutputStream.Write(bts, 0, bts.Length);

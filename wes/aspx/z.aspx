@@ -18,7 +18,7 @@
 <body>
     <form id="form" runat="server">
         <script>
-
+            $.post('/ashx/api.ashx?action=abc', {}, function () { alert(2) }).fail(function () { alert(1) });
         </script>
     </form>
 </body>

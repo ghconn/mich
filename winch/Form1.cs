@@ -52,6 +52,9 @@ namespace winch
             //    }
             //});
 
+            txt1.Text = GetInsSql("cb_Contract", GetIsNotIdentityColumnNames("cb_Contract")) + BR + GetUptSql("cb_Contract");
+
+
         }
 
         private void 设置连接SToolStripMenuItem_Click(object sender, EventArgs e)

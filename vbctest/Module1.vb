@@ -1,6 +1,7 @@
 ﻿Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Threading
+Imports System.Data
 
 Module Module1
 
@@ -29,8 +30,46 @@ Module Module1
         }
         Console.WriteLine(ConcatToXml(dict))
 
-
+        Console.WriteLine(Environment.Is64BitOperatingSystem)
         'JSer._Main()
+
+        Dim f = Single.Parse("220538.29")
+        Console.WriteLine(f.ToString("f2"))
+
+
+        Dim sx = $"123,
+                                {f},{1}"
+        Console.WriteLine(sx)
+
+        Dim i As Integer
+        For i = 0 To 2
+            Console.WriteLine("for" & i)
+        Next
+
+        Dim vals As String() = New String(5) {}
+        vals(0) = 1
+        vals(1) = 1
+        vals(2) = "2"
+        For Each val As String In vals
+            If val < 2 Then
+                Continue For
+            End If
+
+            Console.WriteLine("5")
+
+        Next
+
+        Dim lst = New List(Of List(Of String))()
+        Dim dict2 = New Dictionary(Of String, List(Of String))()
+
+
+
+        dict2.Add("x", New List(Of String)() From {"123"})
+        dict2("x").Add("abc")
+        Console.WriteLine(dict2("x")(0))
+        Console.WriteLine(dict2("x")(1))
+        Console.WriteLine(dict2.ContainsKey("y"))
+        Console.WriteLine(dict2.ContainsKey("x"))
 
         Console.ReadKey()
     End Sub
@@ -72,5 +111,22 @@ Module Module1
 
         Return List
     End Function
+
+    Private Sub createdatatable()
+        Dim dt = New DataTable()
+        dt.Columns.Add(New DataColumn("m"))
+        dt.Columns.Add(New DataColumn("year"))
+        dt.Columns.Add(New DataColumn("scope"))
+
+        dt.Rows.Add("a", "18", "20.2")
+        dt.Rows.Add("b", "18", "2.6")
+        dt.Rows.Add("a", "18", "22.2")
+        dt.Rows.Add("a", "19", "29.66")
+        dt.Rows.Add("b", "18", "20.16")
+        dt.Rows.Add("b", "18", "12.6")
+
+        Dim rows = dt.[Select]("m='a' and year=" + 18)
+        Console.WriteLine(rows.Length)
+    End Sub
 
 End Module
