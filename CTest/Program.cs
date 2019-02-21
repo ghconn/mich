@@ -70,7 +70,7 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-            regt();
+            //
 
             #region thrift client
             //try
