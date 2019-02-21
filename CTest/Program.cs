@@ -69,11 +69,8 @@ namespace CTest
             var s = $@"123,
                                 {f},{1}";
             Console.WriteLine(s);
-            
-            Console.WriteLine(SeqGuid());
-            Console.WriteLine(SeqGuid());
-            Console.WriteLine(SeqGuid());
-            
+
+            regt();
 
             #region thrift client
             //try
@@ -122,9 +119,13 @@ namespace CTest
 
         static async Task<int> d()
         {
-            var i = await Task.Run(() => { Thread.Sleep(5000); return 1; });
-            Console.WriteLine(i.ToString());
-            return i;
+            await Task.Delay(5 * 1000);
+            Console.WriteLine("d in ok");
+            return 1;
+            
+            //var y = d();
+            //Console.WriteLine("d go on.");
+            //Console.WriteLine(y.Result);
         }
 
         public static string ConcatToXml(Dictionary<string, string> variables)
@@ -208,6 +209,38 @@ namespace CTest
             int result = UuidCreateSequential(out guid);
             if (result == RPC_S_OK) return guid;
             return Guid.NewGuid();
+        }
+
+        static void regt()
+        {
+            //var currtext = File.ReadAllText("1.aspx");
+            //var ms = Regex.Matches(currtext, "src\\s*=\\s*[\"']?(.+)\\.js", RegexOptions.IgnoreCase);
+            //foreach (Match m in ms)
+            //{
+            //    var v = m.Groups[1].Value;
+            //    Console.WriteLine(v);
+            //}
+
+            //ms = Regex.Matches(currtext, "RefJsFileHtml\\s*\\(\\s*\"(.+)\\.js", RegexOptions.IgnoreCase);
+            //foreach (Match m in ms)
+            //{
+            //    var v = m.Groups[1].Value;
+            //    Console.WriteLine(v);
+            //}
+
+
+            //
+            var text = @"var re = openXMLHTTP(""DSGL_XMLHTTP.aspx?guid="" + tr.oid, ""DeleteDSProvider"");
+                if (re == ""order"") {";
+            var text2 = @"                var re = openXMLHTTP(""DSGL_XMLHTTP.aspx?guid="" + tr.oid, ""DeleteDSProvider""
+            kldsld);sfsdfsdf
+                if (re == ""order"") {";
+
+            var m2 = Regex.Match(text, "\\(.*?,\\s*(.*?)[\\s,\\r\\n\\)]");//在"[]"里的圆括号加不加"\\"没区别？
+            Console.WriteLine(m2.Groups[1].Value.Replace("\"", ""));
+
+            //var m2 = Regex.Match(text, "[\\)]");
+            //Console.WriteLine(m2.Success);
         }
     }
 }
