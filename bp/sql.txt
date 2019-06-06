@@ -9,6 +9,9 @@ sqlserver 数据类型decimal(10,3)
 --更新表tb列col,col的值为2的更新为3,值为3的更新为2
 update tb set col=(case when col=3 then 2 when col=2 then 3 end) where col in (2,3)
 
+--查询所有表创建日期
+select * from sys.tables  order by create_date desc
+
 --添加字段
 alter table table1 add newcolname varchar(200)
 
@@ -59,3 +62,47 @@ LEFT JOIN dbo.syscomments comm ON col.cdefault = comm.id
 LEFT JOIN sys.extended_properties ep ON col.id = ep.major_id AND col.colid = ep.minor_id AND ep.name = 'MS_Description' 
 LEFT  JOIN sys.extended_properties epTwo ON obj.id = epTwo.major_id AND epTwo.minor_id = 0 AND epTwo.name = 'MS_Description'
 --WHERE obj.name=@tablename		--------去掉这句查询所有表设计详情
+
+--改写为存储过程
+ALTER PROCEDURE [dbo].[spTableDetail]
+	@tablename varchar(100)
+AS
+BEGIN
+	SELECT tbs.name 表名,ds.value 描述 FROM sysobjects tbs left join sys.extended_properties ds ON tbs.id=ds.major_id and ds.minor_id=0 WHERE tbs.xtype='U' and tbs.name=@tablename 
+
+SELECT * FROM (
+SELECT obj.name AS 表名,
+col.colorder AS 序号,
+col.name AS 列名,
+ISNULL(ep.[value], '') AS 列说明,
+t.name AS 数据类型,
+col.length AS 长度,
+ISNULL(COLUMNPROPERTY(col.id, col.name, 'Scale'), 0) AS 小数位数,
+CASE WHEN COLUMNPROPERTY(col.id, col.name, 'IsIdentity') = 1 THEN '√' ELSE '' END AS 标识,
+CASE WHEN EXISTS (SELECT 1 
+FROM dbo.sysindexes si 
+INNER JOIN dbo.sysindexkeys sik ON si.id = sik.id 
+AND si.indid = sik.indid 
+INNER JOIN dbo.syscolumns sc ON sc.id = sik.id 
+AND sc.colid = sik.colid 
+INNER JOIN dbo.sysobjects so ON so.name = si.name 
+AND so.xtype = 'PK' 
+WHERE sc.id = col.id 
+AND sc.colid = col.colid ) THEN '√' 
+ELSE '' END AS 主键,
+CASE WHEN col.isnullable = 1 THEN '√' ELSE '' END AS 允许空,
+ISNULL(comm.text, '') AS 默认值 
+FROM dbo.syscolumns col 
+LEFT JOIN dbo.systypes t ON col.xtype = t.xusertype 
+INNER JOIN dbo.sysobjects obj ON col.id = obj.id AND obj.xtype = 'U' AND obj.status >= 0 
+LEFT JOIN dbo.syscomments comm ON col.cdefault = comm.id 
+LEFT JOIN sys.extended_properties ep ON col.id = ep.major_id AND col.colid = ep.minor_id AND ep.name = 'MS_Description' 
+LEFT JOIN sys.extended_properties epTwo ON obj.id = epTwo.major_id AND epTwo.minor_id = 0 AND epTwo.name = 'MS_Description'
+) AS t
+WHERE 表名=@tablename order by 序号
+END
+
+--写参数化查询语句
+exec sp_executesql N'select someColumn from OneTable where AColumn=''abc'' BColumn like @val',N'@val varchar(200)',@val=N'%keyword%'
+
+

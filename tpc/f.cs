@@ -42,6 +42,23 @@ namespace tpc
         }
         #endregion
 
+        #region 删除同名文件，指定文件名，将文本保存到该文件中，文件位置在桌面，如果不存在则创建该文件
+        /// <summary>
+        /// 删除同名文件，指定文件名，将文本保存到该文件中，文件位置在桌面(如果不是绝对路径)，如果不存在则创建该文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="text"></param>
+        public static void TextCreateToFile(string fileName, string text)
+        {
+            var fname = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
+            if (File.Exists(fname))
+            {
+                File.Delete(fname);
+            }
+            File.AppendAllText(fname, text, Encoding.UTF8);
+        }
+        #endregion
+
         #region 指定文件名，将文本追加到该文件中，文件位置在桌面，如果不存在则创建该文件
         /// <summary>
         /// 指定文件名，将文本追加到该文件中，文件位置在桌面(如果不是绝对路径)，如果不存在则创建该文件

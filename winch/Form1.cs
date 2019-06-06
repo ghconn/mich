@@ -7,6 +7,7 @@ using tpc;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace winch
 {
@@ -52,8 +53,7 @@ namespace winch
             //    }
             //});
 
-            txt1.Text = GetInsSql("cb_Contract", GetIsNotIdentityColumnNames("cb_Contract")) + BR + GetUptSql("cb_Contract");
-
+            //txt1.Text = GetInsSql("cb_Contract", GetIsNotIdentityColumnNames("cb_Contract")) + BR + GetUptSql("cb_Contract");
 
         }
 
@@ -83,8 +83,8 @@ namespace winch
 
         string GetTableNames()
         {
-            tablenames = h1.ExecuteScalar(CommandType.Text, "SELECT Name + ',' FROM " + h1.DbName + "..SysObjects Where XType='U' ORDER BY Name FOR XML PATH('')").ToString().TrimEnd(',');
-            return tablenames;
+            tablenames = h1.ExecuteScalar(CommandType.Text, "SELECT Name + ',' FROM " + h1.DbName + "..SysObjects Where XType='U' ORDER BY Name FOR XML PATH('')")?.ToString().TrimEnd(',');
+            return tablenames ?? "";
         }
 
         string GetColumnNames(string tableName)//所有列名
@@ -272,6 +272,29 @@ namespace winch
         private void 网页WToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new webdoc().Show();
+        }
+
+        private void 生成ModelMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CrModel(h1).Show();
+        }
+
+        void adodotnetdemo()
+        {
+            var myConnection = new SqlConnection("server=.;database=q;uid=sa;pwd=95938");
+            var myCommand = new SqlCommand("select top 1 course from Sc", myConnection);
+            SqlDataAdapter MyAdapter;
+            var a_ds = new DataSet();
+            DataTable dt;
+            MyAdapter = new SqlDataAdapter();
+            myCommand.CommandType = CommandType.Text;
+            MyAdapter.SelectCommand = myCommand;
+
+            MyAdapter.Fill(a_ds);
+            dt = a_ds.Tables[0];
+
+            Text = dt.Rows[0]["course"].ToString();
+            myConnection.Close();
         }
 
     }

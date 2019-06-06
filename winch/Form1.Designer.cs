@@ -43,6 +43,7 @@
             this.txt1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.生成ModelMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -55,14 +56,14 @@
             this.工具ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(789, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(789, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // 设置连接SToolStripMenuItem
             // 
             this.设置连接SToolStripMenuItem.Name = "设置连接SToolStripMenuItem";
-            this.设置连接SToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.设置连接SToolStripMenuItem.Size = new System.Drawing.Size(83, 21);
             this.设置连接SToolStripMenuItem.Text = "设置连接(&S)";
             this.设置连接SToolStripMenuItem.Click += new System.EventHandler(this.设置连接SToolStripMenuItem_Click);
             // 
@@ -72,35 +73,36 @@
             this.直接生成ToolStripMenuItem,
             this.选项OToolStripMenuItem,
             this.生成到文本文件TToolStripMenuItem,
-            this.生成到XMLXToolStripMenuItem});
+            this.生成到XMLXToolStripMenuItem,
+            this.生成ModelMToolStripMenuItem});
             this.生成语句BToolStripMenuItem.Name = "生成语句BToolStripMenuItem";
-            this.生成语句BToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.生成语句BToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
             this.生成语句BToolStripMenuItem.Text = "构筑(&B)";
             // 
             // 直接生成ToolStripMenuItem
             // 
             this.直接生成ToolStripMenuItem.Name = "直接生成ToolStripMenuItem";
-            this.直接生成ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.直接生成ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.直接生成ToolStripMenuItem.Text = "直接生成(&P)";
             this.直接生成ToolStripMenuItem.Click += new System.EventHandler(this.直接生成ToolStripMenuItem_Click);
             // 
             // 选项OToolStripMenuItem
             // 
             this.选项OToolStripMenuItem.Name = "选项OToolStripMenuItem";
-            this.选项OToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.选项OToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.选项OToolStripMenuItem.Text = "选项(&O)";
             // 
             // 生成到文本文件TToolStripMenuItem
             // 
             this.生成到文本文件TToolStripMenuItem.Name = "生成到文本文件TToolStripMenuItem";
-            this.生成到文本文件TToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.生成到文本文件TToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.生成到文本文件TToolStripMenuItem.Text = "生成到文本文件(&T)";
             this.生成到文本文件TToolStripMenuItem.Click += new System.EventHandler(this.生成到文本文件TToolStripMenuItem_Click);
             // 
             // 生成到XMLXToolStripMenuItem
             // 
             this.生成到XMLXToolStripMenuItem.Name = "生成到XMLXToolStripMenuItem";
-            this.生成到XMLXToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.生成到XMLXToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.生成到XMLXToolStripMenuItem.Text = "生成到XML(&X)";
             // 
             // 工具ToolStripMenuItem
@@ -110,27 +112,27 @@
             this.表名和列描述DToolStripMenuItem,
             this.网页WToolStripMenuItem});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
-            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
             this.工具ToolStripMenuItem.Text = "工具(&T)";
             // 
             // 批量更改文件名MToolStripMenuItem
             // 
             this.批量更改文件名MToolStripMenuItem.Name = "批量更改文件名MToolStripMenuItem";
-            this.批量更改文件名MToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.批量更改文件名MToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.批量更改文件名MToolStripMenuItem.Text = "批量更改文件名(&M)";
             this.批量更改文件名MToolStripMenuItem.Click += new System.EventHandler(this.批量更改文件名MToolStripMenuItem_Click);
             // 
             // 表名和列描述DToolStripMenuItem
             // 
             this.表名和列描述DToolStripMenuItem.Name = "表名和列描述DToolStripMenuItem";
-            this.表名和列描述DToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.表名和列描述DToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.表名和列描述DToolStripMenuItem.Text = "表名和列描述(&D)";
             this.表名和列描述DToolStripMenuItem.Click += new System.EventHandler(this.表名和列描述DToolStripMenuItem_Click);
             // 
             // 网页WToolStripMenuItem
             // 
             this.网页WToolStripMenuItem.Name = "网页WToolStripMenuItem";
-            this.网页WToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.网页WToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.网页WToolStripMenuItem.Text = "网页(&W)";
             this.网页WToolStripMenuItem.Click += new System.EventHandler(this.网页WToolStripMenuItem_Click);
             // 
@@ -142,13 +144,13 @@
             this.txt1.Multiline = true;
             this.txt1.Name = "txt1";
             this.txt1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt1.Size = new System.Drawing.Size(789, 527);
+            this.txt1.Size = new System.Drawing.Size(789, 526);
             this.txt1.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(789, 36);
             this.panel1.TabIndex = 2;
@@ -157,10 +159,17 @@
             // 
             this.panel2.Controls.Add(this.txt1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 60);
+            this.panel2.Location = new System.Drawing.Point(0, 61);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(789, 527);
+            this.panel2.Size = new System.Drawing.Size(789, 526);
             this.panel2.TabIndex = 3;
+            // 
+            // 生成ModelMToolStripMenuItem
+            // 
+            this.生成ModelMToolStripMenuItem.Name = "生成ModelMToolStripMenuItem";
+            this.生成ModelMToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.生成ModelMToolStripMenuItem.Text = "生成Model(&M)";
+            this.生成ModelMToolStripMenuItem.Click += new System.EventHandler(this.生成ModelMToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -200,6 +209,7 @@
         private System.Windows.Forms.ToolStripMenuItem 批量更改文件名MToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 表名和列描述DToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 网页WToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 生成ModelMToolStripMenuItem;
     }
 }
 

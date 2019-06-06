@@ -7,20 +7,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <script>
-        //var r = /^\d{1,3}(\.\d{1,6})?(E?|W?)\s?,\s?\d{1,2}(\.\d{1,6})?(N?|S?)$/i;
-        //console.log(r.test('1.2e,22n'));
-        //console.log(r.test('111.2666e,22n'));
-        //console.log(r.test('1.2e ,22n'));
-        //console.log(r.test('1.2222222e,22n'));
-        //console.log(r.test('1.2E,22n'));
-        //console.log(r.test('1.2e,22.n'));
 
-        //var s = 'ssss(23)'.split(/\(\d+\)/)[0];
-        //alert(s);
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
+
     </form>
 </body>
 </html>
+
+
+<%--<form id="form2" enctype="multipart/form-data" runat="server" method="post" action="http://localhost:23600/api/FileUpload/SaveFiles">
+    <input type="file" value="选择" name="upfile" />
+    <input name="fileupload" accept="image/gif,image/jpeg" multiple="multiple" type="file" value="" />
+    <input type="submit" value="提交" />
+</form>--%>

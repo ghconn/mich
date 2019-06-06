@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace mdl
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ent<T>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public List<T> t { get; set; }
 
         public List<DateTime> dts { get; set; }

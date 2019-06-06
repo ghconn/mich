@@ -25,6 +25,8 @@ using System.Diagnostics;
 using Fiddler;
 using System.DirectoryServices;
 using System.Data;
+using System.ComponentModel;
+using CTest.D;
 
 namespace CTest
 {
@@ -70,7 +72,9 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-            //
+
+            Console.WriteLine();
+            
 
             #region thrift client
             //try
@@ -116,7 +120,7 @@ namespace CTest
             Console.WriteLine(0);
             yield break;
         }
-
+        
         static async Task<int> d()
         {
             await Task.Delay(5 * 1000);
@@ -241,6 +245,87 @@ namespace CTest
 
             //var m2 = Regex.Match(text, "[\\)]");
             //Console.WriteLine(m2.Success);
+        }
+
+        static void testCommerceApi()
+        {
+
+            var dict = new Dictionary<string, string>()
+            {
+                { "Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibHZmIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJsdmYiLCJVc2VySW5mbyI6IntcIlVzZXJJZFwiOjksXCJVc2VyTmFtZVwiOlwibHZmXCIsXCJNb2JpbGVQaG9uZVwiOlwiMTU5MjIyMzY2OTZcIixcIkxvZ2luTmFtZVwiOlwibHZmXCIsXCJPcGVuSWRcIjpudWxsfSIsImp0aSI6IjkiLCJleHAiOjE1NTYyNzY0NDIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzQwIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNDAifQ.zp8Jw8xQuxcPTVLc1axUJchmb0UYBOYOoNQJr3ybZVo"}
+            };
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            string re;
+            var response = HttpCreator.Create("http://47.99.73.152:5000/api/Commerce/ChangeCommerce/1", "post", "", "", "", null, null, null, dict, out re);
+            sw.Stop();
+            Console.WriteLine("ts:" + sw.Elapsed.TotalSeconds + " re:" + re);
+        }
+    }
+
+    public enum MemberCheckStatus
+    {
+        [Description("待审核")]
+        WaitForAudit = 0,
+        [Description("正常")]
+        Normal = 1,
+        [Description("未通过")]
+        NotPass = 2,
+        [Description("冻结")]
+        Frozen = 3,
+        [Description("会员临期")]
+        TimeClosed = 4,
+        [Description("未注册")]
+        NotRegister = 5
+    }
+}
+
+
+namespace CTest.D
+{
+    public class A : iC
+    {
+        public string X { get; set; }
+    }
+    public class B : iC
+    {
+        public string X { get; set; }
+        public string Y { get; set; }
+    }
+
+    public interface iC
+    {
+
+    }
+
+    public static class ModelObjectEx
+    {
+        public static void MapTo(this iC ic, iC ic2)
+        {
+            var type = ic2.GetType();
+            var type_ic = ic.GetType();
+
+            var ps = type.GetProperties();
+            foreach(var p in ps)
+            {
+                var p_ic = type_ic.GetProperty(p.Name);
+                if (p_ic != null)
+                {
+                    p.SetValue(ic2, p_ic.GetValue(ic));
+                }
+            }
+        }
+    }
+
+    public class Program
+    {
+        public void _main()
+        {
+            var x = new A() { X = "uuu" };
+            var y = new B();
+            x.MapTo(y);
+            Console.WriteLine("y.X=" + y.X);
         }
     }
 }

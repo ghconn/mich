@@ -68,6 +68,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="CrModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrModel.Designer.cs">
+      <DependentUpon>CrModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Msg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrModel.resx">
+      <DependentUpon>CrModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Msg.resx">
       <DependentUpon>Msg.cs</DependentUpon>

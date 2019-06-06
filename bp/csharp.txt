@@ -71,3 +71,16 @@ public AppDomainManager DomainManager { get; }
 返回域的配置信息，如在config中配置的节点信息
 public AppDomainSetup SetupInformation { get; }
 ------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+//配置文件 Web.config    
+<appSettings>
+<!--数据连接字符串-->
+<add key="SqlConnectionStr" value="server=.;uid=sa;pwd=sa;database=RCCMS"/>
+</appSettings>
+  
+//在程序里获得配置文件的Key对应的值
+System.Configuration.ConfigurationSettings.AppSettings["SqlConnectionStr"];
+System.Configuration.ConfigurationManager.AppSettings["SqlConnectionStr"];
+------------------------------------------------------------------------------------------------------------------------
