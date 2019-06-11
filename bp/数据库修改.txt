@@ -1,0 +1,468 @@
+﻿
+declare @CurrentUser sysname = user_name(),@now datetime = getdate()
+
+
+------------------------------------------------------------------------------------------------------
+if not exists (select 1 from syscolumns where id=object_id('tOrderInfo') and [name]='oiTid')
+begin
+	--添加字段
+	alter table tOrderInfo add oiTid bigint
+	--给字段添加描述
+	execute sp_addextendedproperty 'MS_Description', '关联抽样订单表oiId', 'user', @CurrentUser, 'table', 'tOrderInfo', 'column', 'oiTid'
+end
+------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='tOrderInfoTemp')
+begin
+
+CREATE TABLE tOrderInfoTemp(
+	oiId bigint,
+	piId bigint,
+	eventNo varchar(100),
+	oiName varchar(500),
+	division varchar(200),
+	oiConName varchar(100),
+	oiConCwid varchar(100),
+	oiConPhone varchar(100),
+	oiConEmail varchar(100),
+	oiLocation varchar(500),
+	rbTime datetime DEFAULT getdate(),
+	ruTime datetime DEFAULT getdate(),
+	oiCheckStatus int DEFAULT 0,
+	oiCheckTime datetime,
+	oiCancelReason varchar(200),
+	oiAuditType int,
+	oiCityClass varchar(30),
+	oiEventCity varchar(50),
+	oiMealDatetime datetime,
+	oiRestaurantName varchar(100),
+	oiTStatus varchar(30),
+	PRIMARY KEY(oiId)
+)
+
+execute sp_addextendedproperty 'MS_Description', '订单编号，来自接口mealItemID，非自增', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiId'
+execute sp_addextendedproperty 'MS_Description', '项目编号', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'piId'
+execute sp_addextendedproperty 'MS_Description', '活动单号', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'eventNo'
+execute sp_addextendedproperty 'MS_Description', '订单名称，来自接口餐厅名称+用餐时间', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiName'
+execute sp_addextendedproperty 'MS_Description', '部门', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'division'
+execute sp_addextendedproperty 'MS_Description', '联系人', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiConName'
+execute sp_addextendedproperty 'MS_Description', '来自接口数据活动申请人CWID', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiConCwid'
+execute sp_addextendedproperty 'MS_Description', '联系人电话', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiConPhone'
+execute sp_addextendedproperty 'MS_Description', '联系人Email', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiConEmail'
+execute sp_addextendedproperty 'MS_Description', '用餐地址，来自接口数据餐厅地址', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiLocation'
+execute sp_addextendedproperty 'MS_Description', '记录生成时间', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'rbTime'
+execute sp_addextendedproperty 'MS_Description', '记录变更时间，来自接口最后修改时间', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'ruTime'
+execute sp_addextendedproperty 'MS_Description', '未抽中0、标记抽中1、确认抽中2、取消抽中3', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiCheckStatus'
+execute sp_addextendedproperty 'MS_Description', '抽中时间', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiCheckTime'
+execute sp_addextendedproperty 'MS_Description', '取消原因', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiCancelReason'
+execute sp_addextendedproperty 'MS_Description', '到店检查1、远程检查2', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiAuditType'
+execute sp_addextendedproperty 'MS_Description', '城市类别', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiCityClass'
+execute sp_addextendedproperty 'MS_Description', '来自接口数据用餐城市', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiEventCity'
+execute sp_addextendedproperty 'MS_Description', '用餐时间', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiMealDatetime'
+execute sp_addextendedproperty 'MS_Description', '餐厅名称，来自接口数据', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiRestaurantName'
+execute sp_addextendedproperty 'MS_Description', '接口获取到的订单状态，已预定，已完成，已取消等', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiTStatus'
+
+end
+------------------------------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------------------------------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='tOrderInfoTempHis')
+begin
+
+CREATE TABLE tOrderInfoTempHis(
+	hId bigint identity,
+	oiId bigint,
+	piId bigint,
+	eventNo varchar(100),
+	oiName varchar(500),
+	division varchar(200),
+	oiConName varchar(100),
+	oiConCwid varchar(100),
+	oiConPhone varchar(100),
+	oiConEmail varchar(100),
+	oiLocation varchar(500),
+	rbTime datetime DEFAULT getdate(),
+	ruTime datetime DEFAULT getdate(),
+	oiCheckStatus int DEFAULT 0,
+	oiCheckTime datetime,
+	oiCancelReason varchar(200),
+	oiAuditType int,
+	oiCityClass varchar(30),
+	oiEventCity varchar(50),
+	oiMealDatetime datetime,
+	oiRestaurantName varchar(100),
+	oiTStatus varchar(30),
+	PRIMARY KEY(hId)
+)
+
+execute sp_addextendedproperty 'MS_Description', '订单编号，来自接口mealItemID，非自增', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiId'
+execute sp_addextendedproperty 'MS_Description', '项目编号', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'piId'
+execute sp_addextendedproperty 'MS_Description', '活动单号', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'eventNo'
+execute sp_addextendedproperty 'MS_Description', '订单名称，来自接口餐厅名称+用餐时间', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiName'
+execute sp_addextendedproperty 'MS_Description', '部门', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'division'
+execute sp_addextendedproperty 'MS_Description', '联系人', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiConName'
+execute sp_addextendedproperty 'MS_Description', '来自接口数据活动申请人CWID', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiConCwid'
+execute sp_addextendedproperty 'MS_Description', '联系人电话', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiConPhone'
+execute sp_addextendedproperty 'MS_Description', '联系人Email', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiConEmail'
+execute sp_addextendedproperty 'MS_Description', '用餐地址，来自接口数据餐厅地址', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiLocation'
+execute sp_addextendedproperty 'MS_Description', '记录生成时间', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'rbTime'
+execute sp_addextendedproperty 'MS_Description', '记录变更时间，来自接口最后修改时间', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'ruTime'
+execute sp_addextendedproperty 'MS_Description', '未抽中0、标记抽中1、确认抽中2、取消抽中3', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiCheckStatus'
+execute sp_addextendedproperty 'MS_Description', '抽中时间', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiCheckTime'
+execute sp_addextendedproperty 'MS_Description', '取消原因', 'user', @CurrentUser, 'table', 'tOrderInfoTemp', 'column', 'oiCancelReason'
+execute sp_addextendedproperty 'MS_Description', '到店检查1、远程检查2', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiAuditType'
+execute sp_addextendedproperty 'MS_Description', '城市类别', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiCityClass'
+execute sp_addextendedproperty 'MS_Description', '来自接口数据用餐城市', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiEventCity'
+execute sp_addextendedproperty 'MS_Description', '用餐时间', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiMealDatetime'
+execute sp_addextendedproperty 'MS_Description', '餐厅名称，来自接口数据', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiRestaurantName'
+execute sp_addextendedproperty 'MS_Description', '接口获取到的订单状态，已预定，已完成，已取消等', 'user', @CurrentUser, 'table', 'tOrderInfoTempHis', 'column', 'oiTStatus'
+
+end
+------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='tRuleDefine')
+begin
+
+CREATE TABLE tRuleDefine(
+	rId bigint identity,
+	rCity varchar(50),
+	rCityClass varchar(20),
+	rDdPerMonth int,
+	rYcPerMonth int,
+	rYearMonth int,
+	PRIMARY KEY(rId)
+)
+
+execute sp_addextendedproperty 'MS_Description', '城市', 'user', @CurrentUser, 'table', 'tRuleDefine', 'column', 'rCity'
+execute sp_addextendedproperty 'MS_Description', '城市分类', 'user', @CurrentUser, 'table', 'tRuleDefine', 'column', 'rCityClass'
+execute sp_addextendedproperty 'MS_Description', '每月到店检查数量抽样总数（按城市或城市类别）', 'user', @CurrentUser, 'table', 'tRuleDefine', 'column', 'rDdPerMonth'
+execute sp_addextendedproperty 'MS_Description', '每月远程检查数量抽样总数（按城市或城市类别）', 'user', @CurrentUser, 'table', 'tRuleDefine', 'column', 'rYcPerMonth'
+execute sp_addextendedproperty 'MS_Description', '年份及月份例：201905', 'user', @CurrentUser, 'table', 'tRuleDefine', 'column', 'rYearMonth'
+
+end
+------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='tCityClass')
+begin
+
+CREATE TABLE tCityClass(
+	cId bigint identity,
+	cCity varchar(50),
+	cClass varchar(20),
+	PRIMARY KEY(cId)
+)
+
+execute sp_addextendedproperty 'MS_Description', '城市名', 'user', @CurrentUser, 'table', 'tCityClass', 'column', 'cCity'
+execute sp_addextendedproperty 'MS_Description', 'A类、B类、C类等', 'user', @CurrentUser, 'table', 'tCityClass', 'column', 'cClass'
+
+end
+------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='tSchedule')
+begin
+
+CREATE TABLE tSchedule(
+	[sId] bigint identity,
+	sClass int,
+	sSourceId varchar(100),
+	sModifyDetail varchar(1000),
+	sFailTimes int,
+	sErrorMsg varchar(200),
+	sCreateTime datetime DEFAULT getdate(),
+	PRIMARY KEY([sId])
+)
+
+execute sp_addextendedproperty 'MS_Description', '枚举：1,接口获取订单2接口返回确认抽检list3接口返回取消抽捡item4邮件提醒取消抽中或字段变更5接口返回订单抽捡结果', 'user', @CurrentUser, 'table', 'tSchedule', 'column', 'sClass'
+execute sp_addextendedproperty 'MS_Description', '相关数据在源表中的唯一标识', 'user', @CurrentUser, 'table', 'tSchedule', 'column', 'sSourceId'
+execute sp_addextendedproperty 'MS_Description', '所有变更字段的新旧值详细内容', 'user', @CurrentUser, 'table', 'tSchedule', 'column', 'sModifyDetail'
+execute sp_addextendedproperty 'MS_Description', '任务执行失败后累计次数', 'user', @CurrentUser, 'table', 'tSchedule', 'column', 'sFailTimes'
+execute sp_addextendedproperty 'MS_Description', '失败原因', 'user', @CurrentUser, 'table', 'tSchedule', 'column', 'sErrorMsg'
+execute sp_addextendedproperty 'MS_Description', '创建时间', 'user', @CurrentUser, 'table', 'tSchedule', 'column', 'sCreateTime'
+
+end
+------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='tAnswerHistory')
+begin
+
+CREATE TABLE tAnswerHistory(
+	aId bigint identity,
+	qaId bigint,
+	sqId bigint,
+	qaValue nvarchar(2000),
+	uiId bigint,
+	qoStatus int,
+	qoMemo varchar(1000),
+	rbTime datetime,
+	aCreateTime datetime DEFAULT getdate(),
+	PRIMARY KEY(aId)
+)
+
+
+execute sp_addextendedproperty 'MS_Description', '原tSheetQuestionAnswer表记录编号', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'qaId'
+execute sp_updateextendedproperty 'MS_Description', '问题编号', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'sqId'
+execute sp_updateextendedproperty 'MS_Description', '如果是照片，则存放url', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'qaValue'
+execute sp_updateextendedproperty 'MS_Description', '编辑人id', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'uiId'
+execute sp_updateextendedproperty 'MS_Description', '1:有效0:无效-1:删除', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'qoStatus'
+execute sp_updateextendedproperty 'MS_Description', '备注（如单选说明题的说明）', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'qoMemo'
+execute sp_updateextendedproperty 'MS_Description', '原tSheetQuestionAnswer表记录创建时间', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'rbTime'
+execute sp_updateextendedproperty 'MS_Description', '创建时间', 'user', @CurrentUser, 'table', 'tAnswerHistory', 'column', 'aCreateTime'
+
+end
+------------------------------------------------------------------------------------------------------
+
+
+
+
+----------------------------------角色表数据修改，添加接口来源数据管理权限----------------------------
+if exists(select 1 from tRoleInfo where riAbility =1)
+begin
+	update tRoleInfo set riAbility = riAbility * 10--排序字段修改
+end
+
+delete tRoleInfo where riMemo like 'sample-%'
+insert into tRoleInfo (riType,riStatus,riAbility,riMemo,riAnnex,riDesc1,riDesc2,riDesc3,riDesc4,riDesc5,rbTime,ruTime)
+values (1,1,25,'sample-list',1,'抽样订单列表查看','抽样订单','列表',null,null,@now,@now)
+,(1,1,25,'sample-sign',2,'标记抽中订单','抽样订单','确认抽中',null,null,@now,@now)
+,(1,1,25,'sample-unsign',3,'取消抽中订单','抽样订单','取消抽中',null,null,@now,@now)
+,(1,1,25,'sample-rule',4,'查看抽样规则列表','抽样订单','规则列表',null,null,@now,@now)
+,(1,1,25,'sample-import',5,'从excel导入抽样规则','抽样订单','规则导入',null,null,@now,@now)
+,(1,1,25,'sample-sta',6,'查看城市抽样统计','抽样订单','统计列表',null,null,@now,@now)
+,(1,1,30,'sheet-ans',8,'编辑上传的问卷结果','问卷','编号答卷',null,null,@now,@now)
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------
+delete tCityClass
+insert into tCityClass (cClass,cCity) values 
+( 'A','北京'),
+( 'A','南京'),
+( 'A','广州'),
+( 'A','天津'),
+( 'A','上海'),
+( 'A','重庆'),
+( 'A','沈阳'),
+( 'A','杭州'),
+( 'A','济南'),
+( 'A','武汉'),
+( 'A','成都'),
+( 'A','乌鲁木齐'),
+( 'A','西安'),
+( 'A','深圳'),
+( 'A','南昌'),
+( 'A','苏州'),
+( 'A','长沙'),
+( 'A','大连'),
+( 'A','青岛'),
+( 'A','福州'),
+( 'A','昆明'),
+( 'A','佛山'),
+( 'A','宁波'),
+( 'A','厦门'),
+( 'A','哈尔滨'),
+( 'A','温州'),
+( 'A','无锡'),
+( 'A','郑州'),
+( 'A','台州'),
+( 'A','汕头'),
+( 'B','南宁'),
+( 'B','长春'),
+( 'B','南通'),
+( 'B','石家庄'),
+( 'B','合肥'),
+( 'B','兰州'),
+( 'B','徐州'),
+( 'B','太原'),
+( 'B','贵阳'),
+( 'B','常州'),
+( 'B','烟台'),
+( 'B','海口'),
+( 'B','银川'),
+( 'B','漳州'),
+( 'B','金华'),
+( 'B','潍坊'),
+( 'C','珠海'),
+( 'C','宜昌'),
+( 'C','湖州'),
+( 'C','嘉兴'),
+( 'C','丽水'),
+( 'C','济宁'),
+( 'C','赣州'),
+( 'C','唐山'),
+( 'C','泉州'),
+( 'C','中山'),
+( 'C','绍兴'),
+( 'C','鞍山'),
+( 'C','吉林'),
+( 'C','十堰'),
+( 'C','惠州'),
+( 'C','瑞安'),
+( 'C','湛江'),
+( 'C','临沂'),
+( 'C','锦州'),
+( 'C','呼和浩特'),
+( 'C','江门'),
+( 'C','淮安'),
+( 'C','大庆'),
+( 'C','柳州'),
+( 'C','桂林'),
+( 'C','义乌'),
+( 'C','扬州'),
+( 'C','蚌埠'),
+( 'C','东莞'),
+( 'C','玉林'),
+( 'C','龙岩'),
+( 'C','聊城'),
+( 'C','荆州'),
+( 'C','西宁'),
+( 'C','淄博'),
+( 'C','威海'),
+( 'C','梅州'),
+( 'C','枣庄'),
+( 'C','常德'),
+( 'C','保定'),
+( 'C','莆田'),
+( 'C','宁德'),
+( 'C','淮南'),
+( 'C','德州'),
+( 'C','泰州'),
+( 'C','南充'),
+( 'C','淮北'),
+( 'C','大同'),
+( 'C','廊坊'),
+( 'C','曲靖'),
+( 'C','泰安'),
+( 'C','赤峰'),
+( 'C','清远'),
+( 'C','宝鸡'),
+( 'C','镇江'),
+( 'C','盐城'),
+( 'C','包头'),
+( 'C','九江'),
+( 'C','秦皇岛'),
+( 'C','三亚'),
+( 'C','滨州'),
+( 'C','抚顺'),
+( 'C','岳阳'),
+( 'C','滕州'),
+( 'C','萍乡'),
+( 'C','昆山'),
+( 'C','郴州'),
+( 'C','黄石'),
+( 'C','东营'),
+( 'C','连云港'),
+( 'C','温岭'),
+( 'C','自贡'),
+( 'C','衢州'),
+( 'C','芜湖'),
+( 'C','茂名'),
+( 'C','阳江'),
+( 'C','宿州'),
+( 'C','阜阳'),
+( 'C','六安'),
+( 'C','潮州'),
+( 'C','怀化'),
+( 'C','濮阳'),
+( 'C','洛阳'),
+( 'C','永康'),
+( 'C','绵阳'),
+( 'C','本溪'),
+( 'C','菏泽'),
+( 'C','舟山'),
+( 'C','乐清'),
+( 'C','邯郸'),
+( 'C','安庆'),
+( 'C','马鞍山'),
+( 'C','攀枝花'),
+( 'C','肇庆'),
+( 'C','常熟'),
+( 'C','衡阳'),
+( 'C','沧州'),
+( 'C','焦作'),
+( 'C','齐齐哈尔'),
+( 'C','三明'),
+( 'C','日照'),
+( 'C','遵义'),
+( 'C','运城'),
+( 'C','长治'),
+( 'C','吉安'),
+( 'C','眉山'),
+( 'C','牡丹江'),
+( 'C','德阳'),
+( 'C','佳木斯'),
+( 'C','韶关'),
+( 'C','邢台'),
+( 'C','抚州'),
+( 'C','滁州'),
+( 'C','宿迁'),
+( 'C','河源'),
+( 'C','南平'),
+( 'C','襄阳'),
+( 'C','株洲'),
+( 'C','黄冈'),
+( 'C','漯河'),
+( 'C','孝感'),
+( 'C','铜陵'),
+( 'C','东阳'),
+( 'C','安阳'),
+( 'C','新乡'),
+( 'C','鹰潭'),
+( 'C','宜春'),
+( 'C','巴彦淖尔'),
+( 'C','平顶山'),
+( 'C','三门峡'),
+( 'C','内江'),
+( 'C','宜宾'),
+( 'C','荆门'),
+( 'C','南昌县'),
+( 'C','大理'),
+( 'C','南阳'),
+( 'C','宣城'),
+( 'C','临汾'),
+( 'C','上饶'),
+( 'C','湘潭'),
+( 'C','张家港'),
+( 'C','鄂尔多斯'),
+( 'C','丽江'),
+( 'C','丹阳'),
+( 'C','遂宁'),
+( 'C','信阳'),
+( 'C','德清'),
+( 'C','渭南'),
+( 'C','苍南'),
+( 'C','景德镇'),
+( 'C','商丘'),
+( 'C','广元'),
+( 'C','驻马店'),
+( 'C','六盘水'),
+( 'C','兰溪'),
+( 'C','江阴'),
+( 'C','嵊州'),
+( 'C','海门'),
+( 'C','乐山'),
+( 'C','黄山'),
+( 'C','晋城'),
+( 'C','普宁'),
+( 'C','许昌'),
+( 'C','天台'),
+( 'C','桐乡')
+------------------------------------------------------------------------------------------------------

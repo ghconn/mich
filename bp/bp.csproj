@@ -46,6 +46,7 @@
     <Content Include="py.txt" />
     <Content Include="sql.txt" />
     <Content Include="symbol.txt" />
+    <Content Include="数据库修改.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="2.json" />
