@@ -27,6 +27,7 @@ using System.DirectoryServices;
 using System.Data;
 using System.ComponentModel;
 using CTest.D;
+using scheduler;
 
 namespace CTest
 {
@@ -65,6 +66,9 @@ namespace CTest
             //    Console.WriteLine(s_recv);
             //    socket.Close();
             //});
+
+            //调度demo
+            //schddemo();
 
             var f = 220538.19f;
             Console.WriteLine(f);
@@ -261,6 +265,24 @@ namespace CTest
             var response = HttpCreator.Create("http://47.99.73.152:5000/api/Commerce/ChangeCommerce/1", "post", "", "", "", null, null, null, dict, out re);
             sw.Stop();
             Console.WriteLine("ts:" + sw.Elapsed.TotalSeconds + " re:" + re);
+        }
+
+        static async void schddemo()
+        {
+            await QuartzMethod.AddScheduleJob(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddSeconds(30),
+                Id = 1,
+                IntervalTime = "0|2",
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
         }
     }
 

@@ -27,6 +27,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "vbctest", "vbctest\vbctest.
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "vbtest2", "vbtest2\vbtest2.vbproj", "{095C3447-2942-497F-BDA2-DD8AEA8A852B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scheduler", "scheduler\scheduler.csproj", "{B303B509-3555-4BC4-B110-F5EDE357FD4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{095C3447-2942-497F-BDA2-DD8AEA8A852B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{095C3447-2942-497F-BDA2-DD8AEA8A852B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{095C3447-2942-497F-BDA2-DD8AEA8A852B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B303B509-3555-4BC4-B110-F5EDE357FD4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B303B509-3555-4BC4-B110-F5EDE357FD4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B303B509-3555-4BC4-B110-F5EDE357FD4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B303B509-3555-4BC4-B110-F5EDE357FD4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

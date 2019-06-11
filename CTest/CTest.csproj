@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CTest</RootNamespace>
     <AssemblyName>CTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -90,6 +91,10 @@
     <ProjectReference Include="..\mdl\mdl.csproj">
       <Project>{5a0f836a-16aa-4e30-b3f5-f02ab7972e03}</Project>
       <Name>mdl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\scheduler\scheduler.csproj">
+      <Project>{b303b509-3555-4bc4-b110-f5ede357fd4f}</Project>
+      <Name>scheduler</Name>
     </ProjectReference>
     <ProjectReference Include="..\tpc\tpc.csproj">
       <Project>{fbb88d2f-f03c-4606-953d-47cff75aba89}</Project>
