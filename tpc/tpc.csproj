@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NetMail.cs" />
     <Compile Include="rror.cs" />
     <Compile Include="CacheHelper.cs" />
     <Compile Include="common.cs" />

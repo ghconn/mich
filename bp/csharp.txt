@@ -84,3 +84,18 @@ public AppDomainSetup SetupInformation { get; }
 System.Configuration.ConfigurationSettings.AppSettings["SqlConnectionStr"];
 System.Configuration.ConfigurationManager.AppSettings["SqlConnectionStr"];
 ------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+var dt = DataTable 实例;//id(主键bigint)、name(varchar)、statu(int)
+var row = dt.Select().FirstOrDefault(r => r["id"].ToString() == "1");
+//dt不存在id为1的行时
+row == null
+//dt存在id为1的行时并且name的值为null时。换成statu列结果一样
+row["name"]!=null
+row["name"] is DBNull
+row["name"].ToString()==""
+Convert.ToInt32(row["name"])	//错误：对象不能从DBNull转换为其它类型
+Convert.ToInt32(row["name"].ToString())	//错误：输入字符串的格式不正确
+int.Parse(row["name"])	//错误：输入字符串的格式不正确
+------------------------------------------------------------------------------------------------------------------------

@@ -105,4 +105,14 @@ END
 --写参数化查询语句
 exec sp_executesql N'select someColumn from OneTable where AColumn=''abc'' BColumn like @val',N'@val varchar(200)',@val=N'%keyword%'
 
+--sql IO统计 TIME统计
+SET STATISTICS IO ON
+SET STATISTICS TIME ON
+GO
+			
+select 1 from xxx
+			
+SET STATISTICS IO OFF
+SET STATISTICS TIME OFF
+GO
 

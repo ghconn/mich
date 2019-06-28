@@ -466,3 +466,11 @@ insert into tCityClass (cClass,cCity) values
 ( 'C','天台'),
 ( 'C','桐乡')
 ------------------------------------------------------------------------------------------------------
+
+
+----------------------问卷答案表ruTime添加默认值------------------------------------------------------
+if exists(select A.name as DefaultName,B.name as TableName from sysobjects A inner join sysobjects B on A.parent_obj = B.id where A.xtype = 'D' and B.xtype = 'U' and B.name = 'tSheetQuestionAnswer' and A.name='ruTime_default')
+alter table tSheetQuestionAnswer drop constraint ruTime_default
+go
+alter table tSheetQuestionAnswer add constraint ruTime_default default getdate() for ruTime with values 
+------------------------------------------------------------------------------------------------------

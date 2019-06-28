@@ -28,6 +28,8 @@ using System.Data;
 using System.ComponentModel;
 using CTest.D;
 using scheduler;
+using System.Runtime.Serialization.Json;
+using mdl.Mail;
 
 namespace CTest
 {
@@ -76,9 +78,8 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-
-            Console.WriteLine();
-            
+            var now = DateTime.Now.ToString("yyyy-MM-dd");
+            Console.WriteLine(now.Replace("-", "").Substring(4, 4));
 
             #region thrift client
             //try
@@ -134,6 +135,17 @@ namespace CTest
             //var y = d();
             //Console.WriteLine("d go on.");
             //Console.WriteLine(y.Result);
+        }
+
+        /// <summary>
+        /// 反序列化集合对象
+        /// </summary>
+        public static T[] JsonDeserializeToArrayData<T>(string jsonString)
+        {
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T[]));
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
+            T[] arrayObj = (T[])ser.ReadObject(ms);
+            return arrayObj;
         }
 
         public static string ConcatToXml(Dictionary<string, string> variables)
@@ -284,6 +296,93 @@ namespace CTest
                 TriggerName = "class1"
             });
         }
+
+        static void notes()
+        {
+            var jsonstr = @"[
+              {
+                ""mealItemID"": 1411,
+                ""eventNo"": ""17010610328"",
+                ""division"": ""PH"",
+                ""requesterCwid"": ""GBGYH"",
+                ""requesterName"": ""李XX"",
+                ""requesterPhone"": ""13818723757"",
+                ""diningTime"": ""2019-06-17T11:08:16.6512947+08:00"",
+                ""city"": ""上海"",
+                ""restaurantName"": ""渝信川菜招商局店"",
+                ""restaurantLocation"": ""成都北路333号招商局广场3楼近威海路"",
+                ""orderStatus"": ""Ordered"",
+                ""lastModifyTime"": ""2019-06-17T11:08:16.6512988+08:00""
+              }
+            ]";
+        }
+
+        static void sm()
+        {
+
+            var h2 = new ConfigHost()
+            {
+                Server = "smtp.qq.com",
+                Port = 25,
+                Username = "boring01@foxmail.com",
+                Password = "skazklxkuethbcde",
+                EnableSsl = false
+            };
+            var eventNo = "xxx";
+            var sDate = "";
+            var sTime = "";
+            var sStatu = "";
+            var checkType = "";
+            var oiRestaurantName = "";
+            var oiLocation = "";
+            var province = "";
+            var city = "";
+            var oiConName = "";
+            var oiConPhone = "";
+            var oiExecuteName = "";
+            var body = $"<p>您好！</p><p>以下是Bayer Opera编号<span style='background:#FFFF00'>{eventNo}<span>的活动最新信息，";
+            body += "请在执行审核前确认以下<span style='text-decoration:underline'>红色变更信息</span>，如无法执行，请即刻反馈项目负责人，谢谢。</p>";
+            body += "<div>活动基本信息：</div>";
+            body += $"<div>Opera编号：{eventNo}</div>";
+            body += $"<div>活动日期：{sDate}</div>";
+            body += $"<div>活动时间：{sTime}</div>";
+            body += $"<div>活动状态：{sStatu}</div>";
+            body += $"<div>审核形式：{checkType}</div>";
+            body += $"<div>餐厅名：{oiRestaurantName}</div>";
+            body += $"<div>餐厅地址：{province} / {city} / {oiLocation}</div>";
+            body += $"<div>活动申请人：{oiConName} / {oiConPhone}</div>";
+            body += $"<div>HDBC执行人员：{oiExecuteName}</div>";
+            body += "<p></p>";
+            body += "<p></p>";
+            body += "<p><span style='font-weight:600;font-size:13px'>Classification: </span><span style='font-weight:600;color:#004F71;font-size:13px'>Internal Use Only</span></p>";
+            body += "<img src='cid:" + Convert.ToBase64String(Encoding.Default.GetBytes("hxdbs.jpg")) + "' alt=''/>";
+            var m2 = new ConfigMail()
+            {
+                Body = body,
+                From = "boring01@foxmail.com",
+                To = new string[] { "kan_yon@foxmail.com" },
+                Attachments = new string[] { },
+                Resources = new string[] { "C:\\Users\\cspactera\\source\\repos\\MICH\\bp\\pic\\conn.jpg" }
+            };
+
+            var agent = new NetMail();
+            Console.WriteLine("start");
+            try
+            {
+                agent.CreateHost(h2);
+                m2.Subject = $"<活动变更提醒> Bayer Opera编号{eventNo}， " + DateTime.Now.ToString("MM/dd HH:mm");
+                agent.CreateMultiMail(m2);
+                agent.SendMail();
+
+                Console.WriteLine("success");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + "\n" + ex.InnerException?.Message);
+            }
+
+            Console.WriteLine("end");
+        }
     }
 
     public enum MemberCheckStatus
@@ -306,6 +405,24 @@ namespace CTest
 
 namespace CTest.D
 {
+
+    public class MealInfo
+    {
+        public long mealItemID { get; set; }
+        public string eventNo { get; set; }
+        public string division { get; set; }
+        public string requesterCwid { get; set; }
+        public string requesterName { get; set; }
+        public string requesterPhone { get; set; }
+        public string city { get; set; }
+        public string restaurantName { get; set; }
+        public string restaurantLocation { get; set; }
+        public string orderStatus { get; set; }
+
+        public string diningTime { get; set; }
+        public string lastModifyTime { get; set; }
+    }
+
     public class A : iC
     {
         public string X { get; set; }

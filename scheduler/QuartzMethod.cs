@@ -51,7 +51,7 @@ namespace scheduler
 
                     Type jobType = Type.GetType(taskModel.TaskClassFullName);
                     // 定义这个工作，并将其绑定到我们的IJob实现类
-                    IJobDetail job = new JobDetailImpl(taskModel.TaskName, taskModel.TaskGroupName, jobType);
+                    IJobDetail job = new JobDetailImpl(taskModel.TaskName, taskModel.TaskGroupName, jobType) { Description = taskModel.TaskDescription };
                     ITrigger trigger = TriggerBuilder.Create()
                         .WithIdentity(taskModel.TriggerName, taskModel.TriggerGroupName)
                         .StartAt((DateTimeOffset)taskModel.StartTime) //指定开始时间

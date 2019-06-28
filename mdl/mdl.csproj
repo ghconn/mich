@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="chartpie.cs" />
     <Compile Include="ent.cs" />
+    <Compile Include="Mail\ISendMail.cs" />
+    <Compile Include="Mail\ConfigMail.cs" />
+    <Compile Include="Mail\ConfigHost.cs" />
     <Compile Include="PageInfo.cs" />
     <Compile Include="point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

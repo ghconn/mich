@@ -1,124 +1,22 @@
 ﻿[
   {
-    "path": "/system",
-    "component": "",
-    "redirect": "",
-    "name": "系统管理",
-    "meta": {
-      "title": "系统管理",
-      "icon": ""
-    },
-    "children": [
-      {
-        "path": "/system/roles",
-        "component": "/views/roles/index",
-        "redirect": null,
-        "name": "角色管理",
-        "meta": {
-          "title": "角色管理",
-          "icon": ""
-        },
-        "children": null
-      },
-      {
-        "path": "/system/users",
-        "component": "/views/users/index",
-        "redirect": null,
-        "name": "用户管理",
-        "meta": {
-          "title": "用户管理",
-          "icon": null
-        },
-        "children": null
-      },
-      {
-        "path": "/system/actions",
-        "component": "/views/actions/index",
-        "redirect": null,
-        "name": "功能动作的管理",
-        "meta": {
-          "title": "功能动作的管理",
-          "icon": null
-        },
-        "children": null
-      },
-      {
-        "path": "/system/permissions",
-        "component": "/views/permissions/index",
-        "redirect": null,
-        "name": "权限管理",
-        "meta": {
-          "title": "权限管理",
-          "icon": null
-        },
-        "children": null
-      },
-      {
-        "path": "/system/organizations",
-        "component": "/views/organizations/index",
-        "redirect": null,
-        "name": "组织机构管理",
-        "meta": {
-          "title": "组织机构管理",
-          "icon": null
-        },
-        "children": null
-      }
-    ]
-  },
-  {
-    "path": "/system/roles",
-    "component": "/views/roles/index",
-    "redirect": null,
-    "name": "角色管理",
-    "meta": {
-      "title": "角色管理",
-      "icon": ""
-    },
-    "children": null
-  },
-  {
-    "path": "/system/users",
-    "component": "/views/users/index",
-    "redirect": null,
-    "name": "用户管理",
-    "meta": {
-      "title": "用户管理",
-      "icon": null
-    },
-    "children": null
-  },
-  {
-    "path": "/system/actions",
-    "component": "/views/actions/index",
-    "redirect": null,
-    "name": "功能动作的管理",
-    "meta": {
-      "title": "功能动作的管理",
-      "icon": null
-    },
-    "children": null
-  },
-  {
-    "path": "/system/permissions",
-    "component": "/views/permissions/index",
-    "redirect": null,
-    "name": "权限管理",
-    "meta": {
-      "title": "权限管理",
-      "icon": null
-    },
-    "children": null
-  },
-  {
-    "path": "/system/organizations",
-    "component": "/views/organizations/index",
-    "redirect": null,
-    "name": "组织机构管理",
-    "meta": {
-      "title": "组织机构管理",
-      "icon": null
-    },
-    "children": null
+    "actualAttendeeNo": 12,
+    "checkType": 1,
+    "endTime": "2019-06-21T13:00:00+08:00",
+    "eventNo": "17010610332",
+    "invalidReason": "",
+    "invalidRemark": "",
+    "isMRPreset": false,
+    "isMRSigned": true,
+    "isNonDoctorPresent": true,
+    "isPlanned": false,
+    "isUseCoupon": true,
+    "isValidCheck": true,
+    "latitude": 0,
+    "longitude": 0,
+    "mealItemID": 123460,
+    "startTime": "2019-06-21T12:00:00+08:00",
+    "unplannedReason": "R5",
+    "unplannedRemark": "未知"
   }
 ]
