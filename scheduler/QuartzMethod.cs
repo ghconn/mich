@@ -35,6 +35,55 @@ namespace scheduler
         /// 添加任务计划
         /// </summary>
         /// <returns></returns>
+        public static async Task<RunResult> AddScheduleJob2(SchedulingTask taskModel)
+        {
+            var status = new RunResult();
+            try
+            {
+                scheduler = await GetScheduler();
+                //检查任务是否已存在
+                var jk = new JobKey(taskModel.TaskName, taskModel.TaskGroupName);
+                //如果不存在
+                if (!await scheduler.CheckExists(jk))
+                {
+                    //使用Cron表达式计算触发间隔时间
+                    var cronSchedule = taskModel.IntervalTime;
+
+                    Type jobType = Type.GetType(taskModel.TaskClassFullName);
+                    // 定义这个工作，并将其绑定到我们的IJob实现类
+                    IJobDetail job = new JobDetailImpl(taskModel.TaskName, taskModel.TaskGroupName, jobType) { Description = taskModel.TaskDescription };
+                    ITrigger trigger = TriggerBuilder.Create()
+                        .WithIdentity(taskModel.TriggerName, taskModel.TriggerGroupName)
+                        .StartAt((DateTimeOffset)taskModel.StartTime) //指定开始时间
+                        .EndAt((DateTimeOffset)taskModel.EndTime)//指定结束时间
+                        .WithCronSchedule(cronSchedule)//使用Cron表达式
+                        .ForJob(taskModel.TaskName, taskModel.TaskGroupName) //通过JobKey识别作业
+                        .Build();                // 告诉Quartz使用我们的触发器来安排作业
+
+                    await scheduler.ScheduleJob(job, trigger);
+                    await scheduler.Start();
+                    // await Task.Delay(TimeSpan.FromSeconds(5));
+                    status.Status = 1;
+                    status.Msg = "任务计划运行成功";
+                }
+                else
+                {
+                    status.Status = 1;
+                    status.Msg = "任务计划运行正常";
+                }
+            }
+            catch (Exception ex)
+            {
+                status.Status = 2;
+                status.Msg = "任务计划运行异常，异常信息：" + ex.Message;
+            }
+            return status;
+
+        }
+        /// <summary>
+        /// 添加任务计划
+        /// </summary>
+        /// <returns></returns>
         public static async Task<RunResult> AddScheduleJob(SchedulingTask taskModel)
         {
             var status = new RunResult();

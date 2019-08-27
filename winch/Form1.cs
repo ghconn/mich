@@ -279,6 +279,11 @@ namespace winch
             new CrModel(h1).Show();
         }
 
+        private void 生成ModelMySqlSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CrModel(h1, DbType.mysql).Show();
+        }
+
         void adodotnetdemo()
         {
             var myConnection = new SqlConnection("server=.;database=q;uid=sa;pwd=95938");
@@ -296,7 +301,6 @@ namespace winch
             Text = dt.Rows[0]["course"].ToString();
             myConnection.Close();
         }
-
     }
 
     //class Startup

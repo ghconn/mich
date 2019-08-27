@@ -45,11 +45,11 @@ namespace wes.aspx
         {
             var x = "";//把x写到页面上，复制即可
 
-            string connStr = "server=172.18.132.141;Database=ChaComSystem;UID=root;PWD=123456";
+            string connStr = "server=172.18.132.141;database=FrameBase;uid=root;pwd=123456;charset=utf8";
             System.Data.DataSet set = new System.Data.DataSet();
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
-                string sql = "select table_name from information_schema.tables where table_schema='ChaComSystem' and table_type='base table'";
+                string sql = "select table_name from information_schema.tables where table_schema='FrameBase' and table_type='base table'";
                 conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
