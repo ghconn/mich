@@ -9,20 +9,20 @@ using System.Windows.Forms;
 
 namespace winch
 {
-    public partial class CrModel : DialogBase
+    public partial class TakeFromTemplate : DialogBase
     {
         tpc.h h;
         DbType DbType;
 
         string connStr = "server=172.18.132.136;port=3306;database=attendmn;uid=root;pwd=pactera;charset=utf8";
-        string folder = "Model";
+        string folder = "FromTemplate";
 
-        public CrModel()
+        public TakeFromTemplate()
         {
             InitializeComponent();
         }
 
-        public CrModel(tpc.h h, DbType dbType = DbType.sqlserver) : this()
+        public TakeFromTemplate(tpc.h h, DbType dbType = DbType.sqlserver) : this()
         {
             this.h = h;
             this.DbType = dbType;
@@ -279,7 +279,7 @@ namespace winch
             COLUMN_DEFAULT AS '默认值',
             case IS_NULLABLE when 'YES' then '√' else '' end AS '空值',
             DATA_TYPE AS '数据类型',
-            CHARACTER_MAXIMUM_LENGTH AS '长度MY',
+            CHARACTER_MAXIMUM_LENGTH AS '长度',
             NUMERIC_PRECISION AS '数值最大位数',
             NUMERIC_SCALE AS '小数',
             case COLUMN_KEY when 'PRI' then '√' else '' end as '主键',
@@ -314,84 +314,24 @@ namespace winch
             }
 
             var sb = new StringBuilder();
-            sb.Append("using System;")
-                .Append(br)
-                .Append("using System.ComponentModel;")
-                .Append(BR)
-                .Append("namespace Model")
-                .Append(br)
-                .Append("{")
-                .Append(br)
-                .Append(tab).Append("/// <summary>")
-                .Append(br)
-                .Append(tab).Append($"/// {dvtbdesc[0][0]}")
-                .Append(br)
-                .Append(tab).Append("/// </summary>")
-                .Append(br)
-                .Append(tab).Append($"public class {text} : IModel")
-                .Append(br)
-                .Append(tab).Append("{")
-                .Append(br);
-            for (var i = 0; i < dv.Count; i++)
+
+            for(var i = 0; i < dv.Count; ++i)
             {
                 var row = dv[i];
-                sb.Append(tab + tab).Append("/// <summary>")
-                .Append(br)
-                .Append(tab + tab).Append($"/// {row["列说明"]}")
-                .Append(br)
-                .Append(tab + tab).Append("/// </summary>")
-                .Append(br)
-                .Append(tab + tab).Append($"[Description(\"{row["列说明"]}\")]")
-                .Append(br)
-                .Append(tab + tab).Append("public ");
-
-                var fieldtype = "";
-                switch (row["数据类型"].ToString())
-                {
-                    case "int":
-                        fieldtype = "int";
-                        break;
-                    case "smallint":
-                        fieldtype = "short";
-                        break;
-                    case "tinyint":
-                        fieldtype = "byte";
-                        break;
-                    case "bigint":
-                        fieldtype = "long";
-                        break;
-                    case "decimal":
-                    case "float":
-                    case "real":
-                    case "money":
-                    case "smallmoney":
-                        fieldtype = "decimal";
-                        break;
-                    case "double":
-                        fieldtype = "double";
-                        break;
-                    case "datetime":
-                        fieldtype = "DateTime";
-                        break;
-                    case "bit":
-                        fieldtype = "bool";
-                        break;
-                    default:
-                        fieldtype = "string";
-                        break;
-                }
-                if (fieldtype != "string" && row["空值"].ToString() == "√")
-                {
-                    fieldtype = fieldtype + "?";
-                }
-                sb.Append(fieldtype).Append($" {row["列名"]} {{ get; set; }}")
-                    .Append(br);
+                sb.Append(textBox2.Text.Replace("[表名]", text)
+                    .Replace("[列名]", row["列名"].ToString())
+                    .Replace("[列说明]", row["列说明"].ToString())
+                    .Replace("[序号]", row["序号"].ToString())
+                    .Replace("[默认值]", row["默认值"].ToString())
+                    .Replace("[数据类型]", row["数据类型"].ToString())
+                    .Replace("[长度]", row["长度"].ToString()));
+                //[表名][列名][列说明][序号][默认值][数据类型][长度]
+                if (checkBox1.Checked)
+                    sb.Append(br);
             }
-            sb.Append(tab).Append("}")
-                .Append(br)
-                .Append("}");
 
-            tpc.f.TextCreateToFile(folder + "\\" + text + ".cs", sb.ToString());
+            tpc.f.TextCreateToFile(folder + "\\" + text + ".txt", sb.ToString());
         }
+        
     }
 }

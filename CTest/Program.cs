@@ -28,6 +28,7 @@ using System.Data;
 using System.ComponentModel;
 using scheduler;
 using System.Runtime.Serialization.Json;
+using System.Net.Mail;
 
 namespace CTest
 {
@@ -74,7 +75,7 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-            Console.WriteLine(Regex.IsMatch("s", "^\\w*$"));
+            
 
 
 
@@ -110,8 +111,8 @@ namespace CTest
             Console.ReadKey();
             #endregion
 
-        }
-        
+        }        
+
         static IEnumerator<mdl.point> set()
         {
             foreach (var c in "abcdefghijkl")
@@ -148,7 +149,7 @@ namespace CTest
         /// </summary>
         public static T[] JsonDeserializeToArrayData<T>(string jsonString)
         {
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T[]));
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T[]));//非集合对象把T[]改成T
             MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
             T[] arrayObj = (T[])ser.ReadObject(ms);
             return arrayObj;
@@ -237,6 +238,8 @@ namespace CTest
             return Guid.NewGuid();
         }
 
+
+
         static void regt()
         {
             //var currtext = File.ReadAllText("1.aspx");
@@ -285,13 +288,32 @@ namespace CTest
             Console.WriteLine("ts:" + sw.Elapsed.TotalSeconds + " re:" + re);
         }
 
-        static async void schddemo()
+        static async void schddemo2()
         {
             await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
             {
                 EndTime = DateTime.Now.AddYears(30),
                 Id = 1,
-                IntervalTime = "10 3-8 18 * * ?",
+                IntervalTime = "*/10 0-10 10 * * ?",//10点0分到10分每隔10秒
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
+
+
+        static async void schddemo()
+        {
+            await QuartzMethod.AddScheduleJob(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "0|29",
                 RunningStatus = 1,
                 StartTime = DateTime.Now,
                 TaskClassFullName = "scheduler.task.demo",
@@ -339,4 +361,5 @@ namespace CTest
         [Description("未注册")]
         NotRegister = 5
     }
+    
 }
