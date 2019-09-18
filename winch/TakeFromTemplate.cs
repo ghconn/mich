@@ -178,81 +178,26 @@ namespace winch
                 return;
             }
 
-            var sql = $"SELECT ds.value 描述 FROM sysobjects tbs left join sys.extended_properties ds ON tbs.id=ds.major_id and ds.minor_id=0 WHERE tbs.xtype='U' and tbs.name='{tname}'";
-            var tabledesc = h.ExecuteScalar(CommandType.Text, sql);
+            var dv = dtcolumn.DefaultView;            
 
-            sb.Clear();
-            sb.Append("using System;")
-                .Append(br)
-                .Append("using System.ComponentModel;")
-                .Append(BR)
-                .Append("namespace Model")
-                .Append(br)
-                .Append("{")
-                .Append(br)
-                .Append(tab).Append("/// <summary>")
-                .Append(br)
-                .Append(tab).Append($"/// {tabledesc}")
-                .Append(br)
-                .Append(tab).Append("/// </summary>")
-                .Append(br)
-                .Append(tab).Append($"public class {tname} : IModel")
-                .Append(br)
-                .Append(tab).Append("{")
-                .Append(br);
-            for (var i = 0; i < dtcolumn.Rows.Count; i++)
+            sb = new StringBuilder();
+
+            for (var i = 0; i < dv.Count; ++i)
             {
-                var row = dtcolumn.Rows[i];
-                sb.Append(tab + tab).Append("/// <summary>")
-                .Append(br)
-                .Append(tab + tab).Append($"/// {row["列说明"]}")
-                .Append(br)
-                .Append(tab + tab).Append("/// </summary>")
-                .Append(br)
-                .Append(tab + tab).Append($"[Description(\"{row["列说明"]}\")]")
-                .Append(br)
-                .Append(tab + tab).Append("public ");
-
-                var fieldtype = "";
-                switch (row["数据类型"].ToString())
-                {
-                    case "int":
-                    case "tinyint":
-                    case "smallint":
-                        fieldtype = "int";
-                        break;
-                    case "bigint":
-                        fieldtype = "Int64";
-                        break;
-                    case "decimal":
-                    case "float":
-                    case "real":
-                    case "money":
-                    case "smallmoney":
-                        fieldtype = "decimal";
-                        break;
-                    case "datetime":
-                        fieldtype = "DateTime";
-                        break;
-                    case "bit":
-                        fieldtype = "bool";
-                        break;
-                    default:
-                        fieldtype = "string";
-                        break;
-                }
-                if (fieldtype != "string" && row["允许空"].ToString() == "√")
-                {
-                    fieldtype = fieldtype + "?";
-                }
-                sb.Append(fieldtype).Append($" {row["列名"]} {{ get; set; }}")
-                    .Append(br);
+                var row = dv[i];
+                sb.Append(textBox2.Text.Replace("[表名]", tname)
+                    .Replace("[列名]", row["列名"].ToString())
+                    .Replace("[列说明]", row["列说明"].ToString())
+                    .Replace("[序号]", row["序号"].ToString())
+                    .Replace("[默认值]", row["默认值"].ToString())
+                    .Replace("[数据类型]", row["数据类型"].ToString())
+                    .Replace("[长度]", row["长度"].ToString()));
+                //[表名][列名][列说明][序号][默认值][数据类型][长度]
+                if (checkBox1.Checked)
+                    sb.Append(br);
             }
-            sb.Append(tab).Append("}")
-                .Append(br)
-                .Append("}");
 
-            tpc.f.TextCreateToFile(folder + "\\" + tname + ".cs", sb.ToString());
+            tpc.f.TextCreateToFile(folder + "\\" + tname + ".txt", sb.ToString());
         }
         
         private void SelectToMySql(string text)

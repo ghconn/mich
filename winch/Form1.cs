@@ -289,6 +289,11 @@ namespace winch
             new TakeFromTemplate(h1, DbType.mysql).Show();
         }
 
+        private void templatePToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new TakeFromTemplate(h1).Show();
+        }
+
         void adodotnetdemo()
         {
             var myConnection = new SqlConnection("server=.;database=q;uid=sa;pwd=95938");

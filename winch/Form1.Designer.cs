@@ -38,6 +38,7 @@
             this.生成到XMLXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.生成ModelMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.生成ModelMySqlSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.templateMySqlDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.批量更改文件名MToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.表名和列描述DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +46,7 @@
             this.txt1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.templateMySqlDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.templatePToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -78,6 +79,7 @@
             this.生成到XMLXToolStripMenuItem,
             this.生成ModelMToolStripMenuItem,
             this.生成ModelMySqlSToolStripMenuItem,
+            this.templatePToolStripMenuItem,
             this.templateMySqlDToolStripMenuItem});
             this.生成语句BToolStripMenuItem.Name = "生成语句BToolStripMenuItem";
             this.生成语句BToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
@@ -122,6 +124,13 @@
             this.生成ModelMySqlSToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.生成ModelMySqlSToolStripMenuItem.Text = "生成Model(MySql)(&S)";
             this.生成ModelMySqlSToolStripMenuItem.Click += new System.EventHandler(this.生成ModelMySqlSToolStripMenuItem_Click);
+            // 
+            // templateMySqlDToolStripMenuItem
+            // 
+            this.templateMySqlDToolStripMenuItem.Name = "templateMySqlDToolStripMenuItem";
+            this.templateMySqlDToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.templateMySqlDToolStripMenuItem.Text = "Template(MySql)(&D)";
+            this.templateMySqlDToolStripMenuItem.Click += new System.EventHandler(this.templateMySqlDToolStripMenuItem_Click);
             // 
             // 工具ToolStripMenuItem
             // 
@@ -182,12 +191,12 @@
             this.panel2.Size = new System.Drawing.Size(789, 526);
             this.panel2.TabIndex = 3;
             // 
-            // templateMySqlDToolStripMenuItem
+            // templatePToolStripMenuItem
             // 
-            this.templateMySqlDToolStripMenuItem.Name = "templateMySqlDToolStripMenuItem";
-            this.templateMySqlDToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.templateMySqlDToolStripMenuItem.Text = "Template(MySql)(&D)";
-            this.templateMySqlDToolStripMenuItem.Click += new System.EventHandler(this.templateMySqlDToolStripMenuItem_Click);
+            this.templatePToolStripMenuItem.Name = "templatePToolStripMenuItem";
+            this.templatePToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.templatePToolStripMenuItem.Text = "Template(&P)";
+            this.templatePToolStripMenuItem.Click += new System.EventHandler(this.templatePToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -230,6 +239,7 @@
         private System.Windows.Forms.ToolStripMenuItem 生成ModelMToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 生成ModelMySqlSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem templateMySqlDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem templatePToolStripMenuItem;
     }
 }
 
