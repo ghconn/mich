@@ -73,7 +73,7 @@ namespace winch
 
         private void 直接生成ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            txt1.Text = BuildCodeLines();
+            
         }
 
         private void 生成到文本文件TToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,50 +155,7 @@ namespace winch
             BatRename fbr = new BatRename();
             fbr.Show();
         }
-
-        private void SignalRServer_Click(object sender, EventArgs e)
-        {
-            //WriteToConsole("Starting server...");
-            //SignalRServer.Enabled = false;
-            //Task.Run(() => StartServer());
-        }
-
-        //public IDisposable SignalR { get; set; }
-        //static string ServerURI = System.Configuration.ConfigurationManager.AppSettings["ServiceUri"];
-
-
-        //private void StartServer()
-        //{
-        //    try
-        //    {
-        //        SignalR = Microsoft.Owin.Hosting.WebApp.Start(ServerURI);
-        //    }
-        //    catch (TargetInvocationException)
-        //    {
-        //        WriteToConsole("Server failed to start. A server is already running on " + ServerURI);
-        //        //Re-enable button to let user try to start server again
-        //        this.Invoke((Action)(() => SignalRServer.Enabled = true));
-        //        return;
-        //    }
-        //    WriteToConsole("Server started at " + ServerURI);
-        //}
-        /// <summary>
-        /// This method adds a line to the RichTextBoxConsole control, using Invoke if used
-        /// from a SignalR hub thread rather than the UI thread.
-        /// </summary>
-        /// <param name="message"></param>
-        internal void WriteToConsole(String message)
-        {
-            if (txt1.InvokeRequired)
-            {
-                this.Invoke((Action)(() =>
-                    WriteToConsole(message)
-                ));
-                return;
-            }
-            txt1.AppendText(message + Environment.NewLine);
-        }
-
+        
         private void 表名和列描述DToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var h = h1;
