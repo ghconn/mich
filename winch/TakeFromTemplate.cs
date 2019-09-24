@@ -33,6 +33,7 @@ namespace winch
                         TileLabel("");
                         break;
                 case DbType.mysql:
+                    connStr = System.Configuration.ConfigurationManager.AppSettings["mysql"];
                     TileLabelMySql("");
                     break;
                 default:

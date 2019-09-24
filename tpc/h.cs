@@ -21,9 +21,9 @@ namespace tpc
         #endregion
 
         #region 构造函数
-        public h()
+        public h(string configuration_connectionstring_node_name)
         {
-            mDatabase = DatabaseFactory.CreateDatabase("connstr1");
+            mDatabase = DatabaseFactory.CreateDatabase(configuration_connectionstring_node_name);
             Connection = mDatabase.CreateConnection();
         }
         #endregion

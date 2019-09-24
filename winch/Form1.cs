@@ -18,7 +18,7 @@ namespace winch
             InitializeComponent();
         }
         void d() { }
-        h h1 = new h();
+        h h1 = new h("mssql");
         private void Form1_Load(object sender, EventArgs e)
         {
             //Func<int> func = () => { return 0; };
