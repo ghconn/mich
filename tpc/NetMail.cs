@@ -17,9 +17,19 @@ namespace tpc
 
         public void CreateHost(ConfigHost host)
         {
-            this.host = new SmtpClient(host.Server, host.Port);
-            this.host.Credentials = new System.Net.NetworkCredential(host.Username, host.Password);
-            this.host.EnableSsl = host.EnableSsl;
+            if (host.EnableSsl)
+            {
+                this.host = new SmtpClient(host.Server);
+                this.host.UseDefaultCredentials = true;
+                this.host.EnableSsl = host.EnableSsl;
+            }
+            else
+            {
+                this.host = new SmtpClient(host.Server, host.Port);
+                this.host.UseDefaultCredentials = false;
+                this.host.EnableSsl = host.EnableSsl;
+                this.host.Credentials = new System.Net.NetworkCredential(host.Username, host.Password);
+            }
         }
 
         public void CreateMail(ConfigMail mail)
