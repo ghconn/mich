@@ -74,11 +74,7 @@ namespace CTest
             var s = $@"123,
                                 {f},{1}";
             Console.WriteLine(s);
-
             
-
-
-
             #region thrift client
             //try
             //{

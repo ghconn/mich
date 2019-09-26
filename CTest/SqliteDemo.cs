@@ -5,6 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * 引用System.Data.SQLite.dll并生成，生成后将SQLite.Interop.dll（runtimes\win-x86\native\netstandard2.0版本）放到生成的目标目录，即可正常运行
+ * 运行完此Demo后，生成的test.db可以用Navicat Premium 12连接，不需要用户名密码，指定文件路径即可
+ */
+
 namespace CTest
 {
     public class SqliteDemo
