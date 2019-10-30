@@ -74,7 +74,8 @@ namespace CTest
             var s = $@"123,
                                 {f},{1}";
             Console.WriteLine(s);
-            
+
+
             #region thrift client
             //try
             //{
@@ -358,4 +359,11 @@ namespace CTest
         NotRegister = 5
     }
     
+
+    public class xx
+    {
+        public string value { get; set; }
+        public string label { get; set; }
+        public List<xx> children { get; set; }
+    }
 }
