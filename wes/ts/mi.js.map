@@ -1,1 +1,1 @@
-{"version":3,"file":"mi.js","sourceRoot":"","sources":["mi.ts"],"names":[],"mappings":"AAAA,iBAAiB,IAAY;IACzB,OAAO,WAAW,GAAG,IAAI,CAAC;AAC9B,CAAC;AACD,IAAI,IAAI,GAAG,MAAM,CAAC;AAElB,QAAQ,CAAC,IAAI,CAAC,SAAS,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC"}
+{"version":3,"file":"mi.js","sourceRoot":"","sources":["mi.ts"],"names":[],"mappings":"AAAA,SAAS,OAAO,CAAC,IAAY;IACzB,OAAO,WAAW,GAAG,IAAI,CAAC;AAC9B,CAAC;AACD,IAAI,IAAI,GAAG,MAAM,CAAC;AAElB,QAAQ,CAAC,IAAI,CAAC,SAAS,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC"}
