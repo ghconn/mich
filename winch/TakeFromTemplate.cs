@@ -16,10 +16,12 @@ namespace winch
 
         string connStr = "server=172.18.132.136;port=3306;database=attendmn;uid=root;pwd=pactera;charset=utf8";
         string folder = "FromTemplate";
+        string mydbname = "";
 
         public TakeFromTemplate()
         {
             InitializeComponent();
+            connStr = System.Configuration.ConfigurationManager.AppSettings["mysql"];
         }
 
         public TakeFromTemplate(tpc.h h, DbType dbType = DbType.sqlserver) : this()
@@ -39,8 +41,6 @@ namespace winch
                 default:
                     break;
             }
-
-            
         }
 
         private void TileLabel(string key)
@@ -66,10 +66,29 @@ namespace winch
         {
             DataSet set = new DataSet();
 
+            mydbname = "ghsystem";
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                string sql = "select database()";
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(cmd);
+                    mySqlDataAdapter.Fill(set);
+                }
+                conn.Close();
+            }
+
+            if (set.Tables.Count > 0)
+            {
+                mydbname = set.Tables[0].DefaultView[0][0]?.ToString();
+            }
+
+            set = new DataSet();
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 key = key.Replace("_", "/_");
-                string sql = $"select table_name from information_schema.tables where table_schema='attendmn' and table_type='base table' and table_name like '%{key}%' escape '/'";
+                string sql = $"select table_name from information_schema.tables where table_schema='{mydbname}' and (table_type='BASE TABLE' or table_type='base table') and table_name like '%{key}%' escape '/'";
                 conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
@@ -138,8 +157,6 @@ namespace winch
         }
 
         string br = "\r\n";//换行
-        string BR = "\r\n\r\n";//换行并加一个空行
-        string tab = "    ";
         private void SelectTo(string tname)
         {
             var sb = new StringBuilder();
@@ -206,7 +223,7 @@ namespace winch
             var settbdesc = new DataSet();
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
-                string sqltbdesc = $"select table_comment from information_schema.tables where table_schema='attendmn' and table_type='base table' and table_name='{text}'";
+                string sqltbdesc = $"select table_comment from information_schema.tables where table_schema='{mydbname}' and (table_type='BASE TABLE' or table_type='base table') and table_name='{text}'";
                 conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(sqltbdesc, conn))
                 {
@@ -234,7 +251,7 @@ namespace winch
         FROM
             information_schema.`COLUMNS`
         WHERE
-            TABLE_SCHEMA = 'attendmn' and TABLE_NAME='{text}'
+            TABLE_SCHEMA = '{mydbname}' and TABLE_NAME='{text}'
         ORDER BY
             TABLE_NAME,
             ORDINAL_POSITION";
