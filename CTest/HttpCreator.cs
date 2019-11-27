@@ -77,32 +77,13 @@ namespace CTest
             //    rt.Write(requestStream);
             //}
 
-            try
-            {
-                //获取服务端返回
-                var response = (HttpWebResponse)request.GetResponse();
+            //获取服务端返回
+            var response = (HttpWebResponse)request.GetResponse();
+            StreamReader sr = new StreamReader(response.GetResponseStream(), encoding);
+            result = sr.ReadToEnd().Trim();
+            sr.Close();
 
-                try
-                {
-                    //获取服务端返回数据
-                    StreamReader sr = new StreamReader(response.GetResponseStream(), encoding);
-                    result = sr.ReadToEnd().Trim();
-                    sr.Close();
-                }
-                catch
-                {
-                    result = "";
-                }
-
-                return response;
-            }
-            catch
-            {
-
-            }
-
-            result = "";
-            return null;
+            return response;
         }
     }
     

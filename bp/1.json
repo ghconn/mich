@@ -1,22 +1,29 @@
-﻿[
-  {
-    "actualAttendeeNo": 12,
-    "checkType": 1,
-    "endTime": "2019-06-21T13:00:00+08:00",
-    "eventNo": "17010610332",
-    "invalidReason": "",
-    "invalidRemark": "",
-    "isMRPreset": false,
-    "isMRSigned": true,
-    "isNonDoctorPresent": true,
-    "isPlanned": false,
-    "isUseCoupon": true,
-    "isValidCheck": true,
-    "latitude": 0,
-    "longitude": 0,
-    "mealItemID": 123460,
-    "startTime": "2019-06-21T12:00:00+08:00",
-    "unplannedReason": "R5",
-    "unplannedRemark": "未知"
-  }
-]
+﻿{
+  "statu": 1,
+  "message": "success",
+  "data": [
+    {
+      "division": "PH",
+      "eventNo": "19111510035",
+      "oiAuditType": 1,
+      "oiCheckStatus": 2,
+      "oiCancelReason": null,
+      "oiCityClass": "A",
+      "oiConCwid": "GLCJJ",
+      "oiConEmail": null,
+      "oiConName": "潘伟",
+      "oiConPhone": "18020275677",
+      "oiEventCity": "苏州",
+      "oiId": 4353309,
+      "oiLocation": "观前街245号美罗商城东楼5层",
+      "oiMealDatetime": "2019/11/20 17:15:00",
+      "oiName": "唐宫海鲜舫 2019/11/20 17:15:00",
+      "oiRestaurantName": "唐宫海鲜舫",
+      "oiTStatus": "已预定",
+      "piId": 200100000000034,
+      "rbTime": "2019/11/18 18:00:00",
+      "ruTime": "2019/11/19 17:18:08",
+      "oiRemark": "2019/11/19 17:18:08\r\n操作：预抽中\r\n2019/11/19 17:30:10\r\n确认抽检状态推送到客户开始\r\n2019/11/19 17:30:11\r\n确认抽检状态推送到客户成功\r\n2019/11/19 17:30:11\r\n操作 ：确认抽中\r\n"
+    }
+  ]
+}

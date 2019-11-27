@@ -76,6 +76,23 @@ namespace CTest
             Console.WriteLine(s);
 
 
+
+
+            #region onsiteapp
+            //string url = $"https://onsite.huaxiadnb.cn/admin/logic/api100.ashx?action=getordersamplebyid";
+
+
+            //var res = HttpCreator.Create(url, "post", null, "oiId=4353309", null, null, null, null, null, out string re);
+            //Console.WriteLine(re); 
+            #endregion
+
+
+            var re = "[{\"isSucceeded\":true,\"message\":\"sdflw><ejwo;]{}-=\"}]";
+            var lst = JsonDeserializeToArrayData<Re_Statu>(re);
+
+            
+
+
             #region thrift client
             //try
             //{
@@ -151,6 +168,7 @@ namespace CTest
             T[] arrayObj = (T[])ser.ReadObject(ms);
             return arrayObj;
         }
+
 
         public static string ConcatToXml(Dictionary<string, string> variables)
         {
@@ -365,5 +383,11 @@ namespace CTest
         public string value { get; set; }
         public string label { get; set; }
         public List<xx> children { get; set; }
+    }
+
+    public class Re_Statu
+    {
+        public bool isSucceeded { get; set; }
+        public string message { get; set; }
     }
 }
