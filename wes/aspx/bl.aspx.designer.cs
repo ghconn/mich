@@ -7,11 +7,13 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace wes.aspx {
-    
-    
-    public partial class bl {
-        
+namespace wes.aspx
+{
+
+
+    public partial class bl
+    {
+
         /// <summary>
         /// form1 控件。
         /// </summary>

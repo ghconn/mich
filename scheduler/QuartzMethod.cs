@@ -56,7 +56,22 @@ namespace scheduler
                         .WithIdentity(taskModel.TriggerName, taskModel.TriggerGroupName)
                         .StartAt((DateTimeOffset)taskModel.StartTime) //指定开始时间
                         .EndAt((DateTimeOffset)taskModel.EndTime)//指定结束时间
-                        .WithCronSchedule(cronSchedule)//使用Cron表达式
+                        .WithCronSchedule(cronSchedule, action => action.WithMisfireHandlingInstructionDoNothing())//使用Cron表达式
+                        /*
+                        * withMisfireHandlingInstructionDoNothing
+                        ——不触发立即执行
+                        ——等待下次Cron触发频率到达时刻开始按照Cron频率依次执行
+                        
+                        withMisfireHandlingInstructionIgnoreMisfires
+                        ——以错过的第一个频率时间立刻开始执行
+                        ——重做错过的所有频率周期后
+                        ——当下一次触发频率发生时间大于当前时间后，再按照正常的Cron频率依次执行
+                        
+                        withMisfireHandlingInstructionFireAndProceed
+                        ——以当前时间为触发频率立刻触发一次执行
+                        ——然后按照Cron频率依次执行
+                        * 
+                        */
                         .ForJob(taskModel.TaskName, taskModel.TaskGroupName) //通过JobKey识别作业
                         .Build();                // 告诉Quartz使用我们的触发器来安排作业
 
@@ -105,7 +120,22 @@ namespace scheduler
                         .WithIdentity(taskModel.TriggerName, taskModel.TriggerGroupName)
                         .StartAt((DateTimeOffset)taskModel.StartTime) //指定开始时间
                         .EndAt((DateTimeOffset)taskModel.EndTime)//指定结束时间
-                        .WithCronSchedule(cronSchedule)//使用Cron表达式
+                        .WithCronSchedule(cronSchedule, action => action.WithMisfireHandlingInstructionDoNothing())//使用Cron表达式
+                        /*
+                        * withMisfireHandlingInstructionDoNothing
+                        ——不触发立即执行
+                        ——等待下次Cron触发频率到达时刻开始按照Cron频率依次执行
+
+                        withMisfireHandlingInstructionIgnoreMisfires
+                        ——以错过的第一个频率时间立刻开始执行
+                        ——重做错过的所有频率周期后
+                        ——当下一次触发频率发生时间大于当前时间后，再按照正常的Cron频率依次执行
+
+                        withMisfireHandlingInstructionFireAndProceed
+                        ——以当前时间为触发频率立刻触发一次执行
+                        ——然后按照Cron频率依次执行
+                        * 
+                        */
                         .ForJob(taskModel.TaskName, taskModel.TaskGroupName) //通过JobKey识别作业
                         .Build();                // 告诉Quartz使用我们的触发器来安排作业
 
