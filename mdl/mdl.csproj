@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\TitleAttribute.cs" />
     <Compile Include="chartpie.cs" />
     <Compile Include="ent.cs" />
+    <Compile Include="ExportTemplate.cs" />
     <Compile Include="Mail\ISendMail.cs" />
     <Compile Include="Mail\ConfigMail.cs" />
     <Compile Include="Mail\ConfigHost.cs" />
@@ -53,6 +55,10 @@
     <Compile Include="schd\RunResult.cs" />
     <Compile Include="schd\SchedulingTask.cs" />
     <Compile Include="schd\SchedulingTaskLog.cs" />
+    <Compile Include="StaffDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

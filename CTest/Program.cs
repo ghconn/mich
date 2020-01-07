@@ -29,6 +29,10 @@ using System.ComponentModel;
 using scheduler;
 using System.Runtime.Serialization.Json;
 using System.Net.Mail;
+using System.Globalization;
+using mdl;
+using mdl.Attributes;
+using mdl.Interface;
 
 namespace CTest
 {
@@ -40,7 +44,7 @@ namespace CTest
         {
             DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
             var timestamp1 = (int)(DateTime.Now - startTime).TotalSeconds;
-            Console.WriteLine("sl{0}", timestamp1);
+            Console.WriteLine("sl-{0}", timestamp1);
 
             string sTestMarshalIntPtr = "abc";
             var intptr = Marshal.StringToCoTaskMemAuto(sTestMarshalIntPtr);
@@ -78,6 +82,9 @@ namespace CTest
 
 
 
+
+            //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
+
             #region onsiteapp
             //string url = $"https://onsite.huaxiadnb.cn/admin/logic/api100.ashx?action=getordersamplebyid";
 
@@ -85,12 +92,6 @@ namespace CTest
             //var res = HttpCreator.Create(url, "post", null, "oiId=4353309", null, null, null, null, null, out string re);
             //Console.WriteLine(re); 
             #endregion
-
-
-            var re = "[{\"isSucceeded\":true,\"message\":\"sdflw><ejwo;]{}-=\"}]";
-            var lst = JsonDeserializeToArrayData<Re_Statu>(re);
-
-            
 
 
             #region thrift client
@@ -125,7 +126,7 @@ namespace CTest
             Console.ReadKey();
             #endregion
 
-        }        
+        }
 
         static IEnumerator<mdl.point> set()
         {
@@ -358,6 +359,21 @@ namespace CTest
                 ""lastModifyTime"": ""2019-06-17T11:08:16.6512988+08:00""
               }
             ]";
+        }
+
+        static void GetAttr()
+        {
+            var type = typeof(StaffDto);
+            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in propertyInfos)
+            {
+                var proDescrition = property.GetCustomAttributes<TitleAttribute>();
+                if (proDescrition.Count() > 0)
+                {
+                    Console.WriteLine("字段名：{0}，字段描述内容：{1}", property.Name, proDescrition.First().Title);
+                }
+            }
         }
     }
 

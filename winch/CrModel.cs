@@ -91,7 +91,9 @@ namespace winch
                 key = key.Replace("_", "/_");
                 string sql = $"select table_name from information_schema.tables where table_schema='{mydbname}' and (table_type='BASE TABLE' or table_type='base table') and table_name like '%{key}%' escape '/'";
                 conn.Open();
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
                 {
                     MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(cmd);
                     mySqlDataAdapter.Fill(set);
