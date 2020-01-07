@@ -63,7 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributesHelper.cs" />
     <Compile Include="NetMail.cs" />
+    <Compile Include="office\ExcelFileHelper.cs" />
     <Compile Include="rror.cs" />
     <Compile Include="CacheHelper.cs" />
     <Compile Include="common.cs" />

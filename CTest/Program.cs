@@ -80,9 +80,6 @@ namespace CTest
             Console.WriteLine(s);
 
 
-
-
-
             //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
 
             #region onsiteapp
@@ -374,6 +371,17 @@ namespace CTest
                     Console.WriteLine("字段名：{0}，字段描述内容：{1}", property.Name, proDescrition.First().Title);
                 }
             }
+        }
+
+        static void ExcelExport()
+        {
+            var list = new List<StaffDto>();
+            var lst = new List<List<StaffDto>>();
+            list.Add(new StaffDto() { Name = "a", Name2 = "b" });
+            lst.Add(list);
+            var excelFileHelper = new tpc.office.ExcelFileHelper();
+            var url = excelFileHelper.CreateWorkbook(lst, new List<string>() { "sh1" }, "看看");
+            Console.WriteLine(url);
         }
     }
 
