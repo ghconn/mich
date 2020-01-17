@@ -119,3 +119,28 @@ SET STATISTICS IO OFF
 SET STATISTICS TIME OFF
 GO
 
+
+--创建表-----------------------------------------------------------------------------------------------
+declare @CurrentUser sysname = 'dbo',@now datetime = getdate()
+
+-------
+if not exists(select 1 from sysobjects tbs where tbs.xtype='U' and tbs.name='Table1')
+begin
+
+CREATE TABLE Table1(
+	ID bigint identity,
+	[Name] varchar(1000),
+	CreateTime datetime DEFAULT getdate(),
+	PRIMARY KEY(ID)
+)
+
+execute sp_addextendedproperty 'MS_Description', '主键', 'user', @CurrentUser, 'table', 'Table1', 'column', 'ID'
+execute sp_addextendedproperty 'MS_Description', '名称', 'user', @CurrentUser, 'table', 'Table1', 'column', 'Name'
+execute sp_addextendedproperty 'MS_Description', '创建时间', 'user', @CurrentUser, 'table', 'Table1', 'column', 'CreateTime'
+
+--execute sp_updateextendedproperty 'MS_Description', '描述1', 'user', 'dbo', 'table', 'Table1', 'column', 'ID'--修改描述
+end
+-------
+-------------------------------------------------------------------------------------------------------
+
+
