@@ -55,7 +55,7 @@ namespace tpc.office
                 var i = 0;
                 foreach(var l in list)
                 {
-                    CreateSheet1(l, workbook, i, sheetNameList[i]);
+                    CreateSheet(l, workbook, i, sheetNameList[i]);
                     i++;
                 }
 
@@ -65,66 +65,6 @@ namespace tpc.office
             return urlAddress;
         }
 
-        private void CreateSheet1<T>(List<T> list, Workbook workbook, int index, string sheetName) where T : new()
-        {
-            Worksheet sheet = workbook.Worksheets[index];
-            sheet.Name = sheetName;
-
-            var propertyInfos = AttributesHelper.GetProperties<T>();
-
-            #region 表数据
-            int j = 0, k = 0;
-            foreach (var property in propertyInfos)
-            {
-                var attr = AttributesHelper.GetFieldAttributeDescrition<T, TitleAttribute>(property);
-                var title = attr?.Title;
-                if (title == null)
-                {
-                    continue;
-                }
-
-                #region 列头
-                sheet.Range[1, k + 1].Text = title;
-                #endregion
-
-                int i = 0;
-                foreach (var l in list)
-                {
-                    var dyg = sheet.Range[i + 2, j + 1];
-                    var type = property.PropertyType;
-                    var value = property.GetValue(l);
-                    if (type == typeof(int) || type == typeof(short) || type == typeof(long) || type == typeof(uint) || type == typeof(byte)
-                        || type == typeof(sbyte) || type == typeof(ulong))
-                    {
-                        dyg.NumberValue = double.Parse(property.GetValue(l).ToString());
-                        dyg.NumberFormat = "#,##0";
-                    }
-                    else if (type == typeof(float) || type == typeof(double) || type == typeof(decimal))
-                    {
-                        dyg.NumberValue = double.Parse(property.GetValue(l).ToString());
-                        dyg.NumberFormat = "#,##0.00";
-                    }
-                    else if (value == null)
-                    {
-                        dyg.Text = "";
-                    }
-                    else
-                    {
-                        dyg.Text = value.ToString();
-                    }
-                    //dyg.ColumnWidth = 22;
-                    //dyg.Style.Borders[BordersLineType.EdgeLeft].LineStyle = LineStyleType.Thin;//边框
-                    //dyg.Style.Borders[BordersLineType.EdgeRight].LineStyle = LineStyleType.Thin;
-                    //dyg.Style.Borders[BordersLineType.EdgeTop].LineStyle = LineStyleType.Thin;
-                    //dyg.Style.Borders[BordersLineType.EdgeBottom].LineStyle = LineStyleType.Thin;
-
-                    i++;
-                }
-                j++;
-                k++;
-            }
-            #endregion
-        }
         /// <summary>
         /// 
         /// </summary>
