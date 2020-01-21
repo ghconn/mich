@@ -40,6 +40,7 @@
             this.生成ModelMySqlSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.templatePToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.templateMySqlDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.businessBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.批量更改文件名MToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.表名和列描述DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +79,8 @@
             this.生成ModelMToolStripMenuItem,
             this.生成ModelMySqlSToolStripMenuItem,
             this.templatePToolStripMenuItem,
-            this.templateMySqlDToolStripMenuItem});
+            this.templateMySqlDToolStripMenuItem,
+            this.businessBToolStripMenuItem});
             this.生成语句BToolStripMenuItem.Name = "生成语句BToolStripMenuItem";
             this.生成语句BToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
             this.生成语句BToolStripMenuItem.Text = "构筑(&B)";
@@ -140,6 +142,13 @@
             this.templateMySqlDToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.templateMySqlDToolStripMenuItem.Text = "Template(MySql)(&D)";
             this.templateMySqlDToolStripMenuItem.Click += new System.EventHandler(this.templateMySqlDToolStripMenuItem_Click);
+            // 
+            // businessBToolStripMenuItem
+            // 
+            this.businessBToolStripMenuItem.Name = "businessBToolStripMenuItem";
+            this.businessBToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.businessBToolStripMenuItem.Text = "Business(mysql)(&B)";
+            this.businessBToolStripMenuItem.Click += new System.EventHandler(this.businessBToolStripMenuItem_Click);
             // 
             // 工具ToolStripMenuItem
             // 
@@ -229,6 +238,7 @@
         private System.Windows.Forms.ToolStripMenuItem 生成ModelMySqlSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem templateMySqlDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem templatePToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem businessBToolStripMenuItem;
     }
 }
 

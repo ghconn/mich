@@ -1,0 +1,189 @@
+<template>
+  <div class="deit">
+    <el-form :inline="true" :model="searchModel" class="form-inline" size="mini">      
+      <el-form-item>
+        <el-button type="primary" @click="Search" class="handle-del mr10 el-icon-search" size="mini">搜索</el-button>
+        <el-button v-if="[entityname]Create" type="primary" @click="add[entityname]" class="handle-del mr10 el-icon-plus" size="mini">新增</el-button>
+      </el-form-item>
+    </el-form>
+    <el-table
+      style="width: 100%;border: 1px solid aliceblue;"
+      size="small"
+      :data="dataList"
+      stripe
+      v-loading="loading"
+      element-loading-text="拼命加载中..."
+      @sort-change="SortChange"
+    >
+      <el-table-column type="index" label="序号" width="60"></el-table-column>{{0}}
+      <el-table-column label="操作" show-overflow-tooltip width="160" align="center">
+        <template slot-scope="scope">
+          <el-button type="primary" plain v-if="[entityname]Update" size="mini" @click="editDetail(scope.row)">编辑</el-button>
+          <el-button type="danger" plain v-if="[entityname]Delete" size="mini" @click="del[entityname](scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="paging.PageIndex"
+      :page-sizes="[5, 10, 20, 40]"
+      :page-size="paging.PageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="paging.TotalCount"
+    ></el-pagination>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogDetailVisible"
+      :close-on-click-modal="false"
+      :close-on-press-escape="true"
+      @close="resetDetailDialog"
+    >
+      <el-form :model="detaildialog" :rules="medelrules" ref="popdialog">{{1}}
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogDetailVisible = false" size="mini">取 消</el-button>
+        <el-button @click="submitForm" :loading="submitLoading" type="primary">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { hasPermission } from "@/utils/auth";
+export default {
+  data() {    
+    return {
+      [entityname]Create: false,
+      [entityname]Update: false,
+      [entityname]Status: false,
+      [entityname]Delete: false,
+      searchModel: {},
+      dialogDetailVisible: false,
+      dialogTitle: "",
+      detaildialog: {},
+      dataList: [],
+      messages: {
+        insertSuccess: "添加成功",
+        updateSuccess: "修改成功",
+        deleteSuccess: "删除成功",
+
+        insertError: "添加失败",
+        updateError: "修改失败",
+        deleteError: "删除失败"
+      },
+      apiUrls: {
+        searchUrl: "/api/[entityname]/Get",
+        insertUrl: "/api/[entityname]/Insert",
+        updateUrl: "/api/[entityname]/Update",
+        deleteUrl: "/api/[entityname]/Delete"
+      },
+      medelrules: {
+        Phone: [
+          { required: true, message: "请输入必填项", trigger: "change" }
+        ]
+      },
+      paging: {
+        PageSize: 10,
+        PageIndex: 1,
+        TotalCount: 0,
+        Sort: "CreateTime desc",
+        Model: {}
+      },
+      loading: true,
+      submitLoading: false
+    };
+  },
+  //控件创建成功后执行
+  created() {
+    this.[entityname]Create = hasPermission("[entityname]Create")
+    this.[entityname]Update = hasPermission("[entityname]Update")
+    this.[entityname]Status = hasPermission("[entityname]Status")
+    this.[entityname]Delete = hasPermission("[entityname]Delete")
+    this.Search()
+  },
+  methods: {
+    Search() {
+      this.paging.Model = this.searchModel
+      this.$http
+        .post(this.apiUrls.searchUrl, this.paging)
+        .then(res => {
+          this.dataList = res.Data
+          this.paging.TotalCount = res.TotalCount
+          this.loading = false
+        }, () => {});
+    },
+    SortChange: function(column) {
+      if(column.order){
+        this.paging.Sort = column.prop + " " + column.order.replace("ending", "")
+        this.Search()
+      }
+    },
+    handleSizeChange: function(size) {
+      this.paging.PageSize = size
+      this.Search()
+    },
+    handleCurrentChange: function(currentPage) {
+      this.paging.PageIndex = currentPage
+      this.Search()
+    },
+    editDetail(row) {
+      this.detaildialog = Object.assign({}, row)
+      this.dialogDetailVisible = true
+      this.dialogTitle = "修改[entitydesc]"
+    },
+    resetDetailDialog() {
+      this.detaildialog = {}
+      this.$refs.popdialog.resetFields()
+    },
+    add[entityname]() {
+      this.dialogDetailVisible = true
+      this.dialogTitle = "新增[entitydesc]"
+    },
+    del[entityname](row) {
+      this.$confirm("确定要删除吗?", "提示", { type: "warning" }).then(() => {
+        this.$http
+          .post(this.apiUrls.deleteUrl + '/' + row.ID)
+          .then(res => {
+            if (res.Status) {
+              this.$message.success(this.messages.deleteSuccess);
+              this.Search();
+            } else this.$message.error(res.Message);
+          });
+      }, () => { })
+    },
+    submitForm() {
+      this.$refs.popdialog.validate(valid => {
+        if(valid){
+          this.submitLoading = true
+
+          let iscreate = this.dialogTitle === '新增[entitydesc]'
+          let submitUrl = iscreate ? this.apiUrls.insertUrl : this.apiUrls.updateUrl
+          let successMsg = iscreate ? this.messages.insertSuccess : this.messages.updateSuccess
+
+          this.$http
+            .post(submitUrl, this.detaildialog)
+            .then(res => {
+              if (res.Status) {
+                this.$message.success(successMsg)
+                this.dialogDetailVisible = false
+                this.submitLoading = false
+                this.Search()
+              } else {
+                this.$message.error(res.Message)
+                this.submitLoading = false
+              }
+            }, () => { this.submitLoading = false });
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+.deit {
+  margin: 10px;
+  color: slategray;
+}
+</style>

@@ -269,6 +269,10 @@ namespace winch
             myConnection.Close();
         }
 
+        private void businessBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CrEntityBus(h1, DbType.mysql).Show();
+        }
     }
 
     //class Startup

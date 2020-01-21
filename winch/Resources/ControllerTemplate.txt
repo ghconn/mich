@@ -1,0 +1,133 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Chloe;
+using Core.Common;
+using Core.Repositories;
+using Core.Repositories.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+#pragma warning disable 1591
+
+namespace SmartApplication
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class [entityname]Controller : BasicController
+    {
+        private readonly IDbContext _mySqlContext;
+        public [entityname]Controller(IDbContext mySqlContext)
+        {
+            _mySqlContext = mySqlContext;
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        [HttpPost("Get")]
+        [Authorize(Policy = Permissions.[entityname]Read)]
+        public ResponseResult<[entityname]> Get([FromBody] SearchCondition<[entityname]> search)
+        {
+            var response = new ResponseResult<[entityname]>() { Status = true, Message = string.Empty };
+
+            var listModel = _mySqlContext.Query<[entityname]>(c => c.IsDel == 0 || c.IsDel == null);
+            if (search.Model != null)
+            {
+                //todo:根据条件筛选
+            }
+            if (!string.IsNullOrEmpty(search.Sort))
+            {
+                listModel = listModel.OrderBy(search.Sort);
+            }
+
+            response.Data = listModel.Skip((search.PageIndex - 1) * search.PageSize).Take(search.PageSize).ToList();
+            response.TotalCount = listModel.Count();
+            response.Status = true;
+            return response;
+        }
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("Insert")]
+        [Authorize(Policy = Permissions.[entityname]Create)]
+        public ResponseResult<[entityname]> Insert([FromBody] [entityname] model)
+        {
+            var response = new ResponseResult<[entityname]>()
+            {
+                Status = false,
+                Message = string.Empty
+            };
+
+            model.ID = Guid.NewGuid().ToString();
+            model.IsDel = 0;
+            model.SetDefault(CurrentUser, false);
+            _mySqlContext.Insert(model);
+            response.Status = true;
+            return response;
+        }
+
+
+        /// <summary>
+        /// 编辑
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("Update")]
+        [Authorize(Policy = Permissions.[entityname]Update)]
+        public ResponseResult<[entityname]> Update([FromBody] [entityname] model)
+        {
+            var response = new ResponseResult<[entityname]>()
+            {
+                Status = false,
+                Message = string.Empty
+            };
+
+            var entity = _mySqlContext.Query<[entityname]>().FirstOrDefault(m => m.ID == model.ID);
+            if (entity == null)
+            {
+                response.Message = "未找到修改的数据.";
+                return response;
+            }
+
+            model.SetDefault(CurrentUser, true);
+            var rows = _mySqlContext.Update(model);
+
+            if (rows > 0)
+                response.Status = true;
+            else
+                response.Message = "未更新任何行";
+            return response;
+        }
+
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost("Delete/{id}")]
+        [Authorize(Policy = Permissions.[entityname]Delete)]
+        public ResponseResult<[entityname]> Delete(string id)
+        {
+            var response = new ResponseResult<[entityname]>()
+            {
+                Status = false,
+                Message = string.Empty
+            };
+
+            var rows = _mySqlContext.Update<[entityname]>(m => m.ID == id, m => new [entityname]() { IsDel = 1 });
+            if (rows > 0)
+                response.Status = true;
+            else
+                response.Message = "未删除任何行";
+            return response;
+        }
+    }
+}
