@@ -69,6 +69,7 @@
     <Compile Include="CrEntityBus.Designer.cs">
       <DependentUpon>CrEntityBus.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TakeFromTemplate.cs">
       <SubType>Form</SubType>
     </Compile>

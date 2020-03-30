@@ -80,6 +80,8 @@ namespace CTest
             Console.WriteLine(s);
 
 
+
+
             //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
 
             #region onsiteapp
@@ -90,6 +92,16 @@ namespace CTest
             //Console.WriteLine(re); 
             #endregion
 
+            #region
+            //var postData = File.ReadAllText("2.json");
+            //var url = "https://ude-stg.opal.dnb.com/v2/entity/Business/CHN/job/42f5f43eede14f27a8675e93dfd6cfc1";
+            //var dict = new Dictionary<string, string>() { { "Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtpZCI6InVvYSJ9.eyJpc3MiOiJzc2p3dCIsInN1YiI6MTg5LCJpYXQiOjE1ODQ1MDIyNjcsImV4cCI6MTU4NDU0NTQ2NywiZW1haWwiOiJqaWFuZ2tldmluQGh1YXhpYWRuYi5jb20iLCJnaXZlbl9uYW1lIjoiVXNlciBBcGkgLSIsImZhbWlseV9uYW1lIjoiVURFIFRlc3QgS2V5IiwibmFtZSI6IlVzZXIgQXBpIC0gVURFIFRlc3QgS2V5IiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYXBpa2V5Iiwicm9sZXMiOlsiQkxUX1VTRVJ8QUFBQUFJQT0iLCJVRE9OX1JFQURFUnxBQUFBQUlBPSJdLCJwZXJtcyI6WyJCSUZMSVNUX0JJRkxJU1RYTUxfR0VUIiwiQklGTElTVF9CSUZMSVNUWE1MX0dFVHxBQUFBQUlBPSIsIkJMVF9BUFB8QUFBQUFJQT0iLCJCTFRfQ0hBTkdFSU5TVEFOQ0VfR0VUfEFBQUFBSUE9IiwiQkxUX0ZJTEVGT1JNQVRfR0VUfEFBQUFBSUE9IiwiQkxUX0pPQl9HRVR8QUFBQUFJQT0iLCJCTFRfSk9CSU5TVEFOQ0VfQ0xFQVJXT1JLSU5HQ09QWV9ERUxFVEV8QUFBQUFJQT0iLCJCTFRfSk9CSU5TVEFOQ0VfR0VUfEFBQUFBSUE9IiwiQkxUX0pPQklOU1RBTkNFX1BVU0hUT1BST0RfUE9TVHxBQUFBQUlBPSIsIkJMVF9SRVFVRVNUSk9CSU5TVEFOQ0VVUExPQURVUkxfUE9TVHxBQUFBQUlBPSIsIkJMVF9SVUxFX0dFVHxBQUFBQUlBPSIsIkJMVF9XT1JLRkxPV19HRVR8QUFBQUFJQT0iLCJHRU9SRUZfQ09VTlRSSUVTX0dFVCIsIkdFT1JFRl9DT1VOVFJJRVNfR0VUfEFRQUFBQT09IiwiR0VPUkVGX1JFR0lPTlNfR0VUIiwiR0VPUkVGX1JFR0lPTlNfR0VUfEFRQUFBQT09IiwiVURPTl9EVU5TRE9DX0RFV1NXT1JLSU5HQ09QWV9HRVQiLCJVRE9OX0RVTlNET0NfREVXU1dPUktJTkdDT1BZX0dFVHxBQUFBQUlBPSIsIlVET05fRFVOU0RPQ19QUk9EVUNUSU9OX0dFVCIsIlVET05fRFVOU0RPQ19QUk9EVUNUSU9OX0dFVHxBQUFBQUlBPSIsIlVNTV9BUFAiLCJVTU1fQVBQfEFBQUFBSUE9Il19.ir_3jsFZ3aiD8DEMiCL4YyQGcX_UAZO3FoFPvxVWRkuWhOQzAOuYf46DoDo3Lmnymy9z-bE91wcxHQVE0otp6XSDe5B248XmjgBHidn80Jg3hwtctLRSZR-VAIwPEqFRrPOxrieyVYO2W58j47lqUb2vzphlr9nmJrcx-LWOIrWWTp1SY2RrCW8Hq_sdKtTFEeGvfCAwn5PTFIfQrzY6B8GFmRkxX0uOwR1WoApp9hjrVXbZEYUcQe7pisjak5CvfQUs2SeJDIWxNPQ9km9w6oRmgW9C3DJjr0sevraBMXsTEQF5q2NpV6e4OWo5WvFLOIkTz0F2bAlzV2_7Ak79HQ" } };
+            //var accept = new List<string>() { "application/json", "charset=utf-8" };
+
+            //HttpCreator.Create(url, "post", null, postData, "raw", null, null, accept, dict, out string str);
+
+            //Console.WriteLine(str);
+            #endregion
 
             #region thrift client
             //try
@@ -409,6 +421,15 @@ namespace CTest
         public List<xx> children { get; set; }
     }
 
+    public class yy
+    {
+        public string label { get; set; }
+        public DateTime dt { get; set; }
+
+
+        //var json = "[{\"label\":\"a\",\"dt\":\"2020-03-30 11:47:00\"},{\"label\":\"b\",\"dt\":\"2020-04-01 11:47:00\"},{\"label\":\"c\",\"dt\":\"2020-03-31 11:47:00\"}]";
+        //var xxList = j.ParseModel<List<yy>>(json);
+    }
     public class Re_Statu
     {
         public bool isSucceeded { get; set; }

@@ -13,6 +13,7 @@ namespace winch
     {
         tpc.h h;
         DbType DbType;
+        bool _lowerFirstChar = false;
 
         string connStr = "server=172.18.132.136;port=3306;database=attendmn;uid=root;pwd=pactera;charset=utf8";
         string folder = "FromTemplate";
@@ -22,6 +23,7 @@ namespace winch
         {
             InitializeComponent();
             connStr = System.Configuration.ConfigurationManager.AppSettings["mysql"];
+            _lowerFirstChar = System.Configuration.ConfigurationManager.AppSettings["lowerFirstChar"] == "1";
         }
 
         public TakeFromTemplate(tpc.h h, DbType dbType = DbType.sqlserver) : this()
@@ -62,6 +64,7 @@ namespace winch
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<挂起>")]
         private void TileLabelMySql(string key)
         {
             DataSet set = new DataSet();
@@ -203,8 +206,8 @@ namespace winch
             for (var i = 0; i < dv.Count; ++i)
             {
                 var row = dv[i];
-                sb.Append(textBox2.Text.Replace("[表名]", tname)
-                    .Replace("[列名]", row["列名"].ToString())
+                sb.Append(textBox2.Text.Replace("[表名]", tname.ToLowerFirstChar(_lowerFirstChar))
+                    .Replace("[列名]", row["列名"].ToString().ToLowerFirstChar(_lowerFirstChar))
                     .Replace("[列说明]", row["列说明"].ToString())
                     .Replace("[序号]", row["序号"].ToString())
                     .Replace("[默认值]", row["默认值"].ToString())
@@ -215,7 +218,7 @@ namespace winch
                     sb.Append(br);
             }
 
-            tpc.f.TextCreateToFile(folder + "\\" + tname + ".txt", sb.ToString());
+            tpc.f.TextCreateToFile(folder + "\\" + tname.ToLowerFirstChar(_lowerFirstChar) + ".txt", sb.ToString());
         }
         
         private void SelectToMySql(string text)
@@ -281,8 +284,8 @@ namespace winch
             for(var i = 0; i < dv.Count; ++i)
             {
                 var row = dv[i];
-                sb.Append(textBox2.Text.Replace("[表名]", text)
-                    .Replace("[列名]", row["列名"].ToString())
+                sb.Append(textBox2.Text.Replace("[表名]", text.ToLowerFirstChar(_lowerFirstChar))
+                    .Replace("[列名]", row["列名"].ToString().ToLowerFirstChar(_lowerFirstChar))
                     .Replace("[列说明]", row["列说明"].ToString())
                     .Replace("[序号]", row["序号"].ToString())
                     .Replace("[默认值]", row["默认值"].ToString())
@@ -294,7 +297,22 @@ namespace winch
             }
 
             tpc.f.TextCreateToFile(folder + "\\" + text + ".txt", sb.ToString());
+        }        
+    }
+
+    public static class Extend
+    {
+        public static string ToLowerFirstChar(this string source, bool flag)
+        {
+            if (!flag)
+            {
+                return source;
+            }
+            if (string.IsNullOrEmpty(source))
+            {
+                throw new ArgumentNullException();
+            }
+            return source.Substring(0, 1).ToLower() + source.Substring(1);
         }
-        
     }
 }

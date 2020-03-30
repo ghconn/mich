@@ -1,0 +1,52 @@
+﻿{
+  "status": {
+    "error": false,
+    "code": 200,
+    "type": "success",
+    "message": "Success"
+  },
+  "pagination": {
+    "before_cursor": null,
+    "after_cursor": null,
+    "previous_link": null,
+    "next_link": null
+  },
+  "data": [
+    {
+      "activated_at": "2020-03-19T03:27:06.160Z",
+      "created_at": "2020-03-19T03:10:09.057Z",
+      "email": "guodong.huang1@pactera.com",
+      "username": null,
+      "firstname": "Guodong",
+      "group_id": null,
+      "id": 74628036,
+      "invalid_login_attempts": 0,
+      "invitation_sent_at": "2020-03-19T03:10:09.032Z",
+      "last_login": "2020-03-24T09:13:42.952Z",
+      "lastname": "Huang",
+      "locked_until": null,
+      "comment": null,
+      "openid_name": "guodong.huang1",
+      "locale_code": null,
+      "preferred_locale_code": null,
+      "password_changed_at": "2020-03-19T03:27:06.505Z",
+      "phone": null,
+      "status": 1,
+      "updated_at": "2020-03-24T09:13:42.968Z",
+      "distinguished_name": null,
+      "external_id": null,
+      "directory_id": null,
+      "member_of": null,
+      "samaccountname": null,
+      "userprincipalname": null,
+      "manager_ad_id": null,
+      "manager_user_id": null,
+      "role_id": [ 325337 ],
+      "company": null,
+      "department": null,
+      "title": null,
+      "state": 1,
+      "trusted_idp_id": null
+    }
+  ]
+}

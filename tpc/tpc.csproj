@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributesHelper.cs" />
+    <Compile Include="HttpCreator.cs" />
     <Compile Include="NetMail.cs" />
     <Compile Include="office\ExcelFileHelper.cs" />
     <Compile Include="rror.cs" />

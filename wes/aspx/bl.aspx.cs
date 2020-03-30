@@ -32,7 +32,9 @@ namespace wes.aspx
             //Response.Write(Regex.Match("td:nth-child(23)", "\\d+").Value);
 
             //var s = System.Reflection.Assembly.Load("bp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
-            
+
+
+
         }
 
         public bool NotHasRpt<T>(IEnumerable<T> enumrable, IEqualityComparer<T> equality = null)

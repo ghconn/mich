@@ -22,6 +22,11 @@ execute sp_addextendedproperty 'MS_Description', '这是描述', 'user', 'dbo', 
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', '这是描述', 'user', @CurrentUser, 'table', 'table1', 'column', 'column1'
+--修改字段描述
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_updateextendedproperty 'MS_Description', '这是描述', 'user', @CurrentUser, 'table', 'table1', 'column', 'column1'
+
 
 --将一列的值合并在一起成为一行数据，中间用","分隔
 select stuff(( select  ',' + colname from tablename for xml path('')), 1, 1, '') as name

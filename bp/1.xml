@@ -1,7 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<cb_BudgetUse CfSource="合同" RefType="合同" CfTypeName="签约金额" ContractGUID="512bc603-cfd7-44d5-bed7-7f6e55312ba5" RefGUID="512bc603-cfd7-44d5-bed7-7f6e55312ba5">
-  <DataList>
-    <Row CostGUID="783c16b8-2aa1-4601-be6e-6f53b0f51fa1" oid="ddd91517-3503-e911-80dc-00155d0b0c04" BalanceMode="0" NewBudgetName="" BalanceModeRemarks="" BudgetGUID="9f1b98fc-0309-4faf-ba57-e7c208c6617d" BudgetName="政府地价及相关费用-1-1" CfAmount="5.0000" BudgetAmount="7.0000" ProjectCode="02.01523.01" CostCode="A.01.01.01" ProjectName="拈衣十八跌-一成" IsNotJsCost="1" IfValid="0" HTBalanceGUID="" YgAlterAmount="2.0000" HtYgAlterAmount="0.0000" YgAlterAdj="0.0000" SumAlterAmount="0.0000" YgAlterCR="0.0000" ProjectGUID="4813784f-4bee-45d5-a678-323a97210959" Level="3" QrAmount="0.0000" QrAmountSP="0.0000" IsSGCR="0" IsQr="0" YgAlterAmountSP="0.0000" YgCfAmount="0" CostName="政府地价及相关费用" AlterCfAmount="0.0000" ApplyCfAmount="0.0000" QRHtYgAlterAmount="0.0000" QRYgAlterAdj="0.0000" QRSumAlterAmount="0.0000" LastQRAmount="0.0000"/>
-    <Row CostGUID="71795a7f-a594-4cd8-a0ee-21460e818df4" oid="dcd91517-3503-e911-80dc-00155d0b0c04" BalanceMode="0" NewBudgetName="合作款项-1-1" BalanceModeRemarks="" BudgetGUID="b7532656-ce83-44f5-ae55-26b00ef86a4b" BudgetName="合作款项-1" CfAmount="2.0000" BudgetAmount="2.0000" ProjectCode="02.01523.01" CostCode="A.01.01.02" ProjectName="拈衣十八跌-一成" IsNotJsCost="1" IfValid="0" HTBalanceGUID="" YgAlterAmount="0.0000" HtYgAlterAmount="0.0000" YgAlterAdj="0.0000" SumAlterAmount="0.0000" YgAlterCR="0.0000" ProjectGUID="4813784f-4bee-45d5-a678-323a97210959" Level="2" QrAmount="0.0000" QrAmountSP="0.0000" IsSGCR="0" IsQr="0" YgAlterAmountSP="0.0000" YgCfAmount="0" CostName="合作款项" AlterCfAmount="0.0000" ApplyCfAmount="0.0000" QRHtYgAlterAmount="0.0000" QRYgAlterAdj="0.0000" QRSumAlterAmount="0.0000" LastQRAmount="0.0000"/>
-  </DataList>
-</cb_BudgetUse>
+﻿<samlp:Response xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="R1cfe0f096408dd3a4d21ca15d02329b7997ef2d1" Version="2.0" IssueInstant="2020-03-20T07:17:12Z" Destination="http://localhost:64978/api/Saml/Callback" InResponseTo="idbcc98957fe18439e959db9e06fdb84fb">
+  <saml:Issuer>https://app.onelogin.com/saml/metadata/2d37234e-e25c-46cc-ba4e-2d5f80054d87</saml:Issuer>
+  <samlp:Status>
+    <samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success" />
+  </samlp:Status>
+  <saml:Assertion xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" ID="pfx4487c8f2-c1dc-ce04-ee55-b4288bab685e" IssueInstant="2020-03-20T07:17:12Z">
+    <saml:Issuer>https://app.onelogin.com/saml/metadata/2d37234e-e25c-46cc-ba4e-2d5f80054d87</saml:Issuer>
+    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+      <ds:SignedInfo>
+        <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+        <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+        <ds:Reference URI="#pfx4487c8f2-c1dc-ce04-ee55-b4288bab685e">
+          <ds:Transforms>
+            <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+            <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+          </ds:Transforms>
+          <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+          <ds:DigestValue>GRmyj3PqkSiFGCxvX9maze+vnC9yZfefvwI9iOWil2I=</ds:DigestValue>
+        </ds:Reference>
+      </ds:SignedInfo>
+      <ds:SignatureValue>hAiAZbjRRjNXdrJhfF4lZ/ztilAOSs1ldWeQ6htksxmislI/nq0P4+J1LJpzjKsTORzujwmsHDb0iQV5Iek6q+KE8HlEZD0NDcqL1gQlWQD1fwTvkKW8LqYVGEjlYySbrvgCmsgOul7fWknSuGR0TwmUdxxsoU5kmUddllTfPLHNGmLkSsj5bq6FD7NCaBj2KKFg5fwJDkZD8Ek3XEcEcG3DwcvD8xaXzUYM8TyXydfxnoln2ZfYJJ078B+3TJF3Y2AViGMJG+Nk//Zlbli+eOjc2ZF94CwOpgYt3FERwt+rmJKiq0WyPz0QXdkoYmyCamiR8hI9jPUig/qHr6g3Aw==</ds:SignatureValue>
+      <ds:KeyInfo>
+        <ds:X509Data>
+          <ds:X509Certificate>MIIENjCCAx6gAwIBAgIUIF8aTmMY0mBwHkGokTKM9JWY/d4wDQYJKoZIhvcNAQEFBQAwXDELMAkGA1UEBhMCVVMxFDASBgNVBAoMC3BhY3RlcmEtaGdkMRUwEwYDVQQLDAxPbmVMb2dpbiBJZFAxIDAeBgNVBAMMF09uZUxvZ2luIEFjY291bnQgMTY2MzQxMB4XDTIwMDMxOTA3MTk0MFoXDTI1MDMxOTA3MTk0MFowXDELMAkGA1UEBhMCVVMxFDASBgNVBAoMC3BhY3RlcmEtaGdkMRUwEwYDVQQLDAxPbmVMb2dpbiBJZFAxIDAeBgNVBAMMF09uZUxvZ2luIEFjY291bnQgMTY2MzQxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1XKo7fED/CZNyt/f4EOMT5E3JDS2vENtea0jES9dE+TsV1+UacbvCwWoYdOqjr/2AF7GM+LRvTzK7vDj3FKgA2zFF5BAwQFkl5OdTetI0sCv/Hoa/iCTbvkbf/g5ViPCgvu0RdYhddCFM2zR46iJXMAp2Mm+J4vFoUCbANsnhAGgTd8kD4DusYbzDolsX0nmUrC/TzltEQYgHmvPBzanz86ioudPvDlE9n3PykEkHQHwoMKaQFAxb2why4s2GxyjP9SU94FVqX7TZynqTcrrOQVhjC81+MtwgvNnZomP8a1nmI5T8vC8JMzPahpubWp+wXpOExiDE3IO1i10r1VT4QIDAQABo4HvMIHsMA4GA1UdDwEB/wQEAwICBDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSSP43Re1970KvR2UpkL2jgkntIDTCBmQYDVR0jBIGRMIGOgBSSP43Re1970KvR2UpkL2jgkntIDaFgpF4wXDELMAkGA1UEBhMCVVMxFDASBgNVBAoMC3BhY3RlcmEtaGdkMRUwEwYDVQQLDAxPbmVMb2dpbiBJZFAxIDAeBgNVBAMMF09uZUxvZ2luIEFjY291bnQgMTY2MzQxghQgXxpOYxjSYHAeQaiRMoz0lZj93jAOBgNVHQ8BAf8EBAMCB4AwDQYJKoZIhvcNAQEFBQADggEBAD5PAT6SRnQ/3AGu3W3D9P7kR3QB/VKoV3m4fkJr81t/7VoOhddTdLCYOHSI/M4HZq+5ZqrFexhDIA6kqfHYqua+PrE7wltp4k8Ir7KBxGAdjmAAYb88QdmdJR5ukQ7huWnhIGsicfVsQ7sGMP6qVTVYsqOTB+AVI/Vsg5/idR3uOCnKqeh/rA+6fjIEhnYR5Ifx9xgVOAM5KSgA+ACE5qQJTky6Owq9Rr85HZtAgRX5IvgvpY5Sng453VZY8PQIEVX1jEFJyDpGeHc2dlRiYH21mSCPLyYeKiFDupVcIXeXGTi/IG5aL44Xz7TstG4Xp9Hhah4elzmnfYqYcxsQKhU=</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </ds:Signature>
+    <saml:Subject>
+      <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient">guodong.huang1@pactera.com</saml:NameID>
+      <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+        <saml:SubjectConfirmationData NotOnOrAfter="2020-03-20T07:20:12Z" Recipient="http://localhost:64978/api/Saml/Callback" InResponseTo="idbcc98957fe18439e959db9e06fdb84fb" />
+      </saml:SubjectConfirmation>
+    </saml:Subject>
+    <saml:Conditions NotBefore="2020-03-20T07:14:12Z" NotOnOrAfter="2020-03-20T07:20:12Z">
+      <saml:AudienceRestriction>
+        <saml:Audience>http://localhost:64978/saml2</saml:Audience>
+      </saml:AudienceRestriction>
+    </saml:Conditions>
+    <saml:AuthnStatement AuthnInstant="2020-03-20T07:17:11Z" SessionNotOnOrAfter="2020-03-21T07:17:12Z" SessionIndex="_be2f7dc0-4ca8-0138-5673-0abe7357b131">
+      <saml:AuthnContext>
+        <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextClassRef>
+      </saml:AuthnContext>
+    </saml:AuthnStatement>
+  </saml:Assertion>
+</samlp:Response>
