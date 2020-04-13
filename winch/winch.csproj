@@ -176,6 +176,14 @@
   <ItemGroup>
     <None Include="Resources\ControllerTemplate.txt" />
     <None Include="Resources\VueTemplate.txt" />
+    <Content Include="dllref\Microsoft.mshtml.dll" />
+    <Content Include="dllref\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
+    <Content Include="dllref\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <Content Include="dllref\MySql.Data.dll" />
+    <Content Include="dllref\Newtonsoft.Json.dll" />
+    <Content Include="dllref\Spire.License.dll" />
+    <Content Include="dllref\Spire.Pdf.dll" />
+    <Content Include="dllref\Spire.XLS.dll" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />

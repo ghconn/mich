@@ -80,7 +80,9 @@ namespace CTest
             Console.WriteLine(s);
 
 
-
+            //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
+            //WebServer.port = 8999;
+            //WebServer.Start();
 
             //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
 
