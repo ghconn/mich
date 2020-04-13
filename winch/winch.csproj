@@ -179,6 +179,9 @@
     <Content Include="dllref\Microsoft.mshtml.dll" />
     <Content Include="dllref\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
     <Content Include="dllref\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <Content Include="dllref\Microsoft.Practices.ServiceLocation.dll" />
+    <Content Include="dllref\Microsoft.Practices.Unity.dll" />
+    <Content Include="dllref\Microsoft.Practices.Unity.Interception.dll" />
     <Content Include="dllref\MySql.Data.dll" />
     <Content Include="dllref\Newtonsoft.Json.dll" />
     <Content Include="dllref\Spire.License.dll" />
