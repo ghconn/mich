@@ -1,0 +1,21 @@
+﻿<template>
+  <view class="container found-all-act">
+    <view class="act-item"
+			v-for="(a, i) in dataList"
+			:key="i"
+			:style="'background: url(' + (a.ImgUrl ? filePath + a.ImgUrl : '/static/images/no_data_01.png') + ')'">
+      <view class="act-summary">
+        <view class="__left">
+          <view class="__top">
+            <view
+							:class="{tag : true, green: (a.IsMyAct || a.SignStatus === 1), grey: (!a.IsMyAct a.SignStatus === 2)}"
+							v-if="a.IsMyAct || a.SignStatus !== 0">
+              {{fTag(a.IsMyAct, a.SignStatus)}}
+            </view>
+            <view class="title">{{a.Title}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

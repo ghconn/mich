@@ -129,7 +129,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Name = "TakeFromTemplate";
-            this.Text = "Model";
+            this.Text = "Template";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);

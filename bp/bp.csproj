@@ -33,6 +33,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="2.xml" />
     <Content Include="1.txt" />
     <Content Include="1.xml" />
     <Content Include="2.txt" />
