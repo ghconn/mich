@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<style type="text/css">
+		body {
+			font-size: small;
+			font-family: Arial, 'Microsoft YaHei';
+		}
+
+		.pnl {
+			width: 60%;
+			min-width: 600px;
+			margin: 0 auto;
+		}
+
+		@media screen and (max-width: 900px) {
+			.pnl {
+				min-width: 300px;
+			}
+		}
+
+		.hln {
+			margin-bottom: 20px;
+		}
+
+		.pnl textarea {
+			padding-left: 5px;
+			width: 100%;
+		}
+
+		.ppinput {
+			border: 1px solid #cccccc;
+			outline: none;
+		}
+
+		.ppinput:focus {
+			border: 1px solid #a5a5a5;
+		}
+
+		.ops {
+			text-align: right;
+		}
+
+		.advanced {
+			margin-top: 20px;
+		}
+
+		.advanced div {
+			text-align: right;
+		}
+
+		.advanced .link {
+			font-size: smaller;
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+		.advanced hid {
+			display: none;
+			border-top: 1px solid #cccccc;
+			padding: 20px 0;
+		}
+
+		hid .option {
+			margin-bottom: 10px;
+		}
+
+		.popup {
+			padding: 10px 20px;
+			position: absolute;
+			background: rgba(200, 200, 200, 0.3);
+			color: #808080;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="pnl">
+		<span>输入：json字符串</span>
+		<section class="hln">
+			<textarea id="in" rows="10" onchange="doit()" class="ppinput"></textarea>
+		</section>
+		<span>输出：</span>
+		<section class="hln">
+			<textarea id="out" rows="10" class="ppinput"></textarea>
+		</section>
+		<section class="ops">
+			<button onclick="cp_out(this)">复制</button>
+			<button onclick="save(this)">生成文件</button>
+		</section>
+		<section class="advanced">
+			<div>
+				<span class="link" onclick="toggleadoptions()">future</span>
+			</div>
+			<hid>
+				<div class="option">
+					<label>
+						<input type="radio" name="option1" value="1" />
+						只考虑对象{}
+					</label>
+					<label>
+						<input type="radio" name="option1" value="0" checked />
+						兼顾数组[]及中间不同类型的单值
+					</label>
+				</div>
+				<div class="option">
+					<label>
+						文件名
+						<input type="text" value="Entity.cs" id="fn" class="ppinput" />
+					</label>
+					<label>
+						类名
+						<input type="text" value="Top" id="cn" class="ppinput" />
+					</label>
+				</div>
+				<div class="option">
+					浮点类型使用
+					<label>
+						<input type="radio" name="option2" value="1" checked />
+						decimal
+					</label>
+					<label>
+						<input type="radio" name="option2" value="2" />
+						float
+					</label>
+				</div>
+				<div class="option" onclick="setplaceholder()">
+					<label>
+						<input type="radio" name="option5" value="1" checked />
+						显示示例
+					</label>
+					<label>
+						<input type="radio" name="option5" value="2" />
+						隐藏
+					</label>
+				</div>
+			</hid>
+		</section>
+	</div>
+
+	<script>
+		const setplaceholder = _ => {
+			var isshow = document.getElementsByName('option5')[0].checked
+			if (isshow)
+				s.setAttribute('placeholder', egs.join('\n'))
+			else
+				s.setAttribute('placeholder', '')
+		}
+		const showtip = (txt, $host) => {
+			var popup = document.createElement('div')
+			popup.className = 'popup'
+			popup.style.left = $host.offsetLeft + 'px'
+			popup.style.top = $host.offsetTop - 100 + 'px'
+			popup.innerText = txt
+			document.body.appendChild(popup)
+			setTimeout(() => {
+				popup.remove()
+			}, 1500)
+		}
+	</script>
+	<script>
+		let s = document.querySelector('#in')
+		let o = document.querySelector('#out')
+		let cn = document.querySelector('#cn')
+
+		let egs = ["例(简单对象):{\"a\": 1, \"b\": \"x\"}"]
+		egs.push("例(复杂对象):[1.2, true, {\"a\": \"x\", \"b\": [{\"a\": 0, \"b\": null}]}]")
+		egs.push("例(单个值):true")
+		egs.push("")
+		egs.push("键名双引号能自动补全，例{a: 1, b: \"x\"}//自动补全键名不支持汉字")
+		setplaceholder()
+
+		const cp_out = _ => {
+			txt = document.createElement('textarea')
+			txt.value = o.value
+			document.body.appendChild(txt)
+			txt.select()
+			document.execCommand('copy')
+			txt.remove()
+
+			showtip('复制成功', _)
+		}
+
+		const save = _ => {
+			const data = o.value
+			const blob = new Blob([data], { type: "text/plain" })
+			const a = document.createElement("a")
+			a.href = URL.createObjectURL(blob)
+			a.download = "Entity.cs"
+			a.click()
+			URL.revokeObjectURL(a.href)
+			a.remove()
+		}
+
+		const toggleadoptions = _ => {
+			hid = document.querySelector('hid')
+			hid.style.display = hid.style.display === 'block' ? 'none' : 'block'
+		}
+
+		const doit = _ => {
+			s.value = s.value.replace(/(\w\s*)(:)/g, (m, n, o, p, q) => `"${n}"${o}`)
+			let json = s.value
+			o.value = json2entity(json)
+		}
+
+		//test ok//{"a": [2,3,{"a": "x"}], "b": 1, "c":{"d":1,"e":{"a":1}}}
+		//test ok//[{"a":1},{"a":2},{"a":"x"}]
+		//test ok//{"a": 1, "b": "c", "c": null, "d": true, "e": {"x": true, "y": null, "a": 0, "b": {"c": 1.2}}}
+		//test ok//{"x":[[]]}
+		//test ok//[[],[]]
+
+		const json2entity = json => {
+			if (!json.replace(/s/g, '')) {
+				return ''
+			}
+			if (json.indexOf('[') === -1 && json.indexOf('{') === -1) {
+				try {
+					let re = JSON.parse(json)
+					if (typeof re === 'boolean') {
+						return `bool b = ${re}`
+					}
+					if (typeof re === 'number') {
+						if (json.indexOf('.') === -1) {
+							return `int i = ${re}`
+						}
+						return `decimal d = ${re}m`
+					}
+					if (re === null) {
+						return 'var n = null;//出题太为难人了'
+					}
+					if (typeof re === 'string') {
+						var at = re.indexOf('\n') !== -1 ? '@' : ''
+						return `string s = ${at}"${re}"`
+					}
+				} catch {
+					showtip('输入有误', o)
+					return ''
+				}
+			}
+			let obj = {}
+			try {
+				obj = JSON.parse(json)
+			} catch {
+				showtip('输入有误', o)
+				return ''
+			}
+
+			let re = ''
+			const gen = (_, level, pname) => {
+				let tab = '\t'.repeat(level)
+				let tab2 = tab + '\t'
+				if (Array.isArray(_)) {
+					let temp = []
+					let tempnorepeat = []
+					_.forEach(el => {
+						if (Array.isArray(el)) {
+							temp.push('array')
+							if (tempnorepeat.indexOf('array') === -1) {
+								tempnorepeat.push('array')
+							}
+						} else {
+							temp.push(typeof el)
+							if (tempnorepeat.indexOf(typeof el) === -1) {
+								tempnorepeat.push(typeof el)
+							}
+						}
+					})
+
+					if (tempnorepeat.length === 0) {
+						re += `${tab2}public List<object> ${pname || 'NullArray'} {get; set;}\n`
+					}
+					if(tempnorepeat.length > 1) {
+						re += `${tab2}public List<object> ${pname || 'NonArray'} {get; set;}\n`
+						temp.forEach((tp, i) => {
+							if(tp === 'array') {
+								gen(_[i], level)//??
+							}
+							if(tp === 'object') {
+								re += `${tab2}public Sub${level * 100 + i} Sub${level * 100 + i} {get; set;}\n`
+								gen(_[i], level + 1, 'Sub' + (level * 100 + i))
+							}
+						})
+					}
+					if(tempnorepeat.length === 1) {
+						if(tempnorepeat[0] === 'array') {
+							let dr = []
+							let fragment = {}
+							
+							dept(_, 1, dr, fragment)
+							let layer = Math.min(...dr)
+							let leftbracket = 'List<'.repeat(layer)
+							let rightbracket = '>'.repeat(layer)
+							re += `${tab2}public ${leftbracket}object${rightbracket} ${pname || 'NonArray'} {get; set;}\n`
+							for(p in fragment) {
+								gen(fragment[p], level + 1)
+							}
+						}
+						if(tempnorepeat[0] === 'object') {
+							re += `${tab2}public List<${pname || 'Sub'}> ${pname || 'NonArray'} {get; set;}\n`
+							re += `${tab2}public class ${pname || 'Sub'}\n${tab2}{\n`
+							let tabc = tab2 + '\t'
+							let psumry = {}
+							let ii = 0
+							for(m of _) {
+								for(p in m) {
+									ii++
+									let tp = Array.isArray(m[p]) ? 'array' : typeof m[p]
+									if(psumry[p]) {
+										if(psumry[p] !== tp) {
+											if (tp === 'boolean') {
+												re += `${tabc}public bool ${p}${ii} {get; set;}\n`
+											}
+											if (tp === 'number') {
+												if ((m[p] + '').indexOf('.') === -1) {
+													re += `${tabc}public int ${p}${ii} {get; set;}\n`
+												} else {
+													re += `${tabc}public decimal ${p}${ii} {get; set;}\n`
+												}
+											}
+											if (m[p] === null) {
+												re += `${tabc}public object ${p}${ii} {get; set;}\n`
+											}
+											if (tp === 'string') {
+												re += `${tabc}public string ${p}${ii} {get; set;}\n`
+											}
+											if (m[p] !== null && tp === 'object') {
+												re += `${tabc}public ${p}${ii} ${p}${ii} {get; set;}\n`
+												gen(m[p], level + 1, p + ii)
+											}
+											if(tp === 'array') {
+												gen(m[p], level, p + ii)
+											}
+										}
+									} else {
+										psumry[p] = tp
+										if (tp === 'boolean') {
+											re += `${tabc}public bool ${p} {get; set;}\n`
+										}
+										if (tp === 'number') {
+											if ((m[p] + '').indexOf('.') === -1) {
+												re += `${tabc}public int ${p} {get; set;}\n`
+											} else {
+												re += `${tabc}public decimal ${p} {get; set;}\n`
+											}
+										}
+										if (m[p] === null) {
+											re += `${tabc}public object ${p} {get; set;}\n`
+										}
+										if (tp === 'string') {
+											re += `${tabc}public string ${p} {get; set;}\n`
+										}
+										if (m[p] !== null && tp === 'object') {
+											re += `${tabc}public ${p} ${p} {get; set;}\n`
+											gen(m[p], level + 1, p)
+										}
+										if(tp === 'array') {
+											gen(m[p], level, p)
+										}
+									}
+								}
+							}
+							re += `${tab2}}\n`
+						}
+					}
+				} else {
+					re += `${tab}public class ${pname || 'Top'}\n${tab}{\n`
+					for (p in _) {
+						let tp = Array.isArray(_[p]) ? 'array' : typeof _[p]
+						if (tp === 'boolean') {
+							re += `${tab2}public bool ${p} {get; set;}\n`
+						}
+						if (tp === 'number') {
+							if ((_[p] + '').indexOf('.') === -1) {
+								re += `${tab2}public int ${p} {get; set;}\n`
+							} else {
+								re += `${tab2}public decimal ${p} {get; set;}\n`
+							}
+						}
+						if (_[p] === null) {
+							re += `${tab2}public object ${p} {get; set;}\n`
+						}
+						if (tp === 'string') {
+							re += `${tab2}public string ${p} {get; set;}\n`
+						}
+						if (_[p] !== null && tp === 'object') {
+							re += `${tab2}public ${p} ${p} {get; set;}\n`
+							gen(_[p], level + 1, p)
+						}
+						if(tp === 'array') {
+							gen(_[p], level, p)
+						}
+					}
+					re += `${tab}}\n`
+				}
+			}
+
+			if(Array.isArray(obj)) {
+				re += 'public class Top\n{\n'
+			}
+			gen(obj, 0)
+			if(Array.isArray(obj)) {
+				re += '}'
+			}
+			return re
+		}
+
+		const dept = (_, layer, dr, fragment) => {
+			let arrnorepeat = []
+			_.forEach((v, i) => {
+				if (Array.isArray(v)) {
+					if (arrnorepeat.indexOf('array') === -1) {
+						arrnorepeat.push('array')
+					}
+				} else {
+					if (arrnorepeat.indexOf(typeof v) === -1) {
+						arrnorepeat.push(typeof v)
+					}
+					if(typeof v === 'object') {
+						fragment['SubInArr' + (layer * 100 + i)] = v
+					}
+				}
+			})
+			if(arrnorepeat.length === 1 && arrnorepeat[0] === 'array') {
+				_.forEach(v => dept(v, layer + 1, dr, fragment))
+			}
+			else {
+				dr.push(layer)
+			}
+		}
+
+
+		/* const json2entity2 = json => {
+			if (!json.replace(/s/g, '')) {
+				return ''
+			}
+			if (json.indexOf('[') === -1 && json.indexOf('{') === -1) {
+				try {
+					let re = JSON.parse(json)
+					if (typeof re === 'boolean') {
+						return `bool b = ${re}`
+					}
+					if (typeof re === 'number') {
+						if (json.indexOf('.') === -1) {
+							return `int i = ${re}`
+						}
+						return `decimal d = ${re}m`
+					}
+					if (re === null) {
+						return 'var n = null;//出题太为难人了'
+					}
+					if (typeof re === 'string') {
+						var at = re.indexOf('\n') !== -1 ? '@' : ''
+						return `string s = ${at}"${re}"`
+					}
+				} catch {
+					showtip('输入有误', o)
+					return ''
+				}
+			}
+			let obj = {}
+			try {
+				obj = JSON.parse(json)
+			} catch {
+				showtip('输入有误', o)
+				return ''
+			}
+
+			let re = `public class Top\n{\n`
+			const gen = (_, level) => {
+				let tab = '\t'.repeat(level)
+				if (Array.isArray(_)) {
+					let temp = []
+					let tempnorepeat = []
+					_.forEach(el => {
+						if (Array.isArray(el)) {
+							temp.push('array')
+							if (tempnorepeat.indexOf('array') === -1) {
+								tempnorepeat.push('array')
+							}
+						} else {
+							temp.push(typeof el)
+							if (tempnorepeat.indexOf(typeof el) === -1) {
+								tempnorepeat.push(typeof el)
+							}
+						}
+					})
+
+					if (tempnorepeat.length === 0) {
+						re += `${tab}public List<object> NonArray {get; set;}\n`
+					}
+					if (tempnorepeat.length > 1) {
+						re += `${tab}public List<object> NonArray {get; set;}\n`
+						temp.forEach((tp, i) => {
+							if(tp === 'array') {
+								
+							}
+							if(tp === 'object') {
+								re += `${tab}public Sub Sub {get; set;}\n`
+								re += `${tab}public class Sub\n${tab}{\n`
+								gen(_[i], level + 1)
+								re += `${tab}}\n`
+							}
+						})
+					}
+					if (tempnorepeat.length === 1) {
+						switch (tempnorepeat[0]) {
+							case 'array':
+								re += `${tab}public List<List<object>> Array {get; set;}`;
+								break;
+							case 'object':
+								re += `${tab}public List<Sub> ObjArray {get; set;}\n`
+								re += `${tab}public class Sub\n${tab}{\n`
+								let psumry = {}
+								let ii = 0
+								for(m of _) {
+									for(p in m) {
+										ii++
+										let tp = Array.isArray(m[p]) ? 'array' : typeof m[p]
+										if(psumry[p]) {
+											if(psumry[p] !== tp) {
+												if (tp === 'boolean') {
+													re += `${tab}public bool ${p}${ii} {get; set;}\n`
+												}
+												if (tp === 'number') {
+													if ((m[p] + '').indexOf('.') === -1) {
+														re += `${tab}public int ${p}${ii} {get; set;}\n`
+													} else {
+														re += `${tab}public decimal ${p}${ii} {get; set;}\n`
+													}
+												}
+												if (m[p] === null) {
+													re += `${tab}public object ${p}${ii} {get; set;}\n`
+												}
+												if (tp === 'string') {
+													re += `${tab}public string ${p}${ii} {get; set;}\n`
+												}
+												if (m[p] !== null && tp === 'object') {
+													re += `${tab}public ${p}${ii} ${p}${ii} {get; set;}\n`
+													re += `${tab}public class ${p}${ii}\n${tab}{\n`
+													gen(m[p], level + 1)
+													re += `${tab}}\n`
+												}
+												if(tp === 'array') {
+
+												}
+											}
+										} else {
+											psumry[p] = tp
+											if (tp === 'boolean') {
+												re += `${tab}public bool ${p} {get; set;}\n`
+											}
+											if (tp === 'number') {
+												if ((m[p] + '').indexOf('.') === -1) {
+													re += `${tab}public int ${p} {get; set;}\n`
+												} else {
+													re += `${tab}public decimal ${p} {get; set;}\n`
+												}
+											}
+											if (m[p] === null) {
+												re += `${tab}public object ${p} {get; set;}\n`
+											}
+											if (tp === 'string') {
+												re += `${tab}public string ${p} {get; set;}\n`
+											}
+											if (m[p] !== null && tp === 'object') {
+												re += `${tab}public ${p} ${p} {get; set;}\n`
+												re += `${tab}public class ${p}\n${tab}{\n`
+												gen(m[p], level + 1)
+												re += `${tab}}\n`
+											}
+											if(tp === 'array') {
+
+											}
+										}
+									}
+								}
+								re += `${tab}}\n`
+								break;
+							case 'number':
+								let numbertype = _.toString().indexOf('.') === -1 ? 'int' : 'decimal'
+								re += `${tab}public ${numbertype}[] NumberArray {get; set;}`
+								break;
+							case 'boolean':
+								re += `${tab}public bool[] BlArray {get; set;}`
+								break;
+							case 'string':
+								re += `${tab}public string[] StrArray {get; set;}`
+								break;
+							default: break;
+						}
+					}
+				} else {
+					for (p in _) {
+						let tp = Array.isArray(_[p]) ? 'array' : typeof _[p]
+						if (tp === 'boolean') {
+							re += `${tab}public bool ${p} {get; set;}\n`
+						}
+						if (tp === 'number') {
+							if ((_[p] + '').indexOf('.') === -1) {
+								re += `${tab}public int ${p} {get; set;}\n`
+							} else {
+								re += `${tab}public decimal ${p} {get; set;}\n`
+							}
+						}
+						if (_[p] === null) {
+							re += `${tab}public object ${p} {get; set;}\n`
+						}
+						if (tp === 'string') {
+							re += `${tab}public string ${p} {get; set;}\n`
+						}
+						if (_[p] !== null && tp === 'object') {
+							re += `${tab}public ${p} ${p} {get; set;}\n`
+							re += `${tab}public class ${p}\n${tab}{\n`
+							gen(_[p], level + 1)
+							re += `${tab}}\n`
+						}
+						if(tp === 'array') {
+							
+						}
+					}
+				}
+			}
+
+			gen(obj, 1)
+			re += '\n}'
+			return re
+		} */
+
+	</script>
+</body>
+
+</html>
