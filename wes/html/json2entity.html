@@ -212,6 +212,8 @@
 		//test ok//{"a": 1, "b": "c", "c": null, "d": true, "e": {"x": true, "y": null, "a": 0, "b": {"c": 1.2}}}
 		//test ok//{"x":[[]]}
 		//test ok//[[],[]]
+		//test ok//{"a": [false, false], b: null}
+		//test bug//{"a": 2.0}
 
 		const json2entity = json => {
 			if (!json.replace(/s/g, '')) {
@@ -286,6 +288,16 @@
 						})
 					}
 					if(tempnorepeat.length === 1) {
+						if (tempnorepeat[0] === 'boolean') {
+							re += `${tab2}public bool[] ${pname || 'BlArray'} {get; set;}\n`
+						}
+						if(tempnorepeat[0] === 'number') {
+							let numbertype = _.toString().indexOf('.') === -1 ? 'int' : 'decimal'
+							re += `${tab2}public ${numbertype}[] ${pname || 'NumberArray'} {get; set;}\n`
+						}
+						if (tempnorepeat[0] === 'string') {
+							re += `${tab2}public List<string> ${pname || 'StrArray'} {get; set;}\n`
+						}
 						if(tempnorepeat[0] === 'array') {
 							let dr = []
 							let fragment = {}
@@ -367,7 +379,7 @@
 						}
 					}
 				} else {
-					re += `${tab}public class ${pname || 'Top'}\n${tab}{\n`
+					re += `${tab}public class ${pname || 'Sub'}\n${tab}{\n`
 					for (p in _) {
 						let tp = Array.isArray(_[p]) ? 'array' : typeof _[p]
 						if (tp === 'boolean') {
@@ -401,7 +413,7 @@
 			if(Array.isArray(obj)) {
 				re += 'public class Top\n{\n'
 			}
-			gen(obj, 0)
+			gen(obj, 0, Array.isArray(obj) ? '' : 'Top')
 			if(Array.isArray(obj)) {
 				re += '}'
 			}
