@@ -22,7 +22,6 @@ using System.Reflection.Emit;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Diagnostics;
-using Fiddler;
 using System.DirectoryServices;
 using System.Data;
 using System.ComponentModel;
