@@ -61,6 +61,10 @@
       <Project>{5a0f836a-16aa-4e30-b3f5-f02ab7972e03}</Project>
       <Name>mdl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\tpc\tpc.csproj">
+      <Project>{fbb88d2f-f03c-4606-953d-47cff75aba89}</Project>
+      <Name>tpc</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
