@@ -52,6 +52,7 @@
   <ItemGroup>
     <None Include="2.json" />
     <None Include="1.json" />
+    <None Include="cc.json" />
     <None Include="test.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
