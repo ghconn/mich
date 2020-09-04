@@ -82,5 +82,32 @@ namespace tpc
         {
             return JsonConvert.DeserializeObject<T>(JsonString);
         }
+
+        /// <summary>
+        /// beta
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string DeserializeJObject(string json, params string[] key)
+        {
+            var jObject = Newtonsoft.Json.Linq.JObject.Parse(json);
+            if (key.Length == 0)
+                return jObject.ToString();
+
+            Newtonsoft.Json.Linq.JToken jToken = jObject[key[0]];
+            GetJToken(ref jToken, 1, key);
+            
+            return jToken.ToString();
+        }
+
+        private static void GetJToken(ref Newtonsoft.Json.Linq.JToken jToken, int i, params string[] key)
+        {
+            if (i < key.Length)
+            {
+                jToken = jToken[key[i]];
+                GetJToken(ref jToken, ++i, key);
+            }
+        }
     }
 }

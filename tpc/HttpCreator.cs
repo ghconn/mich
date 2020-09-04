@@ -12,6 +12,16 @@ namespace tpc
 {
     public class HttpCreator
     {
+        public static HttpWebResponse Create(string url, string method, string postData, CookieContainer cookieContainer, out string result)
+        {
+            return Create(url, method, "", postData, null, null, cookieContainer, null, null, out result);
+        }
+
+        public static HttpWebResponse Create(string url, string method, string postData, string contentType, CookieContainer cookieContainer, out string result)
+        {
+            return Create(url, method, "", postData, contentType, null, cookieContainer, null, null, out result);
+        }
+
         public static HttpWebResponse Create(string url, string method, string referrer, string postData, string contentType, Encoding encoding, CookieContainer cookieContainer, IEnumerable<string> acceptContentType, IDictionary<string, string> extraHeader, out string result, string host = null)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);

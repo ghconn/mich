@@ -83,13 +83,15 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-            
+            testupload();
 
             //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
             //WebServer.port = 8999;
             //WebServer.Start();
 
             //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
+            //"{ \"account\": \"1\", \"password\": \"1\"}"
+
 
             #region onsiteapp
             //string url = $"https://onsite.huaxiadnb.cn/admin/logic/api100.ashx?action=getordersamplebyid";
@@ -142,6 +144,60 @@ namespace CTest
             Console.ReadKey();
             #endregion
 
+        }
+
+        static void testupload()
+        {
+            // 登录
+            var cookieContainer = new CookieContainer();
+            HttpCreator.Create("http://172.18.132.148:18080/user/userLogin", "post", "{ \"account\": \"1\", \"password\": \"1\"}", "application/json", cookieContainer, out string result);
+            Console.WriteLine(result);
+            // 初始化上传接口
+            var url_uploadinit = "http://172.18.132.148:18080/common/initUploadFileTask";
+            var data_uploadinit = "{\"bucketName\": \"com.huacemedia.temp\", \"contentType\": \"video/mpeg4\", \"keyName\": \"Git-2.27.0-64-bit.exe\"}";// drive.png
+            HttpCreator.Create(url_uploadinit, "post", data_uploadinit, "application/json", cookieContainer, out result);
+            Console.WriteLine(result);
+            // uploadId
+            var uploadId = tpc.j.DeserializeJObject(result, "data", "uploadId");
+            // 分段上传接口
+            var bucketName = "com.huacemedia.temp";
+            var fullname = @"E:\tool\Git-2.27.0-64-bit.exe"; // 上传的完整文件（未分割前）的完整文件名 // drive.png
+            FileStream fs = new FileStream(fullname, FileMode.Open, FileAccess.Read);
+            for (long i = 0; i < fs.Length; i += 5 * 1024 * 1024) // 每次5M
+            {
+                #region bytes长度
+                long length = 5 * 1024 * 1024L;
+                if (i + length > fs.Length)
+                {
+                    length = fs.Length - i;
+                }
+                if(length == 0)
+                {
+                    break;
+                }
+                #endregion
+                byte[] bts = new byte[length];
+                fs.Read(bts, 0, (int)length);
+                var keyName = "Git-2.27.0-64-bit.exe";// drive.png
+                var partNumber = i + 1;
+                var url_upload = $"http://172.18.132.148:18080/common/uploadMultipartFile?bucketName={bucketName}&keyName={keyName}&partNumber={partNumber}&uploadId={uploadId}";
+                result = HttpCreator.HttpUploadFile(url_upload, keyName, bts, cookieContainer);
+                Console.WriteLine($"上传第{i + 1}部分,result:{result}");
+            }
+        }
+
+        static void jObjectTest()
+        {
+            var s = @"{
+                    ""message"": ""ok"",
+                    ""code"": ""SUCCESS"",
+                    ""data"": {
+                        ""uploadId"": ""wpATz0qb8XrHMpP9odBgsJw4jUL1r8l15FN9oeG01f8azUIT_2dpShZdaCCDVCOn5SGozj7GcYTTTahGZ1mytRk2486d3PShcogsdLmFnZggMc.X490m1D6yQb04a7_a3TBSKfCRmuBa9jcnD7E84Q--""
+                    },
+                    ""success"": true
+            }";
+            var o = tpc.j.DeserializeJObject(s, "data", "uploadId");
+            Console.WriteLine(o);
         }
 
         static IEnumerator<mdl.point> set()

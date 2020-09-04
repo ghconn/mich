@@ -91,6 +91,7 @@
     <Compile Include="Slst.cs" />
     <Compile Include="SP.cs" />
     <Compile Include="HttpCreator.cs" />
+    <Compile Include="SplitF.cs" />
     <Compile Include="SqliteDemo.cs" />
     <Compile Include="thriftdemo\C.cs" />
     <Compile Include="thriftdemo\gencode\Kevp.cs" />
