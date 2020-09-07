@@ -44,7 +44,7 @@ namespace CTest
             var lst = new List<byte[]>();
             for (var i = 0; i < 10; i++) // 文件已经分割成10部分
             {
-                var fullname = $@"E:\tool\Git-2.27.0-64-bit-{i}.exe";
+                var fullname = $@"E:\tool\xx{i}.png";
                 using (FileStream fs = new FileStream(fullname, FileMode.Open, FileAccess.Read))
                 {
                     var bts = new byte[fs.Length];

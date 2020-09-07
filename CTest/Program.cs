@@ -32,6 +32,7 @@ using System.Globalization;
 using mdl;
 using mdl.Attributes;
 using mdl.Interface;
+using RestSharp;
 
 namespace CTest
 {
@@ -83,7 +84,11 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-            testupload();
+            // upload();
+            // testupload();
+            // testdownload();
+
+            // SplitF.mergeF();
 
             //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
             //WebServer.port = 8999;
@@ -146,14 +151,29 @@ namespace CTest
 
         }
 
+        static void upload()
+        {
+            var client = new RestClient("http://172.18.132.140:18080/common/uploadMultipartFile");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Cookie", "SESSION=OWMyMjg0NDktYzBkZS00OGMwLWI5NWUtN2I2ZjY1YWQ3MmU4");
+            request.AddParameter("bucketName", "com.huacemedia.temp");
+            request.AddParameter("keyName", "Git-2.27.0-64-bit.exe");
+            request.AddParameter("uploadId", "0aU3Ga.OJt7_0RYjOKLgPnOj1rltdbHGw71WzQlFySdQuOg4rfs.yjNhgzf77wCM1di57e.vBj0SbBApgSSAhv6tYE93LmmYn2nUTzSNgDORys0HHF_qB6CEWAkT1nviygQoYmWZzu0K1O0W1rHk7g--");
+            request.AddParameter("partNumber", "1");
+            request.AddFile("file", "/Users/kan_y/Downloads/Git-2.27.0-64-bit-0.exe");
+            IRestResponse response = client.Execute(request);
+            Console.WriteLine(response.Content);
+        }
+
         static void testupload()
         {
             // 登录
             var cookieContainer = new CookieContainer();
-            HttpCreator.Create("http://172.18.132.148:18080/user/userLogin", "post", "{ \"account\": \"1\", \"password\": \"1\"}", "application/json", cookieContainer, out string result);
+            HttpCreator.Create("http://172.18.132.140:18080/user/userLogin", "post", "{ \"account\": \"1\", \"password\": \"1\"}", "application/json", cookieContainer, out string result);
             Console.WriteLine(result);
             // 初始化上传接口
-            var url_uploadinit = "http://172.18.132.148:18080/common/initUploadFileTask";
+            var url_uploadinit = "http://172.18.132.140:18080/common/initUploadFileTask";
             var data_uploadinit = "{\"bucketName\": \"com.huacemedia.temp\", \"contentType\": \"video/mpeg4\", \"keyName\": \"Git-2.27.0-64-bit.exe\"}";// drive.png
             HttpCreator.Create(url_uploadinit, "post", data_uploadinit, "application/json", cookieContainer, out result);
             Console.WriteLine(result);
@@ -162,11 +182,15 @@ namespace CTest
             // 分段上传接口
             var bucketName = "com.huacemedia.temp";
             var fullname = @"E:\tool\Git-2.27.0-64-bit.exe"; // 上传的完整文件（未分割前）的完整文件名 // drive.png
+            var keyName = "Git-2.27.0-64-bit.exe";
+            var sectionsize = 1 * 1024 * 1024L;
             FileStream fs = new FileStream(fullname, FileMode.Open, FileAccess.Read);
-            for (long i = 0; i < fs.Length; i += 5 * 1024 * 1024) // 每次5M
+            // 保存上传成功时返回的ETag
+            var lst = new List<IAS>();
+            for (long i = 0, j = 1; i < fs.Length; i += sectionsize, j++)
             {
                 #region bytes长度
-                long length = 5 * 1024 * 1024L;
+                long length = sectionsize;
                 if (i + length > fs.Length)
                 {
                     length = fs.Length - i;
@@ -178,12 +202,42 @@ namespace CTest
                 #endregion
                 byte[] bts = new byte[length];
                 fs.Read(bts, 0, (int)length);
-                var keyName = "Git-2.27.0-64-bit.exe";// drive.png
-                var partNumber = i + 1;
-                var url_upload = $"http://172.18.132.148:18080/common/uploadMultipartFile?bucketName={bucketName}&keyName={keyName}&partNumber={partNumber}&uploadId={uploadId}";
+                var partNumber = j;
+                var url_upload = $"http://172.18.132.140:18080/common/uploadMultipartFile?bucketName={bucketName}&keyName={keyName}&partNumber={partNumber}&uploadId={uploadId}";
                 result = HttpCreator.HttpUploadFile(url_upload, keyName, bts, cookieContainer);
-                Console.WriteLine($"上传第{i + 1}部分,result:{result}");
+                lst.Add(new IAS() { partNumber = (int)j, etag = tpc.j.DeserializeJObject(result, "data", "etag") });
+
+                Console.WriteLine($"上传第{j}部分,result:{result}");
             }
+
+            Console.WriteLine("上传完成，开始提交完成request。。");
+            var url_complete = "http://172.18.132.140:18080/common/completeMultipartUploadFile";
+            var data_complete = $@"{{""bucketName"": ""{bucketName}"", ""keyName"": ""{keyName}"", ""partETagResList"": {j.SerializeObject(lst)}, ""uploadId"": ""{uploadId}""}}";
+            HttpCreator.Create(url_complete, "post", data_complete, "application/json", cookieContainer, out result);
+            Console.WriteLine(result);
+        }
+
+        static void testdownload()
+        {
+            var bucketName = "com.huacemedia.temp";
+            var keyName = "Git-2.27.0-64-bit.exe";
+            int i = 0;
+            long getlength;
+            var sectionsize = 1 * 1024 * 1024; // 一段的大小
+            do
+            {
+                var start = i * sectionsize;
+                var end = (i + 1) * sectionsize - 1; // api用的是结束位置，而不是length，这里要-1
+                var url_download = $"http://172.18.132.140:18080/common/downloadMultipartFile?bucketName={bucketName}&end={end}&keyName={keyName}&start={start}";
+                var dest_name = $@"E:\tool\xx{i}.png";
+                HttpCreator.HttpDownload(url_download, dest_name, out getlength);
+                i++;
+                Console.WriteLine($"下载{getlength}字节.");
+            } while (getlength == sectionsize);
+
+            Console.WriteLine("done.");
+            //// 如果下载出错，里面是错误信息
+            // File.Copy(dest_name, dest_name + ".txt");
         }
 
         static void jObjectTest()
@@ -497,5 +551,11 @@ namespace CTest
     {
         public bool isSucceeded { get; set; }
         public string message { get; set; }
+    }
+
+    public class IAS
+    {
+        public int partNumber { get; set; }
+        public string etag { get; set; }
     }
 }
