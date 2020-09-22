@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -37,9 +37,9 @@
 			outline: none;
 		}
 
-		.ppinput:focus {
-			border: 1px solid #a5a5a5;
-		}
+			.ppinput:focus {
+				border: 1px solid #a5a5a5;
+			}
 
 		.ops {
 			text-align: right;
@@ -49,21 +49,21 @@
 			margin-top: 20px;
 		}
 
-		.advanced div {
-			text-align: right;
-		}
+			.advanced div {
+				text-align: right;
+			}
 
-		.advanced .link {
-			font-size: smaller;
-			text-decoration: underline;
-			cursor: pointer;
-		}
+			.advanced .link {
+				font-size: smaller;
+				text-decoration: underline;
+				cursor: pointer;
+			}
 
-		.advanced hid {
-			display: none;
-			border-top: 1px solid #cccccc;
-			padding: 20px 0;
-		}
+			.advanced hid {
+				display: none;
+				border-top: 1px solid #cccccc;
+				padding: 20px 0;
+			}
 
 		hid .option {
 			margin-bottom: 10px;
@@ -202,7 +202,7 @@
 		}
 
 		const doit = _ => {
-			s.value = s.value.replace(/(\w\s*)(:)/g, (m, n, o, p, q) => `"${n}"${o}`)
+			s.value = s.value.replace(/(\w+\s*)(:)/g, (m, n, o, p, q) => `"${n}"${o}`)
 			let json = s.value
 			o.value = json2entity(json)
 		}
@@ -275,54 +275,54 @@
 					if (tempnorepeat.length === 0) {
 						re += `${tab2}public List<object> ${pname || 'NullArray'} {get; set;}\n`
 					}
-					if(tempnorepeat.length > 1) {
+					if (tempnorepeat.length > 1) {
 						re += `${tab2}public List<object> ${pname || 'NonArray'} {get; set;}\n`
 						temp.forEach((tp, i) => {
-							if(tp === 'array') {
+							if (tp === 'array') {
 								gen(_[i], level)//??
 							}
-							if(tp === 'object') {
+							if (tp === 'object') {
 								re += `${tab2}public Sub${level * 100 + i} Sub${level * 100 + i} {get; set;}\n`
 								gen(_[i], level + 1, 'Sub' + (level * 100 + i))
 							}
 						})
 					}
-					if(tempnorepeat.length === 1) {
+					if (tempnorepeat.length === 1) {
 						if (tempnorepeat[0] === 'boolean') {
 							re += `${tab2}public bool[] ${pname || 'BlArray'} {get; set;}\n`
 						}
-						if(tempnorepeat[0] === 'number') {
+						if (tempnorepeat[0] === 'number') {
 							let numbertype = _.toString().indexOf('.') === -1 ? 'int' : 'decimal'
 							re += `${tab2}public ${numbertype}[] ${pname || 'NumberArray'} {get; set;}\n`
 						}
 						if (tempnorepeat[0] === 'string') {
 							re += `${tab2}public List<string> ${pname || 'StrArray'} {get; set;}\n`
 						}
-						if(tempnorepeat[0] === 'array') {
+						if (tempnorepeat[0] === 'array') {
 							let dr = []
 							let fragment = {}
-							
+
 							dept(_, 1, dr, fragment)
 							let layer = Math.min(...dr)
 							let leftbracket = 'List<'.repeat(layer)
 							let rightbracket = '>'.repeat(layer)
 							re += `${tab2}public ${leftbracket}object${rightbracket} ${pname || 'NonArray'} {get; set;}\n`
-							for(p in fragment) {
+							for (p in fragment) {
 								gen(fragment[p], level + 1)
 							}
 						}
-						if(tempnorepeat[0] === 'object') {
+						if (tempnorepeat[0] === 'object') {
 							re += `${tab2}public List<${pname || 'Sub'}> ${pname || 'NonArray'} {get; set;}\n`
 							re += `${tab2}public class ${pname || 'Sub'}\n${tab2}{\n`
 							let tabc = tab2 + '\t'
 							let psumry = {}
 							let ii = 0
-							for(m of _) {
-								for(p in m) {
+							for (m of _) {
+								for (p in m) {
 									ii++
 									let tp = Array.isArray(m[p]) ? 'array' : typeof m[p]
-									if(psumry[p]) {
-										if(psumry[p] !== tp) {
+									if (psumry[p]) {
+										if (psumry[p] !== tp) {
 											if (tp === 'boolean') {
 												re += `${tabc}public bool ${p}${ii} {get; set;}\n`
 											}
@@ -343,7 +343,7 @@
 												re += `${tabc}public ${p}${ii} ${p}${ii} {get; set;}\n`
 												gen(m[p], level + 1, p + ii)
 											}
-											if(tp === 'array') {
+											if (tp === 'array') {
 												gen(m[p], level, p + ii)
 											}
 										}
@@ -369,7 +369,7 @@
 											re += `${tabc}public ${p} ${p} {get; set;}\n`
 											gen(m[p], level + 1, p)
 										}
-										if(tp === 'array') {
+										if (tp === 'array') {
 											gen(m[p], level, p)
 										}
 									}
@@ -402,7 +402,7 @@
 							re += `${tab2}public ${p} ${p} {get; set;}\n`
 							gen(_[p], level + 1, p)
 						}
-						if(tp === 'array') {
+						if (tp === 'array') {
 							gen(_[p], level, p)
 						}
 					}
@@ -410,11 +410,11 @@
 				}
 			}
 
-			if(Array.isArray(obj)) {
+			if (Array.isArray(obj)) {
 				re += 'public class Top\n{\n'
 			}
 			gen(obj, 0, Array.isArray(obj) ? '' : 'Top')
-			if(Array.isArray(obj)) {
+			if (Array.isArray(obj)) {
 				re += '}'
 			}
 			return re
@@ -431,12 +431,12 @@
 					if (arrnorepeat.indexOf(typeof v) === -1) {
 						arrnorepeat.push(typeof v)
 					}
-					if(typeof v === 'object') {
+					if (typeof v === 'object') {
 						fragment['SubInArr' + (layer * 100 + i)] = v
 					}
 				}
 			})
-			if(arrnorepeat.length === 1 && arrnorepeat[0] === 'array') {
+			if (arrnorepeat.length === 1 && arrnorepeat[0] === 'array') {
 				_.forEach(v => dept(v, layer + 1, dr, fragment))
 			}
 			else {
@@ -508,7 +508,7 @@
 						re += `${tab}public List<object> NonArray {get; set;}\n`
 						temp.forEach((tp, i) => {
 							if(tp === 'array') {
-								
+
 							}
 							if(tp === 'object') {
 								re += `${tab}public Sub Sub {get; set;}\n`
@@ -631,7 +631,7 @@
 							re += `${tab}}\n`
 						}
 						if(tp === 'array') {
-							
+
 						}
 					}
 				}
