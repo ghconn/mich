@@ -111,7 +111,15 @@ namespace tpc.office
 
         private void CreateSheet<T>(List<T> list, Workbook workbook, int index, string sheetName) where T : new()
         {
-            Worksheet sheet = workbook.Worksheets[index];
+            Worksheet sheet;
+            if (index > 2)
+            {
+                sheet = workbook.CreateEmptySheet();
+            }
+            else
+            {
+                sheet = workbook.Worksheets[index];
+            }
             sheet.Name = sheetName;
 
             var propertyInfos = AttributesHelper.GetProperties<T>();
@@ -203,7 +211,15 @@ namespace tpc.office
 
         private void CreateSheet<T>(List<T> list, Workbook workbook, int index, List<int[]> mergeIndex, string sheetName) where T : new()
         {
-            Worksheet sheet = workbook.Worksheets[index];
+            Worksheet sheet;
+            if (index > 2)
+            {
+                sheet = workbook.CreateEmptySheet();
+            }
+            else
+            {
+                sheet = workbook.Worksheets[index];
+            }
             sheet.Name = sheetName;
 
             foreach(int[] indexs in mergeIndex)
