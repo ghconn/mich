@@ -60,5 +60,27 @@ namespace CTest
                 }
             }
         }
+
+
+        public static async Task Merge(string destName, IEnumerable<string> tempfiles)
+        {
+            var lst = new List<byte[]>();
+            foreach (var name in tempfiles)
+            {
+                using (var fs = new FileStream(name, FileMode.Open, FileAccess.Read))
+                {
+                    var bts = new byte[fs.Length];
+                    fs.Read(bts, 0, bts.Length);
+                    lst.Add(bts);
+                }
+            }
+            using (var stream = new FileStream(destName, FileMode.Create))
+            {
+                foreach (var bts in lst)
+                {
+                    await stream.WriteAsync(bts, 0, bts.Length);
+                }
+            }
+        }
     }
 }

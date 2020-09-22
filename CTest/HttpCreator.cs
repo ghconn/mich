@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -193,15 +194,62 @@ namespace CTest
                 File.Delete(tempFile);    //存在则删除
             }
             FileStream fs = new FileStream(tempFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             // 设置参数
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Timeout = 20 * 60 * 1000;
             //发送请求并获取相应回应数据
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             //直到request.GetResponse()程序才开始向目标网页发送Post请求
             Stream responseStream = response.GetResponseStream();
+
+
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
+
             //创建本地文件写入流
             //Stream stream = new FileStream(tempFile, FileMode.Create);
-            byte[] bArr = new byte[1024 * 512];
+            byte[] bArr = new byte[1024];
+            int size = responseStream.Read(bArr, 0, bArr.Length);
+            while (size > 0)
+            {
+                //stream.Write(bArr, 0, size);
+                fs.Write(bArr, 0, size);
+                size = responseStream.Read(bArr, 0, bArr.Length);
+            }
+
+            //stream.Close();
+            length = fs.Length;
+            fs.Close();
+            responseStream.Close();
+            File.Move(tempFile, path);
+        }
+
+
+        /// <summary>
+        /// http下载文件
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="tempfile"></param>
+        /// <param name="cookieContainer"></param>
+        /// <returns></returns>
+        public static async Task<long> HttpDownload(string url, string tempfile, CookieContainer cookieContainer = null)
+        {
+            FileStream fs = new FileStream(tempfile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            // 设置参数
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            if (cookieContainer != null)
+                request.CookieContainer = cookieContainer;
+            //发送请求并获取相应回应数据
+            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+            //直到request.GetResponse()程序才开始向目标网页发送Post请求
+            Stream responseStream = response.GetResponseStream();
+            //创建本地文件写入流
+            //Stream stream = new FileStream(tempFile, FileMode.Create);
+            byte[] bArr = new byte[1024];
             int size = responseStream.Read(bArr, 0, bArr.Length);
             while (size > 0)
             {
@@ -210,10 +258,10 @@ namespace CTest
                 size = responseStream.Read(bArr, 0, bArr.Length);
             }
             //stream.Close();
-            length = fs.Length;
+            var length = fs.Length;
             fs.Close();
             responseStream.Close();
-            File.Move(tempFile, path);
+            return length;
         }
     }
     

@@ -88,6 +88,15 @@ namespace CTest
             // testupload();
             // testdownload();
 
+
+            //_ = StartNewMultiAsync("com.huacemedia.temp", "", 48066136, 5, "", (a, b, c) =>
+            //    {
+            //        Console.WriteLine("point:" + a);
+            //        Console.WriteLine("thread_nth:" + b);
+            //        Console.WriteLine("tempfile:" + c);
+            //    }, () => { });
+
+
             // SplitF.mergeF();
 
             //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
@@ -183,7 +192,7 @@ namespace CTest
             var bucketName = "com.huacemedia.temp";
             var fullname = @"E:\tool\Git-2.27.0-64-bit.exe"; // 上传的完整文件（未分割前）的完整文件名 // drive.png
             var keyName = "Git-2.27.0-64-bit.exe";
-            var sectionsize = 1 * 1024 * 1024L;
+            var sectionsize = 5 * 1024 * 1024L;
             FileStream fs = new FileStream(fullname, FileMode.Open, FileAccess.Read);
             // 保存上传成功时返回的ETag
             var lst = new List<IAS>();
@@ -223,7 +232,7 @@ namespace CTest
             var keyName = "Git-2.27.0-64-bit.exe";
             int i = 0;
             long getlength;
-            var sectionsize = 1 * 1024 * 1024; // 一段的大小
+            var sectionsize = 48066136;// 5 * 1024 * 1024; // 一段的大小
             do
             {
                 var start = i * sectionsize;
@@ -240,7 +249,53 @@ namespace CTest
             // File.Copy(dest_name, dest_name + ".txt");
         }
 
-        static void jObjectTest()
+        public async static Task StartNewMultiAsync(string bucketName, string keyName, long size, int workthreadnum, string destName, Action<long, int, string> action, Action callback, int sectionSize = 1 * 1024)
+        {
+            var files = await Task.WhenAll(Enumerable.Range(1, workthreadnum).Select(i =>
+            {
+                var tasksize = size / workthreadnum;
+                long start = (i - 1) * tasksize;
+                long end = start + tasksize;
+                if (i == workthreadnum)
+                {
+                    end = size;
+                }
+                return Task.Run(async () => await WorkAsync(bucketName, keyName, i, start, end, action, callback, sectionSize));
+            }));
+
+            var lst = files.OrderBy(s =>
+            {
+                var num = System.Text.RegularExpressions.Regex.Match(s, "-(\\d+)\\.temp$").Groups[1].Value;
+                return int.Parse(num);
+            }).ToList();
+            await SplitF.Merge(destName, lst);
+            callback?.Invoke();
+        }
+        async static Task<string> WorkAsync(string bucketName, string keyName, int thread_nth, long taskstart, long taskend, Action<long, int, string> action, Action callback, int sectionSize)
+        {
+            int sectionNum = 0;
+            long getlength;
+            long sectionsize = sectionSize * 1024; // 一段的大小
+            var tempfile = Directory.GetCurrentDirectory() + "\\tempFiles\\" + Guid.NewGuid().ToString() + "-" + thread_nth + ".temp";
+            do
+            {
+                long start = taskstart + sectionNum * sectionsize;
+                long end = taskstart + (sectionNum + 1) * sectionsize - 1; // api用的是结束位置，而不是length，这里要-1
+                if (end > taskend - 1) // api中，下载到taskend位置的字节，只需要等于taskend - 1
+                {
+                    end = taskend - 1;
+                }
+                var url_download = $"http://172.18.132.140:18080/common/downloadMultipartFile?bucketName={bucketName}&end={end}&keyName={keyName}&start={start}";
+                getlength = await HttpCreator.HttpDownload(url_download, tempfile);
+                sectionNum++;
+
+                action?.BeginInvoke(end + 1, thread_nth, tempfile, null, null);
+            } while (getlength == sectionsize && (taskstart + sectionNum * sectionsize < taskend));
+
+            return tempfile;
+        }
+
+        static void JObjectTest()
         {
             var s = @"{
                     ""message"": ""ok"",

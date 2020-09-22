@@ -17,9 +17,9 @@ namespace CTest
         public static void _main()
         {
             //可以不存在test.db文件，运行以下代码将自动创建test.db文件，只要目录存在即可
-            string dbPath = $@"Data Source =C:\Users\cspactera\Desktop\新建文件夹\test.db";
+            string conn_str = $@"Data Source =C:\Users\kan_y\Desktop\新建文件夹\test.db";
 
-            SQLiteConnection conn = new SQLiteConnection(dbPath);
+            SQLiteConnection conn = new SQLiteConnection(conn_str);
             //打开数据库，若文件不存在会自动创建 
             conn.Open();
             //建表语句 
