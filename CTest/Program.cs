@@ -78,6 +78,7 @@ namespace CTest
             //});
             
 
+
             var f = 220538.19f;
             Console.WriteLine(f);
             var s = $@"123,
