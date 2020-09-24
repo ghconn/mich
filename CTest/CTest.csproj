@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AAS.cs" />
+    <Compile Include="Fib.cs" />
     <Compile Include="IISWorker.cs" />
     <Compile Include="DllRef.cs" />
     <Compile Include="Duplex.cs" />

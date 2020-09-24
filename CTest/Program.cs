@@ -84,27 +84,12 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
-            // upload();
-            // testupload();
-            // testdownload();
-
-
-            //_ = StartNewMultiAsync("com.huacemedia.temp", "", 48066136, 5, "", (a, b, c) =>
-            //    {
-            //        Console.WriteLine("point:" + a);
-            //        Console.WriteLine("thread_nth:" + b);
-            //        Console.WriteLine("tempfile:" + c);
-            //    }, () => { });
-
-
-            // SplitF.mergeF();
 
             //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
             //WebServer.port = 8999;
             //WebServer.Start();
 
             //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
-            //"{ \"account\": \"1\", \"password\": \"1\"}"
 
 
             #region onsiteapp
