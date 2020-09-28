@@ -85,6 +85,12 @@ namespace CTest
                                 {f},{1}";
             Console.WriteLine(s);
 
+            //while (true)
+            //{
+            //    var x = HttpCreator.HttpUploadFile("http://localhost:8888/admin/logic/WechatFileUpload.ashx", @"C:\Users\kan_y\Pictures\6.jpg", new CookieContainer(), "myfile");
+            //    Console.WriteLine(x);
+            //    Console.ReadKey();
+            //}
 
             //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
             //WebServer.port = 8999;

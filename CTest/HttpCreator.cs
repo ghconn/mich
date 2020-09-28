@@ -100,7 +100,7 @@ namespace CTest
         /// <summary>
         /// Http上传文件
         /// </summary>
-        public static string HttpUploadFile(string url, string fullname, CookieContainer cookieContainer)
+        public static string HttpUploadFile(string url, string fullname, CookieContainer cookieContainer, string name="file")
         {
             // 设置参数
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -116,7 +116,7 @@ namespace CTest
             string fileName = Path.GetFileName(fullname);
 
             //请求头部信息 
-            StringBuilder sbHeader = new StringBuilder(string.Format("Content-Disposition:form-data;name=\"file\";filename=\"{0}\"\r\nContent-Type:application/octet-stream\r\n\r\n", fileName));
+            StringBuilder sbHeader = new StringBuilder($"Content-Disposition:form-data;name=\"{name}\";filename=\"{fileName}\"\r\nContent-Type:application/octet-stream\r\n\r\n");
             byte[] postHeaderBytes = Encoding.UTF8.GetBytes(sbHeader.ToString());
 
             FileStream fs = new FileStream(fullname, FileMode.Open, FileAccess.Read);

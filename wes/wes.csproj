@@ -108,7 +108,6 @@
     <Content Include="html\有理数除法.html" />
     <Content Include="img\0001.png" />
     <Content Include="img\help.gif" />
-    <Content Include="img\mysoft.png" />
     <Content Include="script\lwloading.js" />
     <Content Include="script\air-bubble.js" />
     <Content Include="script\thrift.js" />
