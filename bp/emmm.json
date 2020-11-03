@@ -1,6 +1,23 @@
 ﻿{
-  "message": "完成合并文件段请求参数:CompleteUploadFileReq(bucketName=com.huacemedia.temp, keyName=Git-2.27.0-64-bit.exe, uploadId=5dPwi4XLk0VAtKiDUUkc1ztNMS_59HJf0Wx54fpFnG4CJUd99o6MjFYDmitU7H.tJXuKa9ULt91psyINWB9sjOr1BCO0rGYqNROh6PydZgANUyubzMPcSpVXSHx5tVFuWDeaSIIVU4OmpXFuY3ViJw--, partETagResList=[PartETagRes(partNumber=1, eTag=b02177688f8b4fb61109ba24415d45ee), PartETagRes(partNumber=2, eTag=68d04bf84cd3092e150ede87f1244475), PartETagRes(partNumber=3, eTag=637a4fcc236b2e09e3ba6178b847705e), PartETagRes(partNumber=4, eTag=5c64ee19868c82c838e14ee3e351caf5), PartETagRes(partNumber=5, eTag=6b830512aec11bf73f1103b4be2edbee), PartETagRes(partNumber=6, eTag=8bfcdf1df8b624846b58f23495b08e89), PartETagRes(partNumber=7, eTag=87fe805b878beb48e416ca52d9796404), PartETagRes(partNumber=8, eTag=ec9e65218de7c9f59d95e766fb8f0ced), PartETagRes(partNumber=9, eTag=0e033c8b333d07b6dd2ebef2f83a1c59), PartETagRes(partNumber=10, eTag=c8d221241d597cada5a6f6b09c82d70c), PartETagRes(partNumber=11, eTag=f7739ff8e402dc3f5f22a0998cf2260b), PartETagRes(partNumber=12, eTag=567f21ffe820c84b48b10cb8f45189ca), PartETagRes(partNumber=13, eTag=5f33078d3794bc935005372e2c4a3a8b), PartETagRes(partNumber=14, eTag=b01ae9eac4e59fe1ca753f3e21703972), PartETagRes(partNumber=15, eTag=b2651c71f5fd4a2b3bad96b2821d1de2), PartETagRes(partNumber=16, eTag=9d47c2d06ce5b8ae81eee8b919ebc287), PartETagRes(partNumber=17, eTag=c10fbaaf3ce26c8d0787eea9037f368f), PartETagRes(partNumber=18, eTag=7fbd76153467ee23e55a3e4a3d94dbb5), PartETagRes(partNumber=19, eTag=ebd925e16060a7bfd36070fc42c909da), PartETagRes(partNumber=20, eTag=0e1ee5a739d3c4bd130a03a4a6424eb1), PartETagRes(partNumber=21, eTag=9a4b9af7b520a129ce2576326bd3f1eb), PartETagRes(partNumber=22, eTag=d3220723697a234b549902a7128061b2), PartETagRes(partNumber=23, eTag=713eea6124c71208500c08d5b0b8ebb9), PartETagRes(partNumber=24, eTag=6d2aa3e5b0a9967c141c0c17e2204658), PartETagRes(partNumber=25, eTag=7232ad712e243ecfcb767a17f100f4dd), PartETagRes(partNumber=26, eTag=cb0488f8a81d04e0b8e1b2ea0d959ded), PartETagRes(partNumber=27, eTag=60f9401da3867865500ca755803e491b), PartETagRes(partNumber=28, eTag=44f42df9a95a0412930e2992c0b58260), PartETagRes(partNumber=29, eTag=19447df3b6ee10928e509fd221fa9564), PartETagRes(partNumber=30, eTag=adf2e60b753a7faf1a13cdbfef8aba1a), PartETagRes(partNumber=31, eTag=197f58cb47fa63903156c4f4f0959a3f), PartETagRes(partNumber=32, eTag=14aa14c7391f9ec930493742dff34004), PartETagRes(partNumber=33, eTag=3757da9a2d2e8738b509f83af653611a), PartETagRes(partNumber=34, eTag=74682a7c2f0e0d0f29c95641071d9cea), PartETagRes(partNumber=35, eTag=098ff02ce88ceb803827e7e8a8bb7f7b), PartETagRes(partNumber=36, eTag=816908bc44981fa771011c67d0e01824), PartETagRes(partNumber=37, eTag=6cff1d818474862b653f43b1e22f8595), PartETagRes(partNumber=38, eTag=cbb31c9a5324fe29cf2561655a766a5c), PartETagRes(partNumber=39, eTag=0835888308e477f7e1dd3becc0bf3b21), PartETagRes(partNumber=40, eTag=3bfa70326c94a8596ec57d890b5b42f8), PartETagRes(partNumber=41, eTag=e001b8ca0c6a218df4401b7ebb7c04c1), PartETagRes(partNumber=42, eTag=61f910a9f84999a9a987033aab26decd), PartETagRes(partNumber=43, eTag=12a0e76d3b65ea0f14f2935a2e52f55c), PartETagRes(partNumber=44, eTag=3e538fdc8025e84126cc7d323c40a3ef), PartETagRes(partNumber=45, eTag=b37a5d5ff49c7947038b2911bfa92291), PartETagRes(partNumber=46, eTag=69e6a02271572d0f241590f914453183)]), 异常:Your proposed upload is smaller than the minimum allowed size (Service: Amazon S3; Status Code: 400; Error Code: EntityTooSmall; Request ID: 907FC751378BB566; S3 Extended Request ID: 1ExUFNAYTIc/1OivaKiMNytziZBzcqpPCw82/YVdWzZJoRe5vnHu+6EM8s6LKZjlWr5fXtCf8Xg=; Proxy: 127.0.0.1)",
-  "code": "INTERNAL_SERVER_ERROR",
-  "data": null,
-  "success": false
+  "userId": 3,
+  "fileList": [
+    {
+      "bucketName": "com.huacemedia.temp",
+      "contentType": "video/mpeg4",
+      "keyName": "Git-2.27.0-64-bit.exe",
+      "length": 48066136
+    },
+    {
+      "bucketName": "movie-convert-test",
+      "contentType": "video/mpeg4",
+      "keyName": "Mulan.2020.HD1080P.mp4",
+      "length": 2499446368
+    },
+    {
+      "bucketName": "movie-convert-test",
+      "contentType": "video/mpeg4",
+      "keyName": "Git-2.27.0-64-bit.exe",
+      "isUpload": true
+    }
+  ]
 }

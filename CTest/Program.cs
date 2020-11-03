@@ -33,6 +33,7 @@ using mdl;
 using mdl.Attributes;
 using mdl.Interface;
 using RestSharp;
+using System.Security.Cryptography;
 
 namespace CTest
 {
@@ -51,19 +52,24 @@ namespace CTest
             var timestamp1 = (int)(DateTime.Now - startTime).TotalSeconds;
             Console.WriteLine("sl-{0}", timestamp1);
 
-            string sTestMarshalIntPtr = "abc";
-            var intptr = Marshal.StringToCoTaskMemAuto(sTestMarshalIntPtr);
-            Console.WriteLine(intptr);
+            #region Marshal intptr
+            //string sTestMarshalIntPtr = "abc";
+            //var intptr = Marshal.StringToCoTaskMemAuto(sTestMarshalIntPtr);
+            //Console.WriteLine(intptr); 
+            #endregion
 
+            #region regex.replace unicode \s
             //var s = "v 1.　　3";
-            //var s2 = Regex.Replace(s, @"\s", "");
+            //var s2 = Regex.Replace(s, @"\s", ""); 
+            #endregion
 
-            //DateTime.Parse("Sat, 30-Nov-2019 01:35:58 GMT");
-
+            #region post xml
             //var result = "";
             //StoreTest.Create("http://localhost:12439/ashx/api.ashx?action=xml", "post", "", "<abc>123</abc>", "text/xml", null, null, null, out result);
-            //Console.WriteLine(result);
+            //Console.WriteLine(result); 
+            #endregion
 
+            #region socker udp
             //Task.Run(() =>
             //{
             //    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -75,23 +81,50 @@ namespace CTest
             //    var s_recv = Encoding.UTF8.GetString(recv, 0, length);
             //    Console.WriteLine(s_recv);
             //    socket.Close();
-            //});
-            
+            //}); 
+            #endregion
 
+            #region 220538.19f
+            //var f = 220538.19f;
+            //Console.WriteLine(f);
+            //var s = $@"123,
+            //                    {f},{1}";
+            //Console.WriteLine(s); 
+            #endregion
 
-            var f = 220538.19f;
-            Console.WriteLine(f);
-            var s = $@"123,
-                                {f},{1}";
-            Console.WriteLine(s);
+            #region 十诺uploadedCompleted
+            //var notice = new List<UploadCompletedNotice>()
+            //{
+            //    new UploadCompletedNotice()
+            //    {
+            //        bucketName = "",
+            //        fileName = "",
+            //        keyName = "",
+            //        md5 = "",
+            //        sha512 = "",
+            //        mimeType = "video/mpeg4",
+            //        movieId = 1L,
+            //        userId = 1L,
+            //        video = true
+            //    }
+            //};
 
+            //var dict = new Dictionary<string, string>() { { "Cookie", "SESSION=YTc0MTYxMzctNzU2MC00MDk4LTgzNGUtNzMyMjQ0ZjUyZjkw" } };
+            //HttpCreator.Create("http://172.18.132.148:28080/transaction/order/uploadedCompleted", "post", "", j.SerializeObject(notice), "application/json",
+            //    Encoding.UTF8, null, null, dict, out var result_json);
 
+            //Console.WriteLine(result_json); 
+            #endregion
+
+            #region webserver
             //WebServer.rootPath = @"C:\Users\cspactera\source\repos\datahub\page";
             //WebServer.port = 8999;
-            //WebServer.Start();
+            //WebServer.Start(); 
+            #endregion
 
-            //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm"));
-
+            #region datetime.parse
+            //Console.WriteLine(DateTime.Parse("Thu, 30 Nov 2017 06:35:34 GMT").ToString("yyyy-MM-dd HH:mm")); 
+            #endregion
 
             #region onsiteapp
             //string url = $"https://onsite.huaxiadnb.cn/admin/logic/api100.ashx?action=getordersamplebyid";
@@ -140,10 +173,54 @@ namespace CTest
             //}
             #endregion
 
+
+            #region json deser ignore case is automatic
+            var x = File.ReadAllText(@"E:\1.txt");
+            var json = j.DeserializeJsonToList<IAS>(x);
+            foreach (var ias in json)
+            {
+                Console.WriteLine(ias.partNumber + "\t" + ias.etag);
+            }
+            Console.WriteLine(json.Count); 
+            #endregion
+
+
             #region pause
             Console.ReadKey();
             #endregion
 
+        }
+
+        public static string SHA256(string fullname)
+        {
+            FileStream stream = new FileStream(fullname, FileMode.Open);
+
+            SHA256Managed Sha256 = new SHA256Managed();
+            byte[] by = Sha256.ComputeHash(stream);
+
+            return BitConverter.ToString(by).Replace("-", "").ToLower();
+        }
+
+        public static string FileMd5(string fullname)
+        {
+            try
+            {
+                FileStream file = new FileStream(fullname, FileMode.Open);
+                System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                byte[] retVal = md5.ComputeHash(file);
+                file.Close();
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < retVal.Length; i++)
+                {
+                    sb.Append(retVal[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
+            }
         }
 
         static void upload()
