@@ -11,15 +11,20 @@ namespace CTest
          static List<int> arr = new List<int>();
         public static void _Main()
         {
-            Console.WriteLine("被除数");
-            var m = int.Parse(Console.ReadLine());
-            Console.WriteLine("除数");
-            var n = int.Parse(Console.ReadLine());
-            Console.WriteLine("计算小数点后面第几位");
-            var nth = int.Parse(Console.ReadLine());
-            Console.WriteLine($"小数点后面第{nth}位是:" + modnth(m, n, nth));
-            Console.WriteLine("循环体:" + string.Join(",", arr));
-            Console.WriteLine("循环体长度:" + arr.Count);
+            while (true)
+            {
+                Console.WriteLine("被除数");
+                var m = int.Parse(Console.ReadLine());
+                Console.WriteLine("除数");
+                var n = int.Parse(Console.ReadLine());
+                Console.WriteLine("计算小数点后面第几位");
+                var nth = int.Parse(Console.ReadLine());
+                Console.WriteLine($"小数点后面第{nth}位是:" + modnth(m, n, nth));
+                Console.WriteLine("循环体:" + string.Join(",", arr));
+                Console.WriteLine("循环体长度:" + arr.Count);
+                Console.WriteLine();
+                Console.WriteLine();
+            }
         }
 
         #region nth arr

@@ -173,17 +173,15 @@ namespace CTest
             //}
             #endregion
 
-
             #region json deser ignore case is automatic
-            var x = File.ReadAllText(@"E:\1.txt");
-            var json = j.DeserializeJsonToList<IAS>(x);
-            foreach (var ias in json)
-            {
-                Console.WriteLine(ias.partNumber + "\t" + ias.etag);
-            }
-            Console.WriteLine(json.Count); 
+            //var x = File.ReadAllText(@"E:\1.txt");
+            //var json = j.DeserializeJsonToList<IAS>(x);
+            //foreach (var ias in json)
+            //{
+            //    Console.WriteLine(ias.partNumber + "\t" + ias.etag);
+            //}
+            //Console.WriteLine(json.Count); 
             #endregion
-
 
             #region pause
             Console.ReadKey();
