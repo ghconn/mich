@@ -20,6 +20,7 @@ namespace CTest
             string conn_str = $@"Data Source =C:\Users\kan_y\Desktop\新建文件夹\test.db";
 
             SQLiteConnection conn = new SQLiteConnection(conn_str);
+            //conn.SetPassword(":)z");
             //打开数据库，若文件不存在会自动创建 
             conn.Open();
             //建表语句 

@@ -34,6 +34,7 @@ using mdl.Attributes;
 using mdl.Interface;
 using RestSharp;
 using System.Security.Cryptography;
+using System.Net.Http;
 
 namespace CTest
 {
@@ -105,15 +106,15 @@ namespace CTest
             //        mimeType = "video/mpeg4",
             //        movieId = 1L,
             //        userId = 1L,
-            //        video = true
+            //        video = false
             //    }
             //};
 
-            //var dict = new Dictionary<string, string>() { { "Cookie", "SESSION=YTc0MTYxMzctNzU2MC00MDk4LTgzNGUtNzMyMjQ0ZjUyZjkw" } };
-            //HttpCreator.Create("http://172.18.132.148:28080/transaction/order/uploadedCompleted", "post", "", j.SerializeObject(notice), "application/json",
+            //var dict = new Dictionary<string, string>() { { "Cookie", "session=NjYyZjg5NGUtMzRhYi00NTNkLTk2MzAtYmViY2Q2MzEzNThm" } };
+            //HttpCreator.Create("http://new.sinomediahz.com/api/transaction/order/uploadedCompleted", "post", "", j.SerializeObject(notice), "application/json",
             //    Encoding.UTF8, null, null, dict, out var result_json);
 
-            //Console.WriteLine(result_json); 
+            //Console.WriteLine(result_json);
             #endregion
 
             #region webserver
@@ -176,11 +177,15 @@ namespace CTest
             #region json deser ignore case is automatic
             //var x = File.ReadAllText(@"E:\1.txt");
             //var json = j.DeserializeJsonToList<IAS>(x);
-            //foreach (var ias in json)
+            //for (var i = 0; i < json.Count; i++)
             //{
-            //    Console.WriteLine(ias.partNumber + "\t" + ias.etag);
+            //    var m = json[i];
+            //    if (m.partNumber - 1 != i)
+            //    {
+            //        Console.WriteLine(i);
+            //    }
             //}
-            //Console.WriteLine(json.Count); 
+            //Console.WriteLine(json.Count);
             #endregion
 
             #region pause
@@ -628,6 +633,18 @@ namespace CTest
             var url = excelFileHelper.CreateWorkbook(lst, new List<string>() { "sh1" }, "看看");
             Console.WriteLine(url);
         }
+
+        #region 
+        public static void E_000(int a)
+        {
+
+        }
+
+        public static Action<int> func_000()
+        {
+            return E_000;
+        }
+        #endregion
     }
 
     public enum MemberCheckStatus
