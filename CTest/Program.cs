@@ -38,12 +38,6 @@ using System.Net.Http;
 
 namespace CTest
 {
-    public enum AuditStatus
-    {
-        未审核 = 0,
-        审核通过 = 1,
-        已驳回 = 2
-    }
     class Program
     {
         static readonly object _locker = new object();
