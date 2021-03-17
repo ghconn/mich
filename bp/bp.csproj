@@ -51,7 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="2.json" />
-    <None Include="1.json" />
+    <None Include="s3Client - 2.json" />
+    <None Include="s3Config - 2.json" />
+    <None Include="s3Config.json" />
+    <None Include="s3Client.json" />
+    <None Include="4.json" />
+    <None Include="5.json" />
     <None Include="cc.json" />
     <None Include="emmm.json" />
     <None Include="test.json" />

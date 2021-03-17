@@ -1,6 +1,7 @@
 ﻿using mdl.schd;
 using Quartz;
 using Quartz.Impl;
+using Quartz.Impl.Triggers;
 using System;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
@@ -81,10 +82,45 @@ namespace scheduler
                     status.Status = 1;
                     status.Msg = "任务计划运行成功";
                 }
-                else
+                else // 如果存在，判断cron表达式是否相同，不同则更新
                 {
-                    status.Status = 1;
-                    status.Msg = "任务计划运行正常";
+                    var trigger = await scheduler.GetTrigger(new Quartz.TriggerKey(taskModel.TriggerName, taskModel.TriggerGroupName));
+                    var cron = taskModel.IntervalTime;
+                    if (trigger != null)
+                    {
+                        var triggerImpl = trigger as CronTriggerImpl;
+                        if (triggerImpl.CronExpressionString != cron)
+                        {
+                            var jobDetail = await scheduler.GetJobDetail(triggerImpl.JobKey);
+                            // var t = jobDetail.GetType(); // JobDetailImpl
+                            var jobImpl = jobDetail as Quartz.Impl.JobDetailImpl;
+
+                            var newTrigger = TriggerBuilder.Create()
+                                    .WithIdentity(taskModel.TriggerName, taskModel.TriggerGroupName)
+                                    .StartAt(DateTimeOffset.UtcNow) //指定开始时间
+                                    .EndAt(taskModel.EndTime)//指定结束时间
+                                    .WithCronSchedule(cron, action => action.WithMisfireHandlingInstructionDoNothing())//使用Cron表达式//第一次启动时不执行
+                                    .ForJob(jobDetail) //通过JobKey识别作业
+                                    .Build();
+                            await scheduler.RescheduleJob(triggerImpl.Key, newTrigger);
+
+                            var firetime = newTrigger.GetNextFireTimeUtc();
+                            var nexttime = firetime.HasValue ? firetime.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : "无";
+
+                            status.Status = 1;
+                            status.Msg = $"调度任务[{taskModel.TaskName}]更新执行计划成功，下次执行时间：{nexttime}";
+                        }
+                        else
+                        {
+                            status.Status = 2;
+                            status.Msg = $"调度任务[{taskModel.TaskName}]运行正常";
+                        }
+                    }
+                    else
+                    {
+                        status.Status = 2;
+                        status.Msg = $"调度任务[{taskModel.TaskName}]运行正常";
+                    }
                 }
             }
             catch (Exception ex)

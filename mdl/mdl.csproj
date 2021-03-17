@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Attributes\TitleAttribute.cs" />
     <Compile Include="chartpie.cs" />
+    <Compile Include="Metadata.cs" />
     <Compile Include="ent.cs" />
     <Compile Include="ExportTemplate.cs" />
     <Compile Include="Mail\ISendMail.cs" />

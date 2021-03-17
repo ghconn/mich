@@ -35,6 +35,7 @@ using mdl.Interface;
 using RestSharp;
 using System.Security.Cryptography;
 using System.Net.Http;
+using Quartz;
 
 namespace CTest
 {
@@ -56,6 +57,11 @@ namespace CTest
             #region regex.replace unicode \s
             //var s = "v 1.　　3";
             //var s2 = Regex.Replace(s, @"\s", ""); 
+
+            /*var json = @"申请人不在餐厅用
+餐，因此无法对本次审核的审核结果作签字确认";
+
+            Console.WriteLine(value: Regex.Replace(input: json, pattern: "\\s", replacement: ""));*/
             #endregion
 
             #region post xml
@@ -182,10 +188,150 @@ namespace CTest
             //Console.WriteLine(json.Count);
             #endregion
 
+            #region schedule
+            //schddemo8();
+            //_ = ScheduleJobChangeTrigger(); 
+            #endregion
+
+
+
             #region pause
             Console.ReadKey();
             #endregion
 
+        }
+
+        public static async Task ByteWriteTest()
+        {
+            MemoryStream ms = new MemoryStream();
+            var bytes = Enumerable.Range(1, 501).Select(i => (byte)i).ToArray();
+            var section_length = 100;
+
+            for (var bts_position = 0; bts_position < bytes.Length; bts_position += section_length)
+            {
+                var ms2 = new MemoryStream();
+                var maxlength = section_length;
+                if (bts_position + section_length > bytes.Length)
+                {
+                    maxlength = bytes.Length - bts_position;
+                }
+                await ms2.WriteAsync(bytes, bts_position, maxlength);
+                Console.WriteLine(string.Join(",", ms2.ToArray()));
+                await ms.WriteAsync(bytes, bts_position, maxlength);
+                Console.WriteLine(maxlength);
+            }
+        }
+
+        public static void GetVideoMetadata()
+        {
+            /*
+FFmpeg version SVN-r18639, Copyright (c) 2000-2009 Fabrice Bellard, et al.
+  configuration: --enable-memalign-hack --enable-postproc --enable-gpl --enable-libfaac --enable-libfaad --enable-libgsm --enable-libmp3lame --enable-libvorbis --enable-libtheora --enable-libx264 --enable-libxvid --disable-ffserver --enable-avisynth --enable-pthreads
+  libavutil     50. 3. 0 / 50. 3. 0
+  libavcodec    52.27. 0 / 52.27. 0
+  libavformat   52.32. 0 / 52.32. 0
+  libavdevice   52. 2. 0 / 52. 2. 0
+  libswscale     0. 7. 1 /  0. 7. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Apr 21 2009 13:44:38, gcc: 4.2.4 (TDM-1 for MinGW)
+
+Seems stream 0 codec frame rate differs from container frame rate: 47.95 (20000000/417083) -> 23.98 (24000/1001)
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '1.txt':
+  Duration: 01:55:08.71, start: 0.000000, bitrate: 9 kb/s
+    Stream #0.0(und): Video: h264, yuv420p, 1920x1080 [PAR 1:1 DAR 16:9], 23.98 tbr, 23.98 tbn, 47.95 tbc
+    Stream #0.1(und): Audio: aac, 48000 Hz, stereo, s16
+At least one output file must be specified
+             * 
+             * 
+             * 
+             * 
+FFmpeg version SVN-r18639, Copyright (c) 2000-2009 Fabrice Bellard, et al.
+  configuration: --enable-memalign-hack --enable-postproc --enable-gpl --enable-libfaac --enable-libfaad --enable-libgsm --enable-libmp3lame --enable-libvorbis --enable-libtheora --enable-libx264 --enable-libxvid --disable-ffserver --enable-avisynth --enable-pthreads
+  libavutil     50. 3. 0 / 50. 3. 0
+  libavcodec    52.27. 0 / 52.27. 0
+  libavformat   52.32. 0 / 52.32. 0
+  libavdevice   52. 2. 0 / 52. 2. 0
+  libswscale     0. 7. 1 /  0. 7. 1
+  libpostproc   51. 2. 0 / 51. 2. 0
+  built on Apr 21 2009 13:44:38, gcc: 4.2.4 (TDM-1 for MinGW)
+
+Seems stream 0 codec frame rate differs from container frame rate: 59.94 (60000/1001) -> 29.97 (60000/2002)
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\kan_y\Videos\Captures\Feedback Hub 2020-10-09 17-39-59.mp4':
+  Duration: 00:00:24.81, start: 0.000000, bitrate: 4380 kb/s
+    Stream #0.0(und): Video: h264, yuv420p, 1024x804 [PAR 1:1 DAR 256:201], 29.97 tbr, 30k tbn, 59.94 tbc
+    Stream #0.1(und): Audio: aac, 48000 Hz, stereo, s16
+At least one output file must be specified
+             */
+            StreamReader sr;
+            ProcessStartInfo s = new ProcessStartInfo();
+            // s.RedirectStandardInput = true;
+            // s.RedirectStandardOutput = true;
+            s.RedirectStandardError = true;
+            s.UseShellExecute = false;
+            s.FileName = @"E:\tool\ffmpeg-18639\ffmpeg.exe";
+            s.Arguments = @"-i C:\Users\kan_y\Videos\花木兰刘亦菲-1.txt";
+            // s.Arguments = @"-i ""C:\Users\kan_y\Videos\Captures\Feedback Hub 2020-10-09 17-39-59.mp4""";
+            // s.Arguments = @"-i C:\Users\kan_y\Pictures\x5.jpg";
+            Process p = Process.Start(s);
+            // sr = p.StandardOutput;
+            sr = p.StandardError;
+
+            var output = sr.ReadToEnd();
+            Console.WriteLine(output);
+            sr.Close();
+            p.WaitForExit();
+            p.Close();
+
+            var lines = output.Split('\n');
+            var duration_line = lines.FirstOrDefault(o => Regex.Match(o, "Duration:").Success);
+            var duration = Regex.Match(duration_line, "\\d{2}:\\d{2}:\\d{2}").Value;
+            var bitrate = Regex.Match(duration_line, "bitrate:\\s*(\\d*)\\skb/s").Groups[1].Value;
+            Console.WriteLine(duration);
+            Console.WriteLine(bitrate);
+
+            var video_line = lines.FirstOrDefault(o => Regex.Match(o, "Stream.*Video:").Success);
+            var videoinfo = Regex.Replace(video_line, "Stream.*Video:", "").Trim().Split(',');
+            var format = videoinfo[0];
+            var colorModel = videoinfo[1].Trim();
+            var frameSize = videoinfo.FirstOrDefault(o => Regex.Match(o, "\\d{1,6}x\\d{1,6}").Success);
+            frameSize = Regex.Match(frameSize, "\\d{1,6}x\\d{1,6}").Value;
+            var fps = videoinfo.FirstOrDefault(o => Regex.Match(o, "\\stbr$").Success);
+            fps = Regex.Replace(fps, "\\stbr", "").Trim();
+            Console.WriteLine(format);
+            Console.WriteLine(colorModel);
+            Console.WriteLine(frameSize);
+            Console.WriteLine(fps);
+        }
+
+        public static void GetStringThenGetBytes()
+        {
+            var s = new byte[] { 1, 2, 3, 60, 6, 7, 102, 230 };
+            var x = Encoding.UTF8.GetString(s, 0, s.Length);
+            byte[] y = Encoding.UTF8.GetBytes(x);
+            Console.WriteLine($"s.Length:{s.Length}\ty.Length:{y.Length}");
+            for (var i = 0; i < s.Length; i++)
+            {
+                if (s[i] != y[i])
+                {
+                    Console.WriteLine(s[i] + "," + y[i]);
+                    Console.WriteLine("-------------");
+                }
+            }
+        }
+
+        public static string GenNonStr(int length)
+        {
+            char[] verification = new char[length];
+            char[] dictionary = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+            };
+            Random random = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                verification[i] = dictionary[random.Next(dictionary.Length - 1)];
+            }
+            return new string(verification);
         }
 
         public static string SHA256(string fullname)
@@ -563,6 +709,113 @@ namespace CTest
             });
         }
 
+        static async void schddemo3()
+        {
+            await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "*/10 * * * * ?",//每隔10秒
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
+
+        static async void schddemo4()
+        {
+            await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "0 */1 * * * ?",//每隔1分
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
+
+        static async void schddemo5()
+        {
+            await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "0 */1 17-18 * * ?",//每天17到18点每隔1分（可以17到17）
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
+
+        static async void schddemo6()
+        {
+            await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "6 */1 * * * ?",//每隔1分在6秒时执行
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
+
+        static async void schddemo7()
+        {
+            await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "0 28 18 16 * ?",//每月16号18点28分0秒执行
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
+
+        static async void schddemo8()
+        {
+            await QuartzMethod.AddScheduleJob2(new mdl.schd.SchedulingTask()
+            {
+                EndTime = DateTime.Now.AddYears(30),
+                Id = 1,
+                IntervalTime = "0 0 0 ? * MON",
+                RunningStatus = 1,
+                StartTime = DateTime.Now,
+                TaskClassFullName = "scheduler.task.demo",
+                TaskDescription = "desc",
+                TaskGroupName = "taskg1",
+                TaskName = "test",
+                TriggerGroupName = "group1",
+                TriggerName = "class1"
+            });
+        }
 
         static async void schddemo()
         {
@@ -580,6 +833,31 @@ namespace CTest
                 TriggerGroupName = "group1",
                 TriggerName = "class1"
             });
+        }
+
+        public static async Task ScheduleJobChangeTrigger()
+        {
+            var scheduler = await QuartzMethod.GetScheduler();
+            var trigger = await scheduler.GetTrigger(new Quartz.TriggerKey("class1", "group1"));
+            //var t = trigger.GetType();//Quartz.Impl.Triggers.CronTriggerImpl
+            var triggerImpl = trigger as Quartz.Impl.Triggers.CronTriggerImpl;
+            // triggerImpl.CronExpressionString // 获取任务的cron表达式
+            var jobDetail = await scheduler.GetJobDetail(new Quartz.JobKey("test", "taskg1"));
+            // var t = jobDetail.GetType(); // JobDetailImpl
+            var jobImpl = jobDetail as Quartz.Impl.JobDetailImpl;
+            Console.WriteLine("下次执行时间：" + trigger.GetNextFireTimeUtc().Value.ToLocalTime());
+
+            var newTrigger = TriggerBuilder.Create()
+                            .WithIdentity("class1", "group1")
+                            .StartAt(DateTimeOffset.Now) //指定开始时间
+                            .EndAt(DateTimeOffset.Now.AddYears(100))//指定结束时间
+                            .WithCronSchedule("*/10 * * * * ?", action => action.WithMisfireHandlingInstructionDoNothing())//使用Cron表达式//第一次启动时不执行
+                            .ForJob(jobDetail) //通过JobKey识别作业
+                            .Build();                // 告诉Quartz使用我们的触发器来安排作业
+
+            await scheduler.RescheduleJob(triggerImpl.Key, newTrigger);
+            var trigger2 = await scheduler.GetTrigger(new Quartz.TriggerKey("class1", "group1"));
+            Console.WriteLine("更改计划后，下次执行时间：" + trigger2.GetNextFireTimeUtc().Value.ToLocalTime());
         }
 
         static void notes()
@@ -626,6 +904,19 @@ namespace CTest
             var excelFileHelper = new tpc.office.ExcelFileHelper();
             var url = excelFileHelper.CreateWorkbook(lst, new List<string>() { "sh1" }, "看看");
             Console.WriteLine(url);
+        }
+
+        static void ExpectUnionTest()
+        {
+            var lst1 = Enumerable.Range(1, 5).Select(i => new { p = i.ToString(), p2 = "abc" }).ToList();
+            var lst2 = Enumerable.Range(3, 5).Select(i => new { p = i.ToString(), p2 = "abc" }).ToList();
+            Console.WriteLine(string.Join(",", lst1.Union(lst2))); // 匿名对象list取并集成功
+            Console.WriteLine(string.Join(",", lst1.Except(lst2).Concat(lst2))); // 同上
+
+            var lst3 = Enumerable.Range(1, 5).Select(i => new { p = i.ToString(), p2 = new ClassA() }).ToList();
+            var lst4 = Enumerable.Range(3, 5).Select(i => new { p = i.ToString(), p2 = new ClassA() }).ToList();
+            Console.WriteLine(string.Join(",", lst3.Union(lst4))); // p2引用类型，未定义比较器，不能合并
+            Console.WriteLine(string.Join(",", lst3.Except(lst4).Concat(lst4))); // p2引用类型，未定义比较器，不能合并
         }
 
         #region 
