@@ -116,6 +116,7 @@
     <Compile Include="PropertiesToEntityClassCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefKey.cs" />
+    <Compile Include="RFC3986Encoder.cs" />
     <Compile Include="SendMail.cs" />
     <Compile Include="Slst.cs" />
     <Compile Include="SP.cs" />

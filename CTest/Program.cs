@@ -195,10 +195,22 @@ namespace CTest
 
 
 
+
+
             #region pause
             Console.ReadKey();
             #endregion
 
+        }
+
+        public static string SHA256Encrypt(string message)
+        {
+            byte[] tmpByte;
+            using (SHA256 sha256 = new SHA256Managed())
+            {
+                tmpByte = sha256.ComputeHash(Encoding.GetEncoding("gbk").GetBytes(message));
+                return string.Concat(tmpByte.Select(b => b.ToString("x2")));
+            }
         }
 
         public static async Task ByteWriteTest()

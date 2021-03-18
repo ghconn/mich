@@ -33,6 +33,7 @@ select stuff(( select  ',' + colname from tablename for xml path('')), 1, 1, '')
 
 --查询表中所有列名
 select name from syscolumns where id = object_id('表名')
+select name from syscolumns where id = object_id('表名') order by colorder
 
 --结合上面的合并方法
 with cte as (select name from syscolumns where id = object_id('表名'))
@@ -149,3 +150,6 @@ end
 -------------------------------------------------------------------------------------------------------
 
 
+-------------------------------------------------------------------------------------------------------
+如果数据库是 SqlServer2012 或更高版本，可以切换使用 OFFSET FETCH 分页方式
+-------------------------------------------------------------------------------------------------------
