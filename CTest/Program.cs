@@ -194,13 +194,18 @@ namespace CTest
             #endregion
 
 
-
-
-
             #region pause
             Console.ReadKey();
             #endregion
 
+        }
+
+        public static void LqTake()
+        {
+            var lst = new List<xx>() { new xx() { label = "a", value = "b" }, new xx() { label = "c", value = "d" } };
+            var x = lst.Skip(1).Take(1).ToList();
+            lst = lst.Take(1).ToList();
+            Console.WriteLine(x.Count);
         }
 
         public static string SHA256Encrypt(string message)
@@ -929,6 +934,22 @@ At least one output file must be specified
             var lst4 = Enumerable.Range(3, 5).Select(i => new { p = i.ToString(), p2 = new ClassA() }).ToList();
             Console.WriteLine(string.Join(",", lst3.Union(lst4))); // p2引用类型，未定义比较器，不能合并
             Console.WriteLine(string.Join(",", lst3.Except(lst4).Concat(lst4))); // p2引用类型，未定义比较器，不能合并
+        }
+
+        static void ForLoop()
+        {
+            var l = 12022;
+            for (var i = 1; i < l;)
+            {
+                var j = i;
+                var max_j = i + 100;
+                for (; j < max_j && j < l; j++)
+                {
+                    Console.Write(j + ",");
+                }
+                Console.WriteLine();
+                i = j;
+            }
         }
 
         #region 

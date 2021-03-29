@@ -2,108 +2,21 @@
   "message": "ok",
   "code": "SUCCESS",
   "data": {
-    "id": 474,
-    "productId": "S20210315002",
-    "folderName": "商家41",
-    "folderSize": 0,
-    "createTime": "2021-03-15 12:31:55",
-    "bucketName": "aws-dev-com-huacemedia-master-file",
-    "fileList": [],
-    "transcodingFolderVoList": [
+    "id": 13,
+    "fileList": [
       {
-        "folderId": "40/474/COMMON/31/166",
-        "folderName": "qianxpmj01-订单166",
-        "folderSize": 109798239,
-        "transcodingFileList": [
-          {
-            "id": "1054",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 15:16:42",
-            "fileName": "沐浴之王.mp4",
-            "fileSize": 109798239,
-            "fileType": null,
-            "enable": true
-          }
-        ]
+        "subTaskId": 6,
+        "name": "639780.png",
+        "bucketName": "aws-dev-com-huacemedia-master-file",
+        "keyName": "32/463/639780.png",
+        "size": 2403224
       },
       {
-        "folderId": "40/474/COMMON/31/16",
-        "folderName": "qianxpmj01-可成功的方案",
-        "folderSize": 403788026,
-        "transcodingFileList": [
-          {
-            "id": "1059",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 18:05:50",
-            "fileName": "小猪佩奇.mp4",
-            "fileSize": 717825,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1058",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 18:03:51",
-            "fileName": "长安诺.mp4",
-            "fileSize": 8163299,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1055",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 16:50:52",
-            "fileName": "天若有情.mp4",
-            "fileSize": 148073210,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1051",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 13:21:42",
-            "fileName": "第九集.mp4",
-            "fileSize": 47739863,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1050",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 13:18:59",
-            "fileName": "第六集.mp4",
-            "fileSize": 51529856,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1049",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 13:12:06",
-            "fileName": "第五集.mp4",
-            "fileSize": 41155434,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1048",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 13:07:38",
-            "fileName": "第二集.mp4",
-            "fileSize": 56386091,
-            "fileType": null,
-            "enable": true
-          },
-          {
-            "id": "1047",
-            "createName": "qianxpsj04",
-            "createTime": "2021-03-15 13:05:27",
-            "fileName": "第四集.mp4",
-            "fileSize": 50022448,
-            "fileType": null,
-            "enable": true
-          }
-        ]
+        "subTaskId": 7,
+        "name": "drive.png",
+        "bucketName": "aws-dev-com-huacemedia-master-file",
+        "keyName": "32/463/drive.png",
+        "size": 14603
       }
     ]
   },
