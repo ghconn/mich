@@ -42,8 +42,10 @@ namespace CTest
     class Program
     {
         static readonly object _locker = new object();
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            await Task.Delay(0);
+
             DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
             var timestamp1 = (int)(DateTime.Now - startTime).TotalSeconds;
             Console.WriteLine("sl-{0}", timestamp1);
@@ -91,30 +93,6 @@ namespace CTest
             //var s = $@"123,
             //                    {f},{1}";
             //Console.WriteLine(s); 
-            #endregion
-
-            #region 十诺uploadedCompleted
-            //var notice = new List<UploadCompletedNotice>()
-            //{
-            //    new UploadCompletedNotice()
-            //    {
-            //        bucketName = "",
-            //        fileName = "",
-            //        keyName = "",
-            //        md5 = "",
-            //        sha512 = "",
-            //        mimeType = "video/mpeg4",
-            //        movieId = 1L,
-            //        userId = 1L,
-            //        video = false
-            //    }
-            //};
-
-            //var dict = new Dictionary<string, string>() { { "Cookie", "session=NjYyZjg5NGUtMzRhYi00NTNkLTk2MzAtYmViY2Q2MzEzNThm" } };
-            //HttpCreator.Create("http://new.sinomediahz.com/api/transaction/order/uploadedCompleted", "post", "", j.SerializeObject(notice), "application/json",
-            //    Encoding.UTF8, null, null, dict, out var result_json);
-
-            //Console.WriteLine(result_json);
             #endregion
 
             #region webserver
@@ -194,10 +172,103 @@ namespace CTest
             #endregion
 
 
+            GetVideoMetadata(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
+            //FileMd5(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
+            //FileSHA256(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
+
+
             #region pause
             Console.ReadKey();
             #endregion
 
+        }
+
+
+        public static string GetVideoMetadata(string filename)
+        {
+            if (Path.GetExtension(filename).ToLower() == ".gif")
+            {
+                return null;
+            }
+            StreamReader sr;
+            ProcessStartInfo s = new ProcessStartInfo();
+            // s.RedirectStandardInput = true;
+            // s.RedirectStandardOutput = true;
+            s.RedirectStandardError = true;
+            s.UseShellExecute = false;
+            s.FileName = Path.Combine(@"E:\tool\ffmpeg-18639", "ffmpeg.exe");
+            s.Arguments = $"-i \"{filename}\"";
+            s.WindowStyle = ProcessWindowStyle.Hidden;
+            s.CreateNoWindow = true;
+            Process p = Process.Start(s);
+            // sr = p.StandardOutput;
+            sr = p.StandardError;
+
+            var output = sr.ReadToEnd();
+            sr.Close();
+            p.WaitForExit();
+            p.Close();
+
+            var lines = output.Split('\n');
+            var duration_line = lines.FirstOrDefault(o => Regex.Match(o, "Duration:").Success);
+            if (string.IsNullOrEmpty(duration_line))
+            {
+                return null;
+            }
+            var duration = Regex.Match(duration_line, "\\d{2}:\\d{2}:\\d{2}").Value;
+            var bitrate = Regex.Match(duration_line, "bitrate:\\s*(\\d*)\\skb/s").Groups[1].Value;
+            int.TryParse(bitrate, out int i_bitrate);
+
+            long totalsecond = 0L;
+            var duration_split = duration.Split(':');
+            var hour = int.Parse(duration_split[0]);
+            var minute = int.Parse(duration_split[1]);
+            var second = int.Parse(duration_split[2]);
+
+            totalsecond += hour * 60 * 60;
+            totalsecond += minute * 60;
+            totalsecond += second;
+
+            if (i_bitrate == 0 && totalsecond < 20)
+            {
+                return null;
+            }
+
+            var video_line = lines.FirstOrDefault(o => Regex.Match(o, "Stream.*Video:").Success);
+            if (string.IsNullOrEmpty(video_line))
+            {
+                return null;
+            }
+            var videoinfo = Regex.Replace(video_line, "Stream.*Video:", "").Trim().Split(',');
+            if (videoinfo.Length < 2)
+            {
+                return null;
+            }
+            var format = videoinfo[0];
+            var colorModel = videoinfo.Length > 5 ? videoinfo[1].Trim() : "";
+            var frameSize = videoinfo.FirstOrDefault(o => Regex.Match(o, "^\\s*\\d{2,6}x\\d{2,6}").Success);
+            if (!string.IsNullOrEmpty(frameSize))
+            {
+                frameSize = Regex.Match(frameSize, "^\\s*\\d{2,6}x\\d{2,6}").Value.Trim();
+            }
+            else
+            {
+                frameSize = "0x0";
+            }
+            var fps = videoinfo.FirstOrDefault(o => Regex.Match(o, "\\stbr$").Success);
+            if (!string.IsNullOrEmpty(fps))
+            {
+                fps = Regex.Replace(fps, "\\stbr", "").Trim();
+            }
+            double.TryParse(fps, out double d_fps);
+            Console.WriteLine(bitrate);
+            Console.WriteLine(duration); 
+            Console.WriteLine(totalsecond);
+            Console.WriteLine(format);
+            Console.WriteLine(frameSize);
+            Console.WriteLine(fps);
+
+            return "";
         }
 
         public static void LqTake()
@@ -206,6 +277,10 @@ namespace CTest
             var x = lst.Skip(1).Take(1).ToList();
             lst = lst.Take(1).ToList();
             Console.WriteLine(x.Count);
+            var z = lst.First();
+            lst.Clear();
+            lst.Add(z);
+            Console.WriteLine(lst.Count);
         }
 
         public static string SHA256Encrypt(string message)
@@ -375,12 +450,25 @@ At least one output file must be specified
                 {
                     sb.Append(retVal[i].ToString("x2"));
                 }
+                Console.WriteLine(sb.ToString());
                 return sb.ToString();
             }
             catch (Exception ex)
             {
                 throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
             }
+        }
+
+        public static string FileSHA256(string fullname)
+        {
+            FileStream stream = new FileStream(fullname, FileMode.Open);
+
+            SHA256Managed Sha256 = new SHA256Managed();
+            byte[] by = Sha256.ComputeHash(stream);
+
+            var x = BitConverter.ToString(by).Replace("-", "").ToLower();
+            Console.WriteLine(x);
+            return BitConverter.ToString(by).Replace("-", "").ToLower();
         }
 
         static void upload()
@@ -491,7 +579,8 @@ At least one output file must be specified
                 var num = System.Text.RegularExpressions.Regex.Match(s, "-(\\d+)\\.temp$").Groups[1].Value;
                 return int.Parse(num);
             }).ToList();
-            await SplitF.Merge(destName, lst);
+            var c = 1;
+            await SplitF.Merge(destName, lst, c);
             callback?.Invoke();
         }
         async static Task<string> WorkAsync(string bucketName, string keyName, int thread_nth, long taskstart, long taskend, Action<long, int, string> action, Action callback, int sectionSize)

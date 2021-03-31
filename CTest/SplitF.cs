@@ -62,24 +62,34 @@ namespace CTest
         }
 
 
-        public static async Task Merge(string destName, IEnumerable<string> tempfiles)
+        public static async Task<int> Merge(string destName, IEnumerable<string> tempfiles, int count)
         {
-            var lst = new List<byte[]>();
+            var i = count;
+            //var bytes_max_length = 1024 * 1024 * 100;
             foreach (var name in tempfiles)
             {
-                using (var fs = new FileStream(name, FileMode.Open, FileAccess.Read))
-                {
-                    var bts = new byte[fs.Length];
-                    fs.Read(bts, 0, bts.Length);
-                    lst.Add(bts);
-                }
+                var fs = new FileStream(name, FileMode.Open, FileAccess.Read);
+                var bts = new byte[fs.Length];
+                fs.Read(bts, 0, bts.Length);
+
+                await Write(bts, destName);
+
+                Console.WriteLine(i++);
+
+                fs.Close();
+                fs.Dispose();
             }
-            using (var stream = new FileStream(destName, FileMode.Create))
+            return i;
+        }
+
+        static async Task Write(byte[] bts, string name)
+        {
+            using (var stream = new FileStream(name, FileMode.Append))
             {
-                foreach (var bts in lst)
-                {
-                    await stream.WriteAsync(bts, 0, bts.Length);
-                }
+                await stream.WriteAsync(bts, 0, bts.Length);
+                await stream.FlushAsync();
+                stream.Close();
+                stream.Dispose();
             }
         }
     }
