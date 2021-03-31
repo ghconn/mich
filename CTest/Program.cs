@@ -171,8 +171,11 @@ namespace CTest
             //_ = ScheduleJobChangeTrigger(); 
             #endregion
 
-
-            GetVideoMetadata(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
+            Console.WriteLine("文件路径:");
+            var ffmpeg = Console.ReadLine();
+            Console.WriteLine("文件路径:");
+            var name = Console.ReadLine();
+            GetVideoMetadata(ffmpeg, name);
             //FileMd5(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
             //FileSHA256(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
 
@@ -184,7 +187,7 @@ namespace CTest
         }
 
 
-        public static string GetVideoMetadata(string filename)
+        public static string GetVideoMetadata(string ffmpeg, string filename)
         {
             if (Path.GetExtension(filename).ToLower() == ".gif")
             {
@@ -196,7 +199,7 @@ namespace CTest
             // s.RedirectStandardOutput = true;
             s.RedirectStandardError = true;
             s.UseShellExecute = false;
-            s.FileName = Path.Combine(@"E:\tool\ffmpeg-18639", "ffmpeg.exe");
+            s.FileName = ffmpeg;
             s.Arguments = $"-i \"{filename}\"";
             s.WindowStyle = ProcessWindowStyle.Hidden;
             s.CreateNoWindow = true;
