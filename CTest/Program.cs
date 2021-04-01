@@ -36,6 +36,8 @@ using RestSharp;
 using System.Security.Cryptography;
 using System.Net.Http;
 using Quartz;
+using MediaToolkit.Model;
+using MediaToolkit;
 
 namespace CTest
 {
@@ -171,23 +173,25 @@ namespace CTest
             //_ = ScheduleJobChangeTrigger(); 
             #endregion
 
-            Console.WriteLine("将文件分割出来一份，默认大小为1g");
-            Console.WriteLine("文件路径：");
-            var name = Console.ReadLine();
-            Console.WriteLine("大小（直接按enter）：");
-            var b = long.TryParse(Console.ReadLine(), out long length);
-            if (!b)
-            {
-                length = 1024 * 1024 * 1024;
-            }
 
-            await SplitF.Split(name, Path.GetDirectoryName(name) + Path.DirectorySeparatorChar + "section-" + Path.GetFileName(name), length);
 
-            Console.WriteLine("完成");
+
             #region pause
             Console.ReadKey();
             #endregion
 
+        }
+
+        public static void MediaToolkitTest()
+        {
+            var inputFile = new MediaFile { Filename = @"E:\tool\(合并)Git-2.27.0-64-bit-1.exe" };
+
+            using (var engine = new Engine())
+            {
+                engine.GetMetadata(inputFile);
+            }
+
+            Console.WriteLine(inputFile.Metadata.Duration);
         }
 
         public static async Task GetSizeFile()
