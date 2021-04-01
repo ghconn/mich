@@ -171,11 +171,15 @@ namespace CTest
             //_ = ScheduleJobChangeTrigger(); 
             #endregion
 
-
-            //GetVideoMetadata(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
-            //FileMd5(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
-            //FileSHA256(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe");
-
+            var count = 1;
+            while (count < 30)
+            {
+                try
+                {
+                    count = await SplitF.Merge(@"C:\Users\kan_y\Videos\花木兰刘亦菲-30g.mp4", new string[] { @"C:\Users\kan_y\Videos\花木兰刘亦菲-1g.mp4" }, count);
+                }
+                catch{}
+            }
 
             #region pause
             Console.ReadKey();
@@ -183,6 +187,10 @@ namespace CTest
 
         }
 
+        public static async Task GetSizeFile()
+        {
+            await SplitF.Split(@"C:\Users\kan_y\Videos\花木兰刘亦菲.mp4", @"C:\Users\kan_y\Videos\花木兰刘亦菲-1g.mp4", 1024 * 1024 * 1024);
+        }
 
         public static string GetVideoMetadata(string filename)
         {

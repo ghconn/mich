@@ -61,6 +61,24 @@ namespace CTest
             }
         }
 
+        public static async Task Split(string name, string destname, long length)
+        {
+            var fs = new FileStream(name, FileMode.Open, FileAccess.Read);
+            var bts = new byte[length];
+            fs.Read(bts, 0, bts.Length);
+
+            using (var stream = new FileStream(destname, FileMode.Append))
+            {
+                await stream.WriteAsync(bts, 0, bts.Length);
+                await stream.FlushAsync();
+                stream.Close();
+                stream.Dispose();
+            }
+
+            fs.Close();
+            fs.Dispose();
+        }
+
 
         public static async Task<int> Merge(string destName, IEnumerable<string> tempfiles, int count)
         {
