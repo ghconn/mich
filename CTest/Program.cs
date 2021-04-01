@@ -171,12 +171,16 @@ namespace CTest
             //_ = ScheduleJobChangeTrigger(); 
             #endregion
 
-            var count = 1;
-            while (count < 30)
+            Console.WriteLine("文件路径：");
+            var path = Console.ReadLine();
+            Console.WriteLine("合并次数：");
+            var count = int.Parse(Console.ReadLine());
+            var i = 1;
+            while (i < count)
             {
                 try
                 {
-                    count = await SplitF.Merge(@"C:\Users\kan_y\Videos\花木兰刘亦菲-30g.mp4", new string[] { @"C:\Users\kan_y\Videos\花木兰刘亦菲-1g.mp4" }, count);
+                    i = await SplitF.Merge(Path.GetDirectoryName(path) + Path.DirectorySeparatorChar + "(合并)" + Path.GetFileName(path), new string[] { path }, i);
                 }
                 catch{}
             }
