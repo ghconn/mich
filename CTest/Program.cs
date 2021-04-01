@@ -171,20 +171,19 @@ namespace CTest
             //_ = ScheduleJobChangeTrigger(); 
             #endregion
 
+            Console.WriteLine("将文件分割出来一份，默认大小为1g");
             Console.WriteLine("文件路径：");
-            var path = Console.ReadLine();
-            Console.WriteLine("合并次数：");
-            var count = int.Parse(Console.ReadLine());
-            var i = 1;
-            while (i < count)
+            var name = Console.ReadLine();
+            Console.WriteLine("大小（直接按enter）：");
+            var b = long.TryParse(Console.ReadLine(), out long length);
+            if (!b)
             {
-                try
-                {
-                    i = await SplitF.Merge(Path.GetDirectoryName(path) + Path.DirectorySeparatorChar + "(合并)" + Path.GetFileName(path), new string[] { path }, i);
-                }
-                catch{}
+                length = 1024 * 1024 * 1024;
             }
 
+            await SplitF.Split(name, Path.GetDirectoryName(name) + Path.DirectorySeparatorChar + "section-" + Path.GetFileName(name), length);
+
+            Console.WriteLine("完成");
             #region pause
             Console.ReadKey();
             #endregion
