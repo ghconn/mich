@@ -9,10 +9,10 @@
         "movieInfoName": "山海情",
         "uploadLogVoRes": [
           {
-            "id": 2218,
-            "fileName": "hc-copyright-1.0-SNAPSHOT.jar",
+            "id": 2330,
+            "fileName": "花木兰刘亦菲-1g.mp4",
             "uploadStatus": 0,
-            "createTime": "2021-03-23 17:34:11",
+            "createTime": "2021-04-01 16:01:55",
             "createId": 32,
             "createBy": "qianxpsj01",
             "lastUpdatedTime": null,
@@ -20,10 +20,10 @@
             "lastUpdatedBy": null
           },
           {
-            "id": 2217,
-            "fileName": "%E4%B8%8B%E8%BD%BD.mp4先导集上.mp4",
+            "id": 2328,
+            "fileName": "花木兰刘亦菲-1g.mp4",
             "uploadStatus": 0,
-            "createTime": "2021-03-23 15:50:41",
+            "createTime": "2021-04-01 16:00:20",
             "createId": 32,
             "createBy": "qianxpsj01",
             "lastUpdatedTime": null,
@@ -64,6 +64,28 @@
         "movieInfoId": 465,
         "movieInfoName": "空",
         "uploadLogVoRes": [
+          {
+            "id": 2302,
+            "fileName": "[草稿大坏狐狸的故事_BD中法双字]测试档1.mp4",
+            "uploadStatus": 0,
+            "createTime": "2021-03-31 16:11:46",
+            "createId": 32,
+            "createBy": "qianxpsj01",
+            "lastUpdatedTime": null,
+            "lastUpdatedId": null,
+            "lastUpdatedBy": null
+          },
+          {
+            "id": 2298,
+            "fileName": "[草稿大坏狐狸的故事_BD中法双字]测试档1.mp4",
+            "uploadStatus": 0,
+            "createTime": "2021-03-31 15:23:58",
+            "createId": 32,
+            "createBy": "qianxpsj01",
+            "lastUpdatedTime": null,
+            "lastUpdatedId": null,
+            "lastUpdatedBy": null
+          },
           {
             "id": 2197,
             "fileName": "花木兰刘亦菲.mp4",
@@ -175,6 +197,17 @@
         "movieInfoId": 463,
         "movieInfoName": "无",
         "uploadLogVoRes": [
+          {
+            "id": 2257,
+            "fileName": "1003880.png",
+            "uploadStatus": 0,
+            "createTime": "2021-03-25 20:01:07",
+            "createId": 32,
+            "createBy": "qianxpsj01",
+            "lastUpdatedTime": null,
+            "lastUpdatedId": null,
+            "lastUpdatedBy": null
+          },
           {
             "id": 2245,
             "fileName": "第五集.mp4",

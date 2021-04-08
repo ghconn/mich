@@ -9,7 +9,7 @@ namespace CTest
 {
     public class SplitF
     {
-        public static void splitF()
+        public static void splitFTest()
         {
             var fullname = @"E:\tool\Git-2.27.0-64-bit.exe";
             using (FileStream fs = new FileStream(fullname, FileMode.Open, FileAccess.Read))
@@ -39,7 +39,7 @@ namespace CTest
             }
         }
 
-        public static void mergeF()
+        public static void mergeFTest()
         {
             var lst = new List<byte[]>();
             for (var i = 0; i < 10; i++) // 文件已经分割成10部分
@@ -61,7 +61,7 @@ namespace CTest
             }
         }
 
-        public static async Task Split(string name, string destname, long length)
+        public static async Task SplitTest(string name, string destname, long length)
         {
             var fs = new FileStream(name, FileMode.Open, FileAccess.Read);
             var bts = new byte[length];
@@ -80,7 +80,7 @@ namespace CTest
         }
 
 
-        public static async Task<int> Merge(string destName, IEnumerable<string> tempfiles, int count)
+        public static async Task<int> MergeTest(string destName, IEnumerable<string> tempfiles, int count)
         {
             var i = count;
             //var bytes_max_length = 1024 * 1024 * 100;
@@ -108,6 +108,55 @@ namespace CTest
                 await stream.FlushAsync();
                 stream.Close();
                 stream.Dispose();
+            }
+        }
+
+        // E:\tool\(合并)Git-2.27.0-64-bit-1.exe
+
+        /// <summary>
+        /// 移动、重命名文件
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        public static void MoveFile(string source, string dest)
+        {
+            var i = 2;
+            var fi = new FileInfo(dest);
+            var path = Path.GetDirectoryName(dest);
+            var name = Path.GetFileName(dest);
+            while (fi.Exists)
+            {
+                dest = $"{path}\\({i}){name}";
+                i++;
+                fi = new FileInfo(dest);
+            }
+
+            Directory.CreateDirectory(path);
+            File.Move(source, dest);
+        }
+
+        /// <summary>
+        /// 合并
+        /// </summary>
+        /// <param name="destName"></param>
+        /// <param name="tempfiles">有序</param>
+        public static async Task Merge(string destName, IEnumerable<string> tempfiles)
+        {
+            using (var destStream = new FileStream(destName, FileMode.Create))
+            {
+                var max_length_once = 1024 * 1024 * 100;
+                foreach (var name in tempfiles)
+                {
+                    using (var fs = new FileStream(name, FileMode.Open, FileAccess.Read))
+                    {
+                        while (fs.Position != fs.Length)
+                        {
+                            var bts = new byte[max_length_once];
+                            var length = await fs.ReadAsync(bts, 0, max_length_once);
+                            destStream.Write(bts, 0, length);
+                        }
+                    }
+                }
             }
         }
     }

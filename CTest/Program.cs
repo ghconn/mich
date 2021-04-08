@@ -38,6 +38,8 @@ using System.Net.Http;
 using Quartz;
 using MediaToolkit.Model;
 using MediaToolkit;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Security;
 
 namespace CTest
 {
@@ -173,6 +175,9 @@ namespace CTest
             //_ = ScheduleJobChangeTrigger(); 
             #endregion
 
+            #region ffmpeg test
+            //GetVideoMetadata(@"E:\tool\(合并)Git-2.27.0-64-bit-1.exe"); 
+            #endregion
 
 
 
@@ -180,6 +185,38 @@ namespace CTest
             Console.ReadKey();
             #endregion
 
+        }
+
+        /// <summary>
+        /// RSA私钥格式转换，java->.net // 需要引用开源类库BouncyCastle.Crypto.dll
+        /// </summary>
+        /// <param name="privateKey">java生成的RSA私钥</param>
+        /// <returns></returns>
+        public static string RSAPrivateKeyJava2DotNet(string privateKey)
+        {
+            RsaPrivateCrtKeyParameters privateKeyParam = (RsaPrivateCrtKeyParameters)PrivateKeyFactory.CreateKey(Convert.FromBase64String(privateKey));
+            return string.Format("<RSAKeyValue><Modulus>{0}</Modulus><Exponent>{1}</Exponent><P>{2}</P><Q>{3}</Q><DP>{4}</DP><DQ>{5}</DQ><InverseQ>{6}</InverseQ><D>{7}</D></RSAKeyValue>",
+            Convert.ToBase64String(privateKeyParam.Modulus.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.PublicExponent.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.P.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.Q.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.DP.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.DQ.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.QInv.ToByteArrayUnsigned()),
+            Convert.ToBase64String(privateKeyParam.Exponent.ToByteArrayUnsigned()));
+        }
+
+        /// <summary>
+        /// RSA公钥pem-->XML格式转换 // 需要引用开源类库BouncyCastle.Crypto.dll
+        /// </summary>
+        /// <param name="publicKey">pem公钥</param>
+        /// <returns></returns>
+        public static string RSAPublicKey(string publicKey)
+        {
+            RsaKeyParameters publicKeyParam = (RsaKeyParameters)PublicKeyFactory.CreateKey(Convert.FromBase64String(publicKey));
+            return string.Format("<RSAKeyValue><Modulus>{0}</Modulus><Exponent>{1}</Exponent></RSAKeyValue>",
+              Convert.ToBase64String(publicKeyParam.Modulus.ToByteArrayUnsigned()),
+              Convert.ToBase64String(publicKeyParam.Exponent.ToByteArrayUnsigned()));
         }
 
         public static void MediaToolkitTest()
@@ -194,9 +231,15 @@ namespace CTest
             Console.WriteLine(inputFile.Metadata.Duration);
         }
 
+        public static async Task MergeLargeFile()
+        {
+            await SplitF.Merge(@"C:\Users\kan_y\Videos\x.mp4", new string[] { @"C:\Users\kan_y\Videos\花木兰刘亦菲-1g.mp4", @"C:\Users\kan_y\Videos\花木兰刘亦菲-1.txt" });
+            Console.WriteLine("done");
+        }
+
         public static async Task GetSizeFile()
         {
-            await SplitF.Split(@"C:\Users\kan_y\Videos\花木兰刘亦菲.mp4", @"C:\Users\kan_y\Videos\花木兰刘亦菲-1g.mp4", 1024 * 1024 * 1024);
+            await SplitF.SplitTest(@"C:\Users\kan_y\Videos\花木兰刘亦菲.mp4", @"C:\Users\kan_y\Videos\花木兰刘亦菲-1g.mp4", 1024 * 1024 * 1024);
         }
 
         public static string GetVideoMetadata(string filename)
@@ -277,7 +320,7 @@ namespace CTest
             }
             double.TryParse(fps, out double d_fps);
             Console.WriteLine(bitrate);
-            Console.WriteLine(duration); 
+            Console.WriteLine(duration);
             Console.WriteLine(totalsecond);
             Console.WriteLine(format);
             Console.WriteLine(frameSize);
@@ -530,7 +573,7 @@ At least one output file must be specified
                 {
                     length = fs.Length - i;
                 }
-                if(length == 0)
+                if (length == 0)
                 {
                     break;
                 }
@@ -595,7 +638,7 @@ At least one output file must be specified
                 return int.Parse(num);
             }).ToList();
             var c = 1;
-            await SplitF.Merge(destName, lst, c);
+            await SplitF.MergeTest(destName, lst, c);
             callback?.Invoke();
         }
         async static Task<string> WorkAsync(string bucketName, string keyName, int thread_nth, long taskstart, long taskend, Action<long, int, string> action, Action callback, int sectionSize)
@@ -646,7 +689,7 @@ At least one output file must be specified
             Console.WriteLine(0);
             yield break;
         }
-        
+
         static async void testd()
         {
             Stopwatch sw = new Stopwatch();
@@ -690,7 +733,7 @@ At least one output file must be specified
             xml += "</root>";
             return xml;
         }
-        
+
         static void my()
         {
             var cc = new CookieContainer();
@@ -745,11 +788,11 @@ At least one output file must be specified
             HttpCreator.Create("http://localhost/service/Mysoft.Slxt.Service.Student/GetApproveState.aspx", "post", "", postdata, "application/json", Encoding.GetEncoding("gb2312"), null, null, new Dictionary<string, string>() { { "x-charset", "utf-8" }, { "Accept-Charset", "utf-8" } }, out re);
             Console.WriteLine(re);
         }
-        
+
         [DllImport("rpcrt4.dll", SetLastError = true)]
         private static extern int UuidCreateSequential(out Guid guid);
         const int RPC_S_OK = 0;
-        
+
         /// <summary>
         /// 获取新的<b>有序Guid</b>，用于数据的主键，不要使用Guid.NewGuid方法获取。
         /// </summary>
@@ -762,43 +805,8 @@ At least one output file must be specified
             return Guid.NewGuid();
         }
 
-
-
-        static void regt()
-        {
-            //var currtext = File.ReadAllText("1.aspx");
-            //var ms = Regex.Matches(currtext, "src\\s*=\\s*[\"']?(.+)\\.js", RegexOptions.IgnoreCase);
-            //foreach (Match m in ms)
-            //{
-            //    var v = m.Groups[1].Value;
-            //    Console.WriteLine(v);
-            //}
-
-            //ms = Regex.Matches(currtext, "RefJsFileHtml\\s*\\(\\s*\"(.+)\\.js", RegexOptions.IgnoreCase);
-            //foreach (Match m in ms)
-            //{
-            //    var v = m.Groups[1].Value;
-            //    Console.WriteLine(v);
-            //}
-
-
-            //
-            var text = @"var re = openXMLHTTP(""DSGL_XMLHTTP.aspx?guid="" + tr.oid, ""DeleteDSProvider"");
-                if (re == ""order"") {";
-            var text2 = @"                var re = openXMLHTTP(""DSGL_XMLHTTP.aspx?guid="" + tr.oid, ""DeleteDSProvider""
-            kldsld);sfsdfsdf
-                if (re == ""order"") {";
-
-            var m2 = Regex.Match(text, "\\(.*?,\\s*(.*?)[\\s,\\r\\n\\)]");//在"[]"里的圆括号加不加"\\"没区别？
-            Console.WriteLine(m2.Groups[1].Value.Replace("\"", ""));
-
-            //var m2 = Regex.Match(text, "[\\)]");
-            //Console.WriteLine(m2.Success);
-        }
-
         static void testCommerceApi()
         {
-
             var dict = new Dictionary<string, string>()
             {
                 { "Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibHZmIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJsdmYiLCJVc2VySW5mbyI6IntcIlVzZXJJZFwiOjksXCJVc2VyTmFtZVwiOlwibHZmXCIsXCJNb2JpbGVQaG9uZVwiOlwiMTU5MjIyMzY2OTZcIixcIkxvZ2luTmFtZVwiOlwibHZmXCIsXCJPcGVuSWRcIjpudWxsfSIsImp0aSI6IjkiLCJleHAiOjE1NTYyNzY0NDIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzQwIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNDAifQ.zp8Jw8xQuxcPTVLc1axUJchmb0UYBOYOoNQJr3ybZVo"}
@@ -1084,7 +1092,7 @@ At least one output file must be specified
         [Description("未注册")]
         NotRegister = 5
     }
-    
+
 
     public class xx
     {
