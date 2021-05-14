@@ -40,6 +40,8 @@ using MediaToolkit.Model;
 using MediaToolkit;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
+using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace CTest
 {
@@ -50,9 +52,13 @@ namespace CTest
         {
             await Task.Delay(0);
 
-            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var timestamp2 = (long)(DateTime.UtcNow - startTime).TotalSeconds;
+
+            startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
             var timestamp1 = (int)(DateTime.Now - startTime).TotalSeconds;
             Console.WriteLine("sl-{0}", timestamp1);
+            Console.WriteLine("sl-{0}", timestamp2);
 
             #region Marshal intptr
             //string sTestMarshalIntPtr = "abc";
@@ -187,6 +193,176 @@ namespace CTest
 
         }
 
+        async static Task SliceFile()
+        {
+            Console.WriteLine("将源文件切出一个更小的指定大小的副本");
+            Console.WriteLine("原文件完整路径:");
+            var source = Console.ReadLine();
+            Console.WriteLine("切出的大小（单位：字节，直接回车算1M， 可以使用'*'，比如100M写成100 * 1024 * 1024）:");
+            var size = Console.ReadLine();
+            long length;
+            if (string.IsNullOrEmpty(size))
+            {
+                length = 1 * 1024 * 1024;
+            }
+            else if(size.Contains("*"))
+            {
+                var numbers = size.Split('*');
+                length = 1L;
+                foreach(var n in numbers)
+                {
+                    length = length * int.Parse(n);
+                }
+            }
+            else
+            {
+                length = long.Parse(size);
+            }
+
+            await SplitF.SplitTest(source, Path.Combine(Path.GetDirectoryName(source),
+                Path.GetFileNameWithoutExtension(source)  + "-" + length + 
+                Path.GetExtension(source)), length);
+
+            Console.WriteLine("完成");
+        }
+
+        static void PartNumberCheck2(string sname)
+        {
+            var name = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop), sname);
+            var ss = File.ReadAllLines(name);
+            List<int> ls = new List<int>();
+            foreach (var s in ss)
+            {
+                ls.Add(int.Parse(s));
+            }
+            ls.Sort();
+
+            Console.WriteLine(ls.Count);
+            var count = 0;
+            for (var i = 1; i < ls.Count; i++)
+            {
+                if (ls[i] - ls[i - 1] != 1)
+                {
+                    Console.WriteLine("i:" + i + ",ls[i]:" + ls[i] + ",ls[i-1]:" + ls[i - 1]);
+                    count++;
+                }
+                if (ls[i] - ls[i - 1] > 1)
+                {
+                    Console.WriteLine("-----------------i:" + i + ",ls[i]:" + ls[i] + ",ls[i-1]:" + ls[i - 1]);
+                }
+            }
+            Console.WriteLine(count);
+        }
+
+        static void PartNumberCheck()
+        {
+            var name = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "1.xml");
+            var ss = File.ReadAllLines(name);
+            List<int> ls = new List<int>();
+            foreach (var s in ss)
+            {
+                if (s.Contains("<PartNumber>"))
+                {
+                    ls.Add(int.Parse(s.Replace("<PartNumber>", "").Replace("</PartNumber>", "").Trim()));
+                }
+            }
+
+            Console.WriteLine(ls.Count);
+            var count = 0;
+            for (var i = 1; i < ls.Count; i++)
+            {
+                if (ls[i] - ls[i - 1] != 1)
+                {
+                    Console.WriteLine("i:" + i + ",ls[i]:" + ls[i] + ",ls[i-1]:" + ls[i - 1]);
+                    count++;
+                }
+                if (ls[i] - ls[i - 1] > 1)
+                {
+                    Console.WriteLine("-----------------i:" + i + ",ls[i]:" + ls[i] + ",ls[i-1]:" + ls[i - 1]);
+                }
+            }
+            Console.WriteLine(count);
+        }
+
+        static void ListTest()
+        {
+            var lst1 = new List<KeyValue>()
+            {
+                new KeyValue() { name = "a", value = "1" },
+                new KeyValue() { name = "b", value = "2" },
+                new KeyValue() { name = "c", value = "3" },
+                new KeyValue() { name = "d", value = "4" },
+                new KeyValue() { name = "e", value = "5" },
+                new KeyValue() { name = "f", value = "6" },
+                new KeyValue() { name = "g", value = "7" }
+            };
+            var lst2 = new List<KeyValue>()
+            {
+                new KeyValue() { name = "2a", value = "1" },
+                new KeyValue() { name = "2b", value = "2" },
+                new KeyValue() { name = "2c", value = "3" },
+                new KeyValue() { name = "2d", value = "4" },
+                new KeyValue() { name = "2e", value = "5" },
+                new KeyValue() { name = "2f", value = "6" },
+                new KeyValue() { name = "2g", value = "7" }
+            };
+
+            var m1 = lst1.Skip(5).Take(lst1.Count - 5).ToList();
+            var m2 = lst2.Skip(3).Take(lst2.Count - 3).ToList();
+            lst1 = lst1.Take(5).ToList();
+            lst2 = lst2.Take(3).ToList();
+            var lst3 = new List<KeyValue>();
+            lst3.AddRange(m1);
+            lst3.AddRange(m2);
+
+            var newvalue = 0m;
+            foreach (var l in lst3)
+            {
+                newvalue += decimal.Parse(l.value);
+            }
+            var kv = new KeyValue();
+            kv.name = "其他";
+            kv.value = newvalue.ToString("f2");
+            lst3.Clear();
+            lst3.Add(kv);
+        }
+
+        static void ListDict()
+        {
+            var lst = new List<IDictionary<string, string>>();
+            lst.Add(new Dictionary<string, string>() { { "1", "10" }, { "2", "1" }, { "3", "1" } });
+            lst.Add(new Dictionary<string, string>() { { "1", "10" }, { "2", "1" }, { "3", "1" } });
+            lst.Add(new Dictionary<string, string>() { { "1", "10" }, { "2", "1" }, { "3", "1" } });
+            var pre5 = lst.OrderByDescending(n => decimal.Parse(n["1"].ToString())).Take(5).ToList();
+            var total_pre5 = pre5.Sum(n => decimal.Parse(n["1"].ToString()));
+            var dict = lst[0];
+            var dict_other = Clone(dict);
+            dict_other["C11"] = (100m - total_pre5).ToString("f2");
+            dict_other["C2"] = "其他";
+            lst.Clear();
+            lst.AddRange(pre5);
+            lst.Add(dict_other);
+        }
+        static IDictionary<string, string> Clone(IDictionary<string, string> source)
+        {
+            var arr = new KeyValuePair<string, string>[source.Count];
+            source.CopyTo(arr, 0);
+            var dict = new Dictionary<string, string>();
+            foreach(var kvp in arr)
+            {
+                dict.Add(kvp.Key, kvp.Value);
+            }
+            dict.Remove("SonListInsertInfo");// 如果存在则删除，因为： SonListInsertInfo，这个字段不要复制
+            return dict;
+        }
+
+        public static void Wakeup()
+        {
+            var base64code = "eyJjb29raWUiOnsibmFtZSI6InNlc3Npb24iLCJ2YWx1ZSI6IllXRXdPRE13WVRVdFpEUTNPQzAwWWpZNUxUaGhaV010WVdNeE1qRmxZbU0yWVdNNSJ9LCJ1c2VySWQiOjY0LCJvcmRlcklkIjpudWxsLCJtb3ZpZUlkIjo0ODgsIm1vdmllTmFtZSI6IuWVhuWutjAz5Lqn5ZOBNiIsImZpbGVMaXN0IjpbeyJidWNrZXROYW1lIjoiYXdzLWRldi1jb20taHVhY2VtZWRpYS1tYXN0ZXItZmlsZSIsImtleU5hbWUiOiIzOS80ODgvMDMwMzEubXA0In0seyJidWNrZXROYW1lIjoiYXdzLWRldi1jb20taHVhY2VtZWRpYS1tYXN0ZXItZmlsZSIsImtleU5hbWUiOiIzOS80ODgvKDIpMDMwMzEubXA0In0seyJidWNrZXROYW1lIjoiYXdzLWRldi1jb20taHVhY2VtZWRpYS1tYXN0ZXItZmlsZSIsImtleU5hbWUiOiIzOS80ODgvKDMpMDMwMzEubXA0In1dfQ==";
+            var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64code));
+            var x = j.DeserializeJsonToObject<AwakenParam>(json);
+        }
+
         /// <summary>
         /// RSA私钥格式转换，java->.net // 需要引用开源类库BouncyCastle.Crypto.dll
         /// </summary>
@@ -229,6 +405,7 @@ namespace CTest
             }
 
             Console.WriteLine(inputFile.Metadata.Duration);
+            // f.TextAppendToDeskFile(j.SerializeObject(inputFile.Metadata));
         }
 
         public static async Task MergeLargeFile()
@@ -254,7 +431,8 @@ namespace CTest
             // s.RedirectStandardOutput = true;
             s.RedirectStandardError = true;
             s.UseShellExecute = false;
-            s.FileName = Path.Combine(@"E:\tool\ffmpeg-18639", "ffmpeg.exe");
+            s.FileName = @"E:\tool\ffmpeg-18639\ffmpeg.exe";
+            // s.FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tool", "ffmpeg.exe");
             s.Arguments = $"-i \"{filename}\"";
             s.WindowStyle = ProcessWindowStyle.Hidden;
             s.CreateNoWindow = true;
@@ -266,6 +444,9 @@ namespace CTest
             sr.Close();
             p.WaitForExit();
             p.Close();
+            p.Dispose();
+
+            f.TextAppendToDeskFile(output);
 
             var lines = output.Split('\n');
             var duration_line = lines.FirstOrDefault(o => Regex.Match(o, "Duration:").Success);
@@ -431,6 +612,7 @@ At least one output file must be specified
             sr.Close();
             p.WaitForExit();
             p.Close();
+            p.Dispose();
 
             var lines = output.Split('\n');
             var duration_line = lines.FirstOrDefault(o => Regex.Match(o, "Duration:").Success);
@@ -494,7 +676,7 @@ At least one output file must be specified
             return BitConverter.ToString(by).Replace("-", "").ToLower();
         }
 
-        public static string FileMd5(string fullname)
+        public static async Task<string> FileMd5(string fullname)
         {
             try
             {
@@ -510,6 +692,11 @@ At least one output file must be specified
                 }
                 Console.WriteLine(sb.ToString());
                 return sb.ToString();
+            }
+            catch(IOException)
+            {
+                await Task.Delay(100);
+                return await FileMd5(fullname);
             }
             catch (Exception ex)
             {
@@ -1064,6 +1251,38 @@ At least one output file must be specified
             }
         }
 
+        static void DimentionReduction()
+        {
+            var lst = new List<IAS>();
+            lst.Add(new IAS() { etag = "a", partNumber = 1 });
+            lst.Add(new IAS() { etag = "b", partNumber = 2 });
+            lst.Add(new IAS() { etag = "c", partNumber = 3 });
+            lst.Add(new IAS() { etag = "d", partNumber = 4 });
+            var lst2 = new List<IAS>();
+            lst2.Add(new IAS() { etag = "e", partNumber = 5 });
+            lst2.Add(new IAS() { etag = "f", partNumber = 6 });
+            lst2.Add(new IAS() { etag = "g", partNumber = 7 });
+            lst2.Add(new IAS() { etag = "h", partNumber = 8 });
+            var lst3 = new List<IAS>();
+            lst3.Add(new IAS() { etag = "i", partNumber = 9 });
+            lst3.Add(new IAS() { etag = "j", partNumber = 10 });
+            lst3.Add(new IAS() { etag = "k", partNumber = 11 });
+            lst3.Add(new IAS() { etag = "l", partNumber = 12 });
+
+            var lst_a = new List<List<IAS>>();
+            lst_a.Add(lst);
+            lst_a.Add(lst2);
+            lst_a.Add(lst3);
+
+            var l = new List<IAS>();
+            foreach (var x in lst_a)
+            {
+                l = l.Concat(x).ToList();
+            }
+
+            Console.WriteLine(l.Count);
+        }
+
         #region 
         public static void E_000(int a)
         {
@@ -1120,5 +1339,53 @@ At least one output file must be specified
     {
         public int partNumber { get; set; }
         public string etag { get; set; }
+    }
+
+    public class AwakenParam
+    {
+        public long? userId { get; set; }
+        public long? orderId { get; set; }
+        /// <summary>
+        /// 产品id
+        /// </summary>
+        public long? movieId { get; set; }
+        /// <summary>
+        /// 产品名称
+        /// </summary>
+        public string movieName { get; set; }
+        public bool? isTestFile { get; set; }
+        public string testId { get; set; }
+        public KeyValue cookie { get; set; }
+        public List<FileParam> fileList { get; set; }
+    }
+
+    public class KeyValue
+    {
+        public string name { get; set; }
+        public string value { get; set; }
+    }
+
+    public class FileParam
+    {
+        /// <summary>
+        /// 桶名称，即用户唯一编码,临时文件该值为：com.huacemedia.temp
+        /// </summary>
+        public string bucketName { get; set; }
+        /// <summary>
+        /// 文件content-type属性值,参考:https://www.iana.org/assignments/media-types/media-types.xhtml
+        /// </summary>
+        public string contentType { get; set; }
+        /// <summary>
+        /// 文件名，必须在桶中唯一
+        /// </summary>
+        public string keyName { get; set; }
+        /// <summary>
+        /// 总字节数（下载时需要）
+        /// </summary>
+        public long length { get; set; }
+        /// <summary>
+        /// 是否为上传
+        /// </summary>
+        public bool isUpload { get; set; }
     }
 }

@@ -1,0 +1,229 @@
+{
+  "message": "ok",
+  "code": "SUCCESS",
+  "data": [
+    {
+      "templateName": "±¶¡÷≤‚ ‘",
+      "parentId": "2f4997e4eeae45bbbbd3ed26086d5409",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 139,
+          "templateName": "±¶¡÷≤‚ ‘",
+          "container": "",
+          "parentId": "2f4997e4eeae45bbbbd3ed26086d5409",
+          "resolutionSpecifications": "1",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"\",\"profile\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-27 14:47:10",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        }
+      ]
+    },
+    {
+      "templateName": "±¶¡÷≤‚ ‘",
+      "parentId": "aca5a6a1526c4b58a72008154be6477f",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 138,
+          "templateName": "±¶¡÷≤‚ ‘",
+          "container": "1",
+          "parentId": "aca5a6a1526c4b58a72008154be6477f",
+          "resolutionSpecifications": "sd",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"1\",\"profile\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-27 14:47:10",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        },
+        {
+          "id": 127,
+          "templateName": "±¶¡÷≤‚ ‘",
+          "container": "1",
+          "parentId": "aca5a6a1526c4b58a72008154be6477f",
+          "resolutionSpecifications": "sd",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"1\",\"profile\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-26 17:55:33",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        }
+      ]
+    },
+    {
+      "templateName": "≤‚ ‘1111",
+      "parentId": "14ad066c138040d1a35c89d47afed0b7",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 125,
+          "templateName": "≤‚ ‘1111",
+          "container": "11",
+          "parentId": "14ad066c138040d1a35c89d47afed0b7",
+          "resolutionSpecifications": "11",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"1\",\"profile\":\"1\",\"rateControlMode\":\"11\",\"bitrate\":\"1\",\"resolution\":\"1\",\"pixelAspectRatio\":\"1\",\"framerate\":\"1\",\"intraDCprecision\":\"1\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-26 17:29:10",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        }
+      ]
+    },
+    {
+      "templateName": "≤‚ ‘1111",
+      "parentId": "80792796a14d454c803d9f70d7d0a842",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 126,
+          "templateName": "≤‚ ‘1111",
+          "container": "2",
+          "parentId": "80792796a14d454c803d9f70d7d0a842",
+          "resolutionSpecifications": "222",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"2\",\"profile\":\"2\",\"rateControlMode\":\"2\",\"bitrate\":\"2\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-26 17:29:10",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        }
+      ]
+    },
+    {
+      "templateName": "≤‚ ‘2",
+      "parentId": "5e8b2390aacc4b8dae373771b5f8ca90",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 124,
+          "templateName": "≤‚ ‘2",
+          "container": "9",
+          "parentId": "5e8b2390aacc4b8dae373771b5f8ca90",
+          "resolutionSpecifications": "999",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"9\",\"profile\":\"\",\"rateControlMode\":\"9\",\"bitrate\":\"\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-26 17:27:41",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        }
+      ]
+    },
+    {
+      "templateName": "≤‚ ‘2",
+      "parentId": "a216c5f753184b11bfd759b2c4b15bc0",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 123,
+          "templateName": "≤‚ ‘2",
+          "container": "",
+          "parentId": "a216c5f753184b11bfd759b2c4b15bc0",
+          "resolutionSpecifications": "888",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"\",\"profile\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-26 17:27:41",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": null,
+          "lastUpdatedId": null,
+          "lastUpdatedBy": null,
+          "del": false
+        },
+        {
+          "id": 97,
+          "templateName": "≤‚ ‘2",
+          "container": "",
+          "parentId": "a216c5f753184b11bfd759b2c4b15bc0",
+          "resolutionSpecifications": "888",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"\",\"profile\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-19 16:43:48",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": "2021-04-26 17:27:14",
+          "lastUpdatedId": 32,
+          "lastUpdatedBy": "qianxpsj01",
+          "del": false
+        }
+      ]
+    },
+    {
+      "templateName": "≤‚ ‘2",
+      "parentId": "05ebeaa03ae243838c911f2ccc22f3dc",
+      "movieSpecificationsTemplates": [
+        {
+          "id": 70,
+          "templateName": "≤‚ ‘2",
+          "container": "4",
+          "parentId": "05ebeaa03ae243838c911f2ccc22f3dc",
+          "resolutionSpecifications": "44",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"4\",\"profile\":\"4\",\"rateControlMode\":\"4\",\"bitrate\":\"4\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-19 14:32:32",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": "2021-04-19 15:03:40",
+          "lastUpdatedId": 32,
+          "lastUpdatedBy": "qianxpsj01",
+          "del": false
+        },
+        {
+          "id": 69,
+          "templateName": "≤‚ ‘2",
+          "container": "3",
+          "parentId": "05ebeaa03ae243838c911f2ccc22f3dc",
+          "resolutionSpecifications": "3",
+          "audio": "{\"audioCodec\":\"\",\"rateControlMode\":\"\",\"bitrate\":\"\",\"sampleRate\":\"\",\"bitDepth\":\"\",\"tracks\":\"\"}",
+          "video": "{\"videoCodec\":\"3\",\"profile\":\"3\",\"rateControlMode\":\"3\",\"bitrate\":\"3\",\"resolution\":\"\",\"pixelAspectRatio\":\"\",\"framerate\":\"\",\"intraDCprecision\":\"\"}",
+          "subtitle": "",
+          "othersExplain": "",
+          "createTime": "2021-04-19 14:29:05",
+          "createId": 32,
+          "createBy": "qianxpsj01",
+          "lastUpdatedTime": "2021-04-19 15:03:40",
+          "lastUpdatedId": 32,
+          "lastUpdatedBy": "qianxpsj01",
+          "del": false
+        }
+      ]
+    }
+  ],
+  "success": true
+}

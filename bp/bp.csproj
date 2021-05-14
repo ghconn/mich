@@ -37,6 +37,9 @@
     <Content Include="1.txt" />
     <Content Include="1.xml" />
     <Content Include="2.txt" />
+    <Content Include="6.txt" />
+    <Content Include="7.txt" />
+    <Content Include="5.txt" />
     <Content Include="bl.txt" />
     <Content Include="csharp.txt" />
     <Content Include="css.txt" />
@@ -51,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="2.json" />
-    <None Include="s3Client - 2.json" />
+    <None Include="6.json" />
     <None Include="s3Config - 2.json" />
     <None Include="s3Config.json" />
     <None Include="s3Client.json" />
