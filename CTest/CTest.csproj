@@ -114,6 +114,7 @@
     <Compile Include="JSer.cs" />
     <Compile Include="LetMeSS.cs" />
     <Compile Include="LoopBody.cs" />
+    <Compile Include="LunaCalendar.cs" />
     <Compile Include="MapTo.cs" />
     <Compile Include="MyAsyncResult.cs" />
     <Compile Include="MIList.cs" />
